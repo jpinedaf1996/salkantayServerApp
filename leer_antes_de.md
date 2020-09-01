@@ -7,7 +7,7 @@ Para iniciar el archivo de la apliacion se tiene que intalar la carpeta node_mod
 
 se puede instalar con el comando 
 
-GIT install 
+# NPM install 
 
 siempre y cuando este al archivo package.json
 
