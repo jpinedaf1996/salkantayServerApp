@@ -1,0 +1,17 @@
+{
+  "name": "salkantayserver",
+  "version": "0.0.1",
+  "description": "Servidor para servidor de Salkantay",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Jesus Pineda",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
