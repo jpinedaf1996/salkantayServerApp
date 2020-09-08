@@ -1,12 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');  // Se importan las librerias
+const apiRouter = require('./routers/api');
 
-const app = express();
+require('./dbconfig'); // Se llama la conexion de la dbconfig
 
-app.get('/', (req,res)=>{
-    res.send(req.ip);
-})
+const app = express(); //Se hace una instancia de servidor
 
-app.listen(3000, ()=>{
-    console.log("Listen on port 3000");
-})
+app.use(bodyParser.json()); // Se configura el servidor para comunicacion por JSON
+app.use(bodyParser.urlencoded({extended : true })); // Permite recibir peteciones por PSOT
+
+app.use('/apiv0.1',apiRouter); // RUTA Principal EJEM: localhost/apiv0.1/otrasrutas
+
+app.listen(3000, () => console.log("El servidor esta escuchando en el puerto 3000..."));
 
