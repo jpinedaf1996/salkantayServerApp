@@ -26,7 +26,7 @@ router.delete('/:productId', async (req,res)=>{ //estas rutas reciben parametros
     await Producto.destroy ({ // funcion para borrar 
         where: { idProducto: req.params.productId }
     });
-    res.json({success: 'Se ha borro un registro.'});
+    res.json({success: 'Se ha borrado un registro.'});
     
 });
 

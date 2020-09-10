@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');  // Se importan las librerias
-const apiRouter = require('./routers/api');
+const apiRouter = require('./routers/api-config');
 const cors = require('cors')
 require('./dbconfig'); // Se llama la conexion de la dbconfig
 
