@@ -5,7 +5,7 @@ const {Categoria}  =  require('../../dbconfig')
 //Se crean las rutas para una API REST con los diferente metodos 
 
 router.get('/', async (req,res)=>{ 
-    let categorias = await Categoria.findAll();
+    let categorias = await Categoria.findAll({});
     res.json(categorias);
 });
 
