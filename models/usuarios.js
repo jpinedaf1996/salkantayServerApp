@@ -12,9 +12,9 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
             autoIncrement: true
         },
         usuario: type.STRING,
-        pass: type.STRING,
+        pass: type.STRING(150),
         tipo: type.ENUM('1', '2')
-    })
+    },{ timestamps: false });
 };
 
 // ESTE ARCHIVO SE PUEDE TOMAR DE EJEMPLO SOLO CAMBIAR EL NOMBRE DE LA TABLA Y LOS CAMPOS

@@ -17,7 +17,7 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
         desc: type.STRING,
         estado: type.ENUM('1', '2')
 
-    })
+    },{ timestamps: false });
 };
 
 // ESTE ARCHIVO SE PUEDE TOMAR DE EJEMPLO SOLO CAMBIAR EL NOMBRE DE LA TABLA Y LOS CAMPOS
