@@ -11,7 +11,8 @@ const validarToken = (req,res,next)=>{
      */
     if(!req.headers['token']){
         //Si no viene el token Error
-        return res.json({error: 'Token requerido'});
+        res.status(500).send({ error: 'Token requerido' });
+        // throw new Error('Token requerido');
     }
     const token = req.headers['token']; // Se almacena el token en una variable 
     let payload = {
@@ -23,10 +24,12 @@ const validarToken = (req,res,next)=>{
     try {
         payload = jwt.decode(token,fraseAcceso);
     }catch (error) {
-        return res.json({error: 'El token es incorrecto'});
+        res.status(500).send({ error: 'El token es incorrecto' });
+        
     }
     if (payload.expireAt < moment().unix()) {
-        return res.json({error : 'El token expiro'});
+        res.status(500).send({ error: 'El token expiro' });
+
     }
     
     req.usuarioId =  payload.usuarioId;
