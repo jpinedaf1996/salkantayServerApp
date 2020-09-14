@@ -15,7 +15,7 @@ const apiUsuarioRouter = require('./api/users');
  * una actualizacion.
  */
 router.use('/products',middleware. validarToken ,apiProdRouter); 
-router.use('/category', apiCategoriaRouter);
+router.use('/category',middleware. validarToken, apiCategoriaRouter);
 router.use('/users', apiUsuarioRouter);
 
 //se exporta hacia el archivo main.js donde esta la ruta principal localhost/apiv0.1/
