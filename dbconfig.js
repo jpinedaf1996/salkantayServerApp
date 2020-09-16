@@ -12,7 +12,7 @@ const Conexion = new Sequelize('salkantaydb','root','catolica',{
 }); 
 /**
  * Se usa la funcion importada 
- * se le pasa los 2 parametros la Conexion y la librria
+ * se le pasa los 2 parametros la Conexion y la libreria
  * 
  */
 const Producto = ProdModel(Conexion, Sequelize); 
@@ -22,6 +22,7 @@ const Usuarios = UserModel(Conexion, Sequelize);
 // RELACIONES
 
 Producto.belongsTo(Categoria,{as:'categorias',foreignKey:'categoriaId',onDelete:'cascade'})
+
 /**
  * Se sincroniza con la base de datos 
  * 
