@@ -8,10 +8,6 @@ const router = require('express').Router();
 const apiProdRouter = require('./api/products'); 
 const apiCategoriaRouter = require('./api/categories');
 const apiUsuarioRouter = require('./api/users');
-const apiMesaRouter = require('./api/mesa');
-const apiClienteRouter = require('./api/cliente');
-const apiOrdenRouter = require('./api/orden');
-const apiOrdenDetRouter = require('./api/ordendet');
 
 /***
  * Se indica que debe escuchar todas las rutas.
@@ -21,10 +17,6 @@ const apiOrdenDetRouter = require('./api/ordendet');
 router.use('/products',middleware.validarToken ,apiProdRouter); 
 router.use('/category',middleware.validarToken, apiCategoriaRouter);
 router.use('/users', apiUsuarioRouter);
-router.use('/mesa',middleware.validarToken ,apiMesaRouter); 
-router.use('/cliente',middleware.validarToken ,apiClienteRouter); 
-router.use('/orden',middleware.validarToken ,apiOrdenRouter); 
-router.use('/ordendet',middleware.validarToken ,apiOrdenDetRouter); 
 
 //se exporta hacia el archivo main.js donde esta la ruta principal localhost/apiv0.1/
 module.exports = router; 
