@@ -13,8 +13,7 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
         },
         categoria: type.STRING(50),
         desc: type.STRING(55),
-        imagen: type.STRING,
-
+        
     }, { timestamps: false });
 };
 

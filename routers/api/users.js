@@ -4,7 +4,7 @@ const { Usuarios } = require('../../dbconfig');
 const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const token = require('./createToken');
-const middleware = require('../middlewares');
+const middleware = require('../middlewares/middlewares');
 
 //Funcion para validar el incio de sesion
 

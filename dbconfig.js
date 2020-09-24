@@ -15,6 +15,7 @@ const Conexion = new Sequelize('salkantaydb','root','catolica',{
  * se le pasa los 2 parametros la Conexion y la libreria
  * 
  */
+
 const Producto = ProdModel(Conexion, Sequelize); 
 const Categoria = CateModel(Conexion, Sequelize);
 const Usuarios = UserModel(Conexion, Sequelize);

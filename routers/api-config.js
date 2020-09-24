@@ -3,11 +3,12 @@
  * de cada modelo de los archivos de la 
  * carpeta /routers/api
  */
-const middleware  =  require('./middlewares');
+const middleware  =  require('./middlewares/middlewares');
 const router = require('express').Router();
 const apiProdRouter = require('./api/products'); 
 const apiCategoriaRouter = require('./api/categories');
 const apiUsuarioRouter = require('./api/users');
+
 
 /***
  * Se indica que debe escuchar todas las rutas.
@@ -17,6 +18,7 @@ const apiUsuarioRouter = require('./api/users');
 router.use('/products',middleware.validarToken ,apiProdRouter); 
 router.use('/category',middleware.validarToken, apiCategoriaRouter);
 router.use('/users', apiUsuarioRouter);
+;
 
 //se exporta hacia el archivo main.js donde esta la ruta principal localhost/apiv0.1/
 module.exports = router; 

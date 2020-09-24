@@ -1,6 +1,6 @@
 const jwt = require('jwt-simple');
 const moment = require('moment');
-const { fraseAcceso } = require('./api/createToken');
+const { fraseAcceso } = require('../api/createToken');
 /**
  * Funcion para validar el token de inicio de sesion 
  */

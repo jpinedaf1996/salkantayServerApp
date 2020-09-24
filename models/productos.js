@@ -15,8 +15,8 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
         producto: type.STRING,
         precio: type.DOUBLE(5, 2),
         desc: type.STRING,
-        estado: type.ENUM('1', '2')
-
+        estado: type.ENUM('1', '2'),
+        imagen: type.STRING
     },{ timestamps: false });
 };
 
