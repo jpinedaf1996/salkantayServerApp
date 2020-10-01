@@ -64,13 +64,19 @@ router.put('/:productId', upload.single('image'), async (req, res) => { //estas 
             }, {
             where: { productoId: req.params.productId }
         });
+        
     } else {
         await Producto.update(req.body, {
             where: { productoId: req.params.productId }
         });
+        
     }
 
-    res.json({ 'categoriaId': req.body.categoriaId });
+    return res.status(200).json(
+        {   
+            success: 'Se actualizo de forma correcta!'
+        }
+    );
 });
 router.delete('/:productId', async (req, res) => { //estas rutas reciben parametros 
 

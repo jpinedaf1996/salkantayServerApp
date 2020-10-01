@@ -30,7 +30,7 @@ const OrdenDet = OrdenDetModel(Conexion, Sequelize);
 
 // RELACIONES
 
-Producto.belongsTo(Categoria,{as:'categorias',foreignKey:'categoriaId',onDelete:'cascade'})
+Categoria.hasMany(Producto,{as:'categorias',foreignKey:'categoriaId',onDelete:'restrict'})
 Orden.belongsTo(Cliente,{as:'cliente',foreignKey:'clienteId',onDelete:'cascade'})
 Orden.belongsTo(Mesa,{as:'mesa',foreignKey:'mesaId',onDelete:'cascade'})
 OrdenDet.belongsTo(Orden,{as:'orden',foreignKey:'ordenId',onDelete:'cascade'})
