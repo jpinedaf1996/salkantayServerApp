@@ -22,7 +22,7 @@ const apiOrdenDetRouter = require('./api/ordendet');
 router.use('/products',middleware.validarToken ,apiProdRouter); 
 router.use('/category',middleware.validarToken, apiCategoriaRouter);
 router.use('/users', apiUsuarioRouter);
-router.use('/mesa',middleware.validarToken ,apiMesaRouter); 
+router.use('/mesas',middleware.validarToken ,apiMesaRouter); 
 router.use('/cliente',middleware.validarToken ,apiClienteRouter); 
 router.use('/orden',middleware.validarToken ,apiOrdenRouter); 
 router.use('/ordendet',middleware.validarToken ,apiOrdenDetRouter); 
