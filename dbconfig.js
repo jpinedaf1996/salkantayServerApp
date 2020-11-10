@@ -10,10 +10,10 @@ const OrdenDetModel = require('./models/ordendet');
  * se genera la Conexion de la DB
  * 
  */
-const Conexion = new Sequelize('salkantaydb','root','catolica',{
+const Conexion = new Sequelize('coffeecode','root','2125',{
     host:'localhost',
     dialect:'mariadb'
-}); 
+});  
 /**
  * Se usa la funcion importada 
  * se le pasa los 2 parametros la Conexion y la libreria

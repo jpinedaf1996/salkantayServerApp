@@ -6,7 +6,7 @@
 
 module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta siento exportado y recibe 2 parametros
 
-    return sequelize.define('clientes',{ // Los nombres de los campos deben ser en singular NO EN PLURAL
+    return sequelize.define('cliente',{ // Los nombres de los campos deben ser en singular NO EN PLURAL
         clienteId:{                    // Campo de la tabla producto 
             type: type.INTEGER,         // Tipo de datos 
             primaryKey: true,
