@@ -14,6 +14,10 @@ module.exports = (sequelize, type) => { // Esta es una funcion sin nombre que es
         },
         clienteId: type.INTEGER,
         mesaId: type.INTEGER,
+        descuento: {
+            type: type.DOUBLE(5, 2),
+            defaultValue: 0
+        },
         fecha_hora: {
             type: type.DATE,
             allowNull: false,

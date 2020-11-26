@@ -14,9 +14,9 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
         },
         ordenId: type.INTEGER,
         productoId: type.INTEGER,
+        precio: type.DOUBLE(5, 2),// este campo es usado parta gennerar reportes
         unidades: type.INTEGER
         
-
     },{ timestamps: false });
 };
 

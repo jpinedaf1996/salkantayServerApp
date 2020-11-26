@@ -6,10 +6,11 @@ const MesaModel = require('./models/mesa');
 const ClienteModel = require('./models/cliente');
 const OrdenModel = require('./models/orden');
 const OrdenDetModel = require('./models/ordendet');
+const PromocionesModel = require('./models/promociones');
 /**
  * se genera la Conexion de la DB
  *
- */
+ */ 
 const Conexion = new Sequelize('salkantaydb','root','catolica',{
     host:'localhost',
     dialect:'mariadb'
@@ -27,6 +28,7 @@ const Mesa = MesaModel(Conexion, Sequelize);
 const Cliente = ClienteModel(Conexion, Sequelize);
 const Orden = OrdenModel(Conexion, Sequelize);
 const OrdenDet = OrdenDetModel(Conexion, Sequelize);
+const Promociones = PromocionesModel(Conexion, Sequelize);
 
 // RELACIONES
 
@@ -54,5 +56,6 @@ module.exports = {
     Usuarios,
     Cliente,
     Orden,
-    OrdenDet
+    OrdenDet,
+    Promociones
 };

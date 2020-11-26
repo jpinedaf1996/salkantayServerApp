@@ -24,10 +24,11 @@ router.get('/ordendetbyproducto/:id_orden', async (req, res) => {
 });
 
 router.put('/:ordendetId', async (req, res) => {
-    console.log(req.body.unidades);//estas rutas reciben parametros
+    console.log(parseFloat(req.body.precio));//estas rutas reciben parametros
     await OrdenDet.update(
         {
-            unidades: req.body.unidades,
+            precio: parseFloat(req.body.precio),
+            unidades: req.body.unidades
         },
         {
             where: { ordendetId: req.params.ordendetId } // funcion para actualizar

@@ -5,7 +5,12 @@ const { Mesa, Orden } = require('../../dbconfig')
 
 
 router.get('/', async (req, res) => {
-  let mesas = await Mesa.findAll({});
+  let mesas = await Mesa.findAll(
+    {
+      order: [
+        ['mesaId', 'DESC']
+    ]
+    });
   res.json(mesas);
 });
 
@@ -29,8 +34,9 @@ router.put('/:mesaId', async (req, res) => { //estas rutas reciben parametros
 
 router.post('/', async (req, res) => {
   console.log(req.body)
-  let mesas = await Mesa.create(req.body);
-  res.json(mesas);
+  await Mesa.create(req.body);
+  
+  res.json({ success: 'Se ha actualizado un registro.' });
 });
 
 router.get('/findOne/:mesaId', async (req, res) => {
