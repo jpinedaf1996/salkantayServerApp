@@ -44,6 +44,18 @@ router.put('/newOrden/:mesaId', async (req, res) => {
     }
 
 });
+///////
+router.put('/descuento/:ordenId', async (req, res) => { 
+    //estas rutas reciben parametros 
+    await Orden.update({
+        'descuento': req.body.descuento
+    }, { // funcion para actualizar
+        where: { ordenId: req.params.ordenId }
+    });
+    //console.log(req.params.ordenId)
 
+    res.json({ descuento: req.body.descuento });
+
+});
 
 module.exports = router; // se exporta el router hacia api.js

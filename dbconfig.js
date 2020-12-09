@@ -35,8 +35,8 @@ const Promociones = PromocionesModel(Conexion, Sequelize);
 Categoria.hasMany(Producto,{as:'categorias',foreignKey:'categoriaId',onDelete:'restrict'})
 Orden.belongsTo(Cliente,{as:'cliente',foreignKey:'clienteId',onDelete:'cascade'})
 Orden.belongsTo(Mesa,{foreignKey:'mesaId',onDelete:'cascade'})
-OrdenDet.belongsTo(Orden,{as:'orden',foreignKey:'ordenId',onDelete:'cascade'})
-OrdenDet.belongsTo(Producto,{as:'producto',foreignKey:'productoId',onDelete:'cascade'})
+OrdenDet.belongsTo(Orden,{foreignKey:'ordenId',onDelete:'cascade'})
+OrdenDet.belongsTo(Producto,{foreignKey:'productoId',onDelete:'cascade'})
 /**
  * Se sincroniza con la base de datos
  *

@@ -12,7 +12,6 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
             primaryKey: true,
             autoIncrement: true
         },
-        ordenId: type.INTEGER,
         productoId: type.INTEGER,
         precio: type.DOUBLE(5, 2),// este campo es usado parta gennerar reportes
         unidades: type.INTEGER
@@ -20,4 +19,4 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
     },{ timestamps: false });
 };
 
-// ESTE ARCHIVO SE PUEDE TOMAR DE EJEMPLO SOLO CAMBIAR EL NOMBRE DE LA TABLA Y LOS CAMPOS
+// ESTE ARCHIVO SE PUEDE TOMAR DE EJEMPLO SOLO CAMBIAR EL NOMBRE DE LA TABLA Y LOS CAMPOS 

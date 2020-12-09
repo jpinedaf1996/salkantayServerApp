@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     await Promociones.create(req.body);
     
-    res.json({ success: 'Se ha guardado con registro.' });
+    res.json({ success: 'Se ha guardado con exito.' });
 });
 router.put('/:promoId', async (req, res) => { //estas rutas reciben parametros 
     await Promociones.update(req.body, { // funcion para actualizar 
@@ -25,6 +25,7 @@ router.put('/:promoId', async (req, res) => { //estas rutas reciben parametros
     res.json({ success: 'Se ha actualizado un registro.' });
 
 });
+
 router.get('/findOne/:promoId', async (req, res) => {
     let promo = await Promociones.findOne({
         where: {

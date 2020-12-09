@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { OrdenDet } = require('../../dbconfig');
+const { OrdenDet,Producto,Orden } = require('../../dbconfig');
 //Se crean las rutas para una API REST con los diferente metodos
 
 router.get('/', async (req, res) => {
@@ -16,15 +16,32 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/ordendetbyproducto/:id_orden', async (req, res) => {
-    let ordendetbyproducto = await OrdenDet.findAll({
-        include: 'producto',
-        where: { ordenId: req.params.id_orden }
-    });
-    res.json(ordendetbyproducto);
+    try {
+        let ordendetbyproducto = await OrdenDet.findAll({
+            where: {
+                ordenId: req.params.id_orden
+            },
+            include: [
+                {
+                model: Producto
+            }, 
+            {
+                model: Orden,
+                attributes: ['descuento'],
+                
+            }
+        ],
+        });
+        //console.log(ordendetbyproducto);
+        res.json(ordendetbyproducto);
+    } catch (error) {
+        console.log("Error:" + error.message)
+    }
+
+
 });
 
 router.put('/:ordendetId', async (req, res) => {
-    console.log(parseFloat(req.body.precio));//estas rutas reciben parametros
     await OrdenDet.update(
         {
             precio: parseFloat(req.body.precio),
