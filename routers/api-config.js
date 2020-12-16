@@ -12,8 +12,9 @@ const apiMesaRouter = require('./api/mesa');
 const apiClienteRouter = require('./api/cliente');
 const apiOrdenRouter = require('./api/orden');
 const apiOrdenDetRouter = require('./api/ordendet');
-
-
+const apiPromoRouter = require('./api/promo');
+const apiInfoRouter = require('./api/info');
+//const apiMenuRouter = require('./api/menu');
 /***
  * Se indica que debe escuchar todas las rutas.
  * EJEMPlO despues de prefijo localhost/apiv0.1/productos/:25 esto para hacer
@@ -26,6 +27,10 @@ router.use('/mesas',middleware.validarToken ,apiMesaRouter);
 router.use('/cliente',middleware.validarToken ,apiClienteRouter); 
 router.use('/orden',middleware.validarToken ,apiOrdenRouter); 
 router.use('/ordendet',middleware.validarToken ,apiOrdenDetRouter); 
+router.use('/promociones',middleware.validarToken ,apiPromoRouter); 
+router.use('/info',middleware.validarToken ,apiInfoRouter); 
+//router.use('/menu',middleware.validarToken ,apiMenuRouter); 
+
 
 //se exporta hacia el archivo main.js donde esta la ruta principal localhost/apiv0.1/
 module.exports = router; 

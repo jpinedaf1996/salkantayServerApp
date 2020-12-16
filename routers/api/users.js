@@ -8,10 +8,10 @@ const middleware = require('../middlewares/middlewares');
 
 //Funcion para validar el incio de sesion
 
-router.get('/validarToken', middleware.validarToken, async (req, res) => { 
-    
+router.get('/validarToken', middleware.validarToken, async (req, res) => {
+
     return res.status(303).json({ success: 'El token el token es valido' });
-    
+
 });
 
 router.post('/login', [
@@ -81,8 +81,36 @@ router.get('/', async (req, res) => {
     let usuarios = await Usuarios.findAll();
     res.json(usuarios);
 });
+router.get('/findOne/:id', async (req, res) => {
+    let usuario = await Usuarios.findOne({
+        where: {
+            usuarioId: req.params.id
+        }
+    });
+    if(usuario){
+        res.json(usuario);
+    }else{
+        res.json({error: "Se produjo un error al intentar actualizar ", code: 20 });
+    }
+    
+});
 
-router.put('/:usuarioId', async (req, res) => { //estas rutas reciben parametros 
+router.put('/:usuarioId',[
+
+    check('usuario', 'El nombre del usario es obligatorio').not().isEmpty(),
+    check('pass', 'La contraseña es obligatoria').not().isEmpty(),
+
+], async (req, res) => { //estas rutas reciben parametros 
+    const erros = validationResult(req);
+
+    if (!erros.isEmpty()) {
+
+        return res.status(422).json({ errores: erros.array() });
+
+    }
+    //Funcion para encriptar la cotraseña 
+    req.body.pass = bcrypt.hashSync(req.body.pass, 10);
+    
     await Usuarios.update(req.body, { // funcion para actualizar 
         where: { usuarioId: req.params.usuarioId }
     });

@@ -1,50 +1,49 @@
 const router = require('express').Router();
-const {Orden}  =  require('../../dbconfig');
-//Se crean las rutas para una API REST con los diferente metodos 
+const { Orden, Mesa } = require('../../dbconfig');
+//Se crean las rutas para una API REST con los diferente metodos
 
-router.get('/', async (req,res)=>{ 
-    console.log(req.ordenId);
-    let Orden = await Orden.findAll();
-    res.json(orden);
+router.get('/', async (req, res) => {
+    let ordenes = await Orden.findAll();
+    res.json(ordenes);
 });
-router.get('/ordenbycliente', async (req,res)=>{ 
-    let ordenbycliente = await Orden.findAll({
-        include:'cliente'
-    });
-    res.json(ordenbycliente);
-});
-router.get('/ordenbymesa', async (req,res)=>{ 
+
+//FUNCION PARA LLAMAR A LAS MESAS QUE ESTEN OCUPADAS OSEA ESTADO 1 
+//CON LA ORDEN ACTIVAS OSEA ESTADO 1
+router.get('/ordenbymesa', async (req, res) => {
     let ordenbymesa = await Orden.findAll({
-        include:'mesa'
+        include: {
+            model: Mesa,
+            where: { estado: '1' }
+        },
+        where: { estado: '1' } // estado del orden activa
     });
     res.json(ordenbymesa);
+
 });
-router.post('/', async (req,res)=>{
-    try {
-        let orden = await Orden.create(req.body);
-        res.json(orden);
-    } catch (error) {
-        res.json(error);
-    }
-});
-router.put('/:ordenId', async (req,res)=>{ //estas rutas reciben parametros 
-    try {
-        await Orden.update(req.body,{ // funcion para actualizar 
-            where: { ordenId: req.params.ordenId }
+
+//DUNCION PARA CAMBIAR EL ESTADO DE UNA MESA Y AGREGAR UN ANUVEA ORDEN 
+//ESTA PASA HACER DE ESTADO 1 OSEA ACTIVA
+router.put('/newOrden/:mesaId', async (req, res) => { 
+    //Se cambia el estado de la mesa   
+    if (req.body.estado === '0') {
+        let response = await Mesa.update({
+            'estado': '1'
+        }, { // funcion para actualizar
+            where: { mesaId: req.params.mesaId }
         });
-        res.json({success: 'Se ha actualizado un registro.'});
-    } catch (error) {
-        res.json(error);
+        //SE CREA UN NUEVA ORDEN Y SE LE AÑADE LA MESA 
+        //QUE QUE SE LE CAMBIO EL ESTADOD
+        if (response) {
+            await Orden.create({
+                'mesaId': req.params.mesaId
+            });
+            res.json({ success: 'Se ha creado la orden.' });
+        }
+    } else {
+        res.json({ error: 'Error al crear la orden.' });
     }
+
 });
-router.delete('/:ordenId', async (req,res)=>{ //estas rutas reciben parametros 
-    try {
-        await Orden.destroy ({ // funcion para borrar 
-            where: { ordenId: req.params.ordenId }
-        });
-        res.json({success: 'Se ha borrado un registro.'});
-    } catch (error) {
-        res.json(error)
-    } 
-});
+
+
 module.exports = router; // se exporta el router hacia api.js
