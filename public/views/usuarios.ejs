@@ -1,0 +1,225 @@
+<%- include('./templates/header'); -%>
+
+<body>
+
+  <!-- Product Form  <main class="container-fluid"> -->
+
+  <div class="row">
+    <div class="col-md-6 p-4 my-auto">
+      <h3 style="color: whitesmoke;">Formulario de Usuarios</h3>
+      <div class="row"></div>
+      <button onclick="return ShowHide('UserForm')" type="button" class="btn btn-secondary">Mostrar/Ocultar</button>
+      <div class="row"></div>
+      <div></div>
+      <!-- Product Form -->
+      <form id="UserForm" class="card card-body">
+        <div class="form-group">
+          <a>Nombre del Usuario</a>
+          <input type="text" id="usuario" name="usuario" placeholder="Ejem. Usuario21" class="form-control" autofocus>
+        </div>
+
+        <div class="form-group">
+          <a>Digite una Contraseña</a>
+          <div class="input-group">
+            <input id="Pass" name="pass" type="Password" Class="form-control">
+            <div class="input-group-append">
+              <button id="show_password" class="btn btn-primary" type="button" onclick="ShowPassword()"> <span
+                  class="fa fa-eye-slash icon"></span> </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <a>Tipo de Usuario</a>
+          <select id="tipo" name="tipo" placeholder="Tipo de usuario" class="form-control">
+
+            <option>Selecciona una opcion....</option>
+            <option value="1">Administrador</option>
+            <option value="2">Invitado</option>
+          </select>
+        </div>
+        <div>
+          <input type="hidden" value="0" name="idforedit" id="idforedit">
+        </div>
+        <button id="btn-User" type="submit" class="btn btn-primary">
+          Guardar
+        </button>
+      </form>
+
+    </div>
+
+    <!-- Product List -->
+    <div class="col-md-6">
+      <div id="ContentUser">
+      <div class="row justify-content-center">
+        <div style="margin: auto;">
+      <!--
+      <table id="UserTable" style="background-color: whitesmoke;" class="table table-bordered table-sm">
+        <thead>
+          <tr>
+              <th>Usuario</th>
+              <th>Tipo de Ususario</th>
+              <th>Editar</th>
+              <th>Borrar</th>
+          </tr>
+      </thead>
+      <tfoot>
+          <tr>
+            <th>Usuario</th>
+            <th>Tipo de Ususario</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+          </tr>
+      </tfoot>
+      </table>
+    --> </div>
+    </div>
+  </div>
+
+
+  <!-- </main> -->
+
+</body>
+
+
+<%- include('./templates/scripts.ejs'); -%>
+
+<script>
+
+  //funcion para mostar y ocultar el formulario
+  function ShowHide(id) {
+    var elemento = document.getElementById(id);
+    if (!elemento) {
+      return true;
+    }
+    if (elemento.style.display == "none") {
+      elemento.style.display = "block"
+    } else {
+      elemento.style.display = "none"
+    };
+    return true;
+  };
+
+  //Funcion para el show pass
+  function ShowPassword() {
+    var cambio = document.getElementById("Pass");
+    if (cambio.type == "password") {
+      cambio.type = "text";
+      $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    } else {
+      cambio.type = "password";
+      $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+  }
+
+  $(document).ready(function () {
+    //CheckBox mostrar contraseña
+    $('#ShowPassword').click(function () {
+      $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+    });
+  });
+
+
+  $(document).ready(async () => {
+    getListUsers();
+  })
+
+
+  $("#btn-newTable").on('click', () => {
+    $("#UserForm").modal("show");
+  });
+
+  const getListUsers = async () => {
+    let response = await new GetInfoByFetch(url.apiuser).request();
+    document.getElementById('ContentUser').innerHTML = "-- ";
+    if (response.length === 0) {
+
+document.getElementById('ContentUser').innerHTML = "<p class='text-white'> No hay mesas disponibles </p>";
+}
+
+response.map((users) => {//    ejemplo de template string js
+const table = `<div class="card product text-dark animate__animated animate__bounce" style="width: 11rem;">
+          <div class="card-body" onclick="editTable(${users.usuarioId})" >
+              <p class="card-text"><strong>Usuario:${users.usuario}</strong></p>
+              <p class="card-text"><strong>Tipo de Usuario:${users.tipo}</strong></p>
+              
+          </div><hr>
+          <i id="btn-delete" class="btn btn-danger" onclick="DeleteUser(${users.usuarioId})"><i
+              class="fas fa-trash"></i></button>`;
+document.getElementById('ContentUser').insertAdjacentHTML('beforeEnd', table);
+
+})
+};
+
+
+  document.querySelector("#UserForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    let data = new FormData(event.currentTarget);
+
+    if (parseInt(data.get("idforedit")) === 0) {
+      editOsaveTable(new URLSearchParams({
+        'usuario': data.get("usuario"),
+        'pass': data.get("pass"),
+        'tipo': data.get("tipo"),
+
+      }), method = 'POST', link = url.apiuser);
+
+    } else {
+      editOsaveTable(new URLSearchParams({
+        'usuario': data.get("usuario"),
+        'tipo': data.get("tipo")
+      }), method = 'PUT', link = `${url.apiuser}${data.get('idforedit')}`);
+    }
+  });
+
+  const editOsaveTable = async (data, method, link) => {
+
+    let response = await new GetInfoByFetch(`${link}`, method, data).request();
+
+    if (response.ok === false) {
+      alertify.alert("<i class='fas fa-exclamation-circle text-danger'></i> Error al enviar el formulario ",
+        "Recomendaciones:<br>Tamaño maximo de la imagen 5Mb<br>Formato : jpeg jpg png o gif!");
+    } else {
+      getListUsers();
+      console.log(response.success)
+      document.querySelector("#UserForm").reset();
+      
+
+
+    }
+  }
+
+const DeleteUser = (usuarioId) => {
+
+alertify.confirm("<i class='fas fa-exclamation-circle text-danger'></i> Advertencia ", "¿Decea borrar este usuario ?.",
+  async function () {
+    let response = await new GetInfoByFetch(`${url.apiuser}${usuarioId}`, 'DELETE').request();
+    alertify.success(response.success);
+    
+    getListUsers();
+  },
+  function () {
+  });
+}
+
+
+const editTable = async (usuarioId) => {
+    document.querySelector("#UserForm").reset();
+
+    const response = await new GetInfoByFetch(`${url.apiuser}findOne/${usuarioId}`).request();
+    
+    Object.entries(response).forEach(([key, value]) => {
+      $(`#${key}`).val(`${value}`);
+
+    });
+
+    $("#idforedit").val(usuarioId); //input hiden en el formulario
+    $("#UserForm").FormData("show");
+  }
+
+
+</script>
+
+</body>
+
+</html>

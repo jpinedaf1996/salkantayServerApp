@@ -1,0 +1,67 @@
+/******
+
+Css Menu 
+
+*********/
+.main-container-list{
+    background-color: var(--body-color);
+    width: 90%;
+    height: auto;
+    margin-top: 15px!important;
+    margin: auto;
+    padding: 0;
+}
+
+.sidebar-menu-color{
+    border: none;
+    background-color:  var(--side-menu);
+    color: var(--text-side) !important;
+    
+}
+.nav-bar-color{
+    background-color:  var(--nav-bar);
+}
+.sidebar-menu-color a{
+    text-decoration-line: none;
+    color: var(--text-side);
+}
+.marginRow{
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.mairginContent{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.main-content{
+    width: 100%;
+    height: 100vh;
+} 
+.option:hover{
+    border-left: 8px solid var(--hover-boder);
+    background-color: var(--bg-hover);
+}
+.option > .fas{
+    
+    margin-right: 18px;
+}
+.option{ 
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 15px;
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+    
+}
+.tittle{
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+}

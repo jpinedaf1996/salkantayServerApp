@@ -1,0 +1,409 @@
+<%- include('./templates/header'); -%>
+<!-- 
+                Autor Jesus pineda / "Otro autor"
+                13/08/2020
+                Proposito de esta pagina: Esta es la pagina de productos 
+                aqui se gestionanran los diferente produstos 
+              -->
+<!-- Aqui Agregar el contenido para las paginas del sistemas  -->
+
+<!-- Modal para configuracion de categorias -->
+<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">GESTION DE CATEGORIAS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formcategory">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input placeholder="Nueva categoria" type="text" class="form-control" name="categoria"
+                                    id="categoria" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <input id="btn-Category" type="submit" class="btn btn-primary" value="Guardar">
+                        </div>
+                    </div>
+                </form>
+                <div id="alert">
+
+                </div>
+                <form id="formWithCheck">
+                    <div id="contenteCategory">
+
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="deleteCategory();">Borrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal para configuracion de productos -->
+<div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar un nuevo producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formProducto">
+
+                    <div class="form-group">
+                        <label for="categoria">Asignar a categoria:</label>
+                        <select id="categoriaId" class="custom-select" name="categoriaId" required>
+
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="producto"></i> Nombre del producto:</label>
+                                <input type="text" class="form-control " name="producto" id="producto"
+                                    placeholder="Nombre del producto" required>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="precio">Precio del producto</label>
+                                <input type="number" class="form-control " step="0.01" name="precio" id="precio"
+                                    placeholder="Precio" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc">Descripcion (opcional)</label>
+                        <textarea id="desc" name="desc" class="form-control" rows="2" required></textarea>
+                    </div>
+                    <input type="hidden" value="0" name="idforedit" id="idforedit">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="producto"></i> Imagen para producto:</label>
+                                <input type="file" class="form-control" name="image" id="image">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <img width="100%" height="100%" id="preview">
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <input id="seveProduct" type="submit" class="btn btn-primary" value="Guardar">
+
+            </div>
+            <!-- Fin del formulario -->
+            </form>
+        </div>
+    </div>
+</div>
+<!-- CARDS -->
+<div class="main-container-list">
+    <div class="text-white row justify-content-center">
+        <div style="margin: auto;">
+            <button style="margin: 10px;" class="btn btn-lg btn-info ">Combos <i class="fas fa-plus"></i></button>
+            <button id="btn-newCategory" style="margin: 10px;" class="btn btn-lg btn-danger"><i
+                class="fas fa-cog"></i> Cateorias</button>
+            <button id="btn-newProduct" style="margin: 10px;" class="btn btn-lg btn-warning"></i>
+
+                Productos <i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+    <!-- categorias -->
+    <div id="container-list" class="row text-center justify-content-center">
+
+    </div>
+    <!-- productos -->
+    <div class="container">
+        <div id="container-productos" class="text-white row text-center justify-content-center">
+
+        </div>
+    </div>
+
+</div>
+<%- include('./templates/scripts.ejs'); -%>
+
+<script>
+
+    $(document).ready(async () => {
+        getListCategory();
+    })
+    const getListCategory = async () => {
+        let response = await new GetInfoByFetch(url.apicategory).request();
+        document.getElementById('container-list').innerHTML = " ";
+    
+        response.map((category) => {
+            const categoria = `
+            <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="text-warning  col-sm-2 card-category border border-warning">
+                <p class="text-category" >${category.categoria.toUpperCase()}</p>
+                
+            </div>`;
+            document.getElementById('container-list').insertAdjacentHTML('beforeEnd', categoria);
+
+        })
+    }
+    //Funcion borrar un producto
+    const DeleteProduct = (producId, categoriaId) => {
+
+        alertify.confirm("<i class='fas fa-exclamation-circle text-danger'></i> Advertencia ", "¿Decea borrar este producto?.",
+            async function () {
+                let response = await new GetInfoByFetch(`${url.products}${producId}`, 'DELETE').request();
+                alertify.success(response.success);
+                getProductsByCategory(categoriaId);
+            },
+            function () {
+            });
+    }
+    //FUNCION PARA TRAER LAS LISTA DE CATEGORIAS EN EL FOMRULARIO DE AGREGAR
+    document.getElementById("btn-newProduct").addEventListener('click', async () => {
+        document.querySelector('#preview').setAttribute('src', "http://localhost:3000/previews/logo.jpg");
+        document.querySelector("#formProducto").reset();
+        $("#idforedit").val(0)
+        fieldInputCategory();
+
+    },
+        false);
+
+    //FUNCION PARA LLENAR LOS SELECT CON LAS CATEGORIAS EN LOS FORMULARIOS
+    const fieldInputCategory = async () => {
+
+        const content = document.getElementById("categoriaId");
+        let response = await new GetInfoByFetch(url.apicategory).request();
+
+        content.innerHTML = "<option value='0' disabled selected>CATEGORIAS</option>";
+
+        if (response.length > 0) {
+            response.map((categorias) => {
+                let categoria = `<option value="${categorias.categoriaId}">${categorias.categoria}</option> `;
+                content.insertAdjacentHTML('beforeEnd', categoria);
+            });
+            $("#addProduct").modal("show");
+
+        } else {
+            content.innerHTML = "<option value='0' disabled selected>SIN CATEGORIAS</option>";
+        }
+    }
+
+    // FUNCION PARA LLENAR EL INPUT CON LOS DATOS DE UN PRODUCTO
+
+    const editProduct = async (productoid) => {
+        document.querySelector("#formProducto").reset();
+        fieldInputCategory();
+        const response = await new GetInfoByFetch(`${url.products}findOne/${productoid}`).request();
+
+        Object.entries(response).forEach(([key, value]) => {
+            $(`#${key}`).val(`${value}`);
+
+        });
+        document.querySelector('#preview').setAttribute(
+            'src',
+            `http://localhost:3000/previews/${response.imagen}`
+        );
+        $(`#cetegoriaId`).val(`${response.categoriaId}`);
+        $("#idforedit").val(productoid);
+        $("#addProduct").modal("show");
+    }
+    //FUNCION PARA GUARDAR LOS DATOS DEL FOMULARIO
+
+    const editOsaveProducto = async (data, method, link) => {
+
+        let response = await new GetInfoByFetch(`${link}`, method, data).request();
+
+        if (response.ok === false) {
+            alertify
+                .alert("<i class='fas fa-exclamation-circle text-danger'></i> Error al enviar el formulario ",
+                    "Recomendaciones:<br>Tamaño maximo de la imagen 5Mb<br>Formato : jpeg jpg png o gif!");
+        } else {
+            document.querySelector("#formProducto").reset();
+            $("#addProduct").modal("hide");
+
+            getProductsByCategory(data.get("categoriaId"));
+        }
+    }
+    //FUNCION PARA GUARDAR O EDITAR PRODUCTOS 
+
+    document.querySelector("#formProducto").addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let data = new FormData(event.currentTarget);
+
+        if (parseInt(data.get("idforedit")) === 0) {
+            editOsaveProducto(data, method = 'POST', link = url.products);
+        } else {
+            editOsaveProducto(data, method = 'PUT', link = `${url.products}${data.get('idforedit')}`);
+        }
+    });
+
+    //FUNCION PARA HACER PREVIEW DE LA IMAGEN EN EL FORMULARRIO 
+    const renderImage = (formData) => {
+        const selectFile = formData.get('image');
+        const preview = URL.createObjectURL(selectFile);
+
+        document.querySelector('#preview').setAttribute('src', preview);
+    }
+
+    document.querySelector('#image').addEventListener('change', (event) => {
+        const $form = document.querySelector('#formProducto');
+        const formData = new FormData($form);
+
+        renderImage(formData);
+
+    });
+
+    //Funcion para obtener productos por categoria
+
+    let selectedCat = null;
+
+    const getProductsByCategory = async (id) => {
+        const content = document.getElementById('container-productos');
+        let response = await new GetInfoByFetch(`${url.products}productosBycategori/${id}`).request();
+        //HACE EL FOCUS AL HACER CLICK A UNA TARGETA DE CATEGORIAS
+        if (selectedCat === null) {
+            $(`#${id}`).addClass("selected");
+            selectedCat = id
+        } else {
+            $(`#${selectedCat}`).removeClass("selected")
+            $(`#${id}`).addClass("selected")
+            selectedCat = id
+        }
+
+        if (response.length > 0) {
+            content.innerHTML = " ";
+            response.map((productos) => {
+                const products = `
+            <div id="productCard" class="card product text-dark animate__animated animate__bounce" style="width: 11rem;">
+                <img onclick="editProduct(${productos.productoId})"  class="card-img-top" height="125px" src="http://localhost:3000/previews/${productos.imagen}" alt="Card image cap">
+                <div class="card-body" onclick="editProduct(${productos.productoId})" >
+                    <p class="card-text"><strong>${productos.producto.toUpperCase()}(${productos.desc})</strong></p>
+                    <p class="card-text"><strong>$${productos.precio}</strong></p>
+                </div>
+                <button id="btn-delete" class="btn-danger form-control" onclick="DeleteProduct(${productos.productoId},${id})"><i
+                    class="fas fa-trash"></i></button>
+            </div>               
+                `;
+                content.insertAdjacentHTML('beforeEnd', products);
+
+            });
+            //alertify.success("Producto agregado con exito!");
+        } else {
+            content.innerHTML = "SIN PRODUCTOS"
+        }
+    }
+
+</script>
+<script>
+    /*
+        
+        Funciones para categorias 
+    
+    */
+    function getCheckBoxChecked() {
+        let form = document.querySelector("#formWithCheck");
+        let listResult = [];
+
+        for (var i = 0; i < form.length; i++) {
+            if (form[i].checked) {
+                listResult.push(form[i].value);
+            }
+        }
+        return listResult;
+    }
+    
+    document.querySelector("#formcategory").addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        let data = new FormData(event.currentTarget);
+
+        let response = await new GetInfoByFetch(`${url.apicategory}`, 'POST',
+            new URLSearchParams({
+                'categoria': data.get("categoria"),
+            })).request();
+        if (response.errores) {
+            alertify.error(response.errores[0].msg);
+        } else {
+            document.querySelector("#formcategory").reset();
+            $("#modalCategory").modal("hide");
+            getListCategory();
+        }
+    });
+
+    $("#btn-newCategory").on('click', () => {
+        document.getElementById("alert").innerHTML = " ";
+        fieldCheckCategory()
+        $("#modalCategory").modal("show");
+    });
+
+    const fieldCheckCategory = async () => {
+        const content = document.getElementById("contenteCategory");
+        let response = await new GetInfoByFetch(url.apicategory).request();
+
+        content.innerHTML = " ";
+
+        if (response.length > 0) {
+
+            response.map((categorias) => {
+                let listContent = `
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="${categorias.categoriaId}" id="check${categorias.categoriaId}">
+                    <label class="form-check-label" for="check${categorias.categoriaId}">
+                        ${categorias.categoria.toUpperCase()}
+                    </label>
+                </div> `;
+                content.insertAdjacentHTML('beforeEnd', listContent);
+            });
+
+        } else {
+            content.innerHTML = "NO HAY CATEGORIAS...";
+        }
+    }
+    const deleteCategory = async () => {
+
+        let response = await new GetInfoByFetch(`${url.apicategory}`, 'DELETE', new URLSearchParams({
+            'data': getCheckBoxChecked()
+        })).request();
+
+        if (!response.errores) {
+            if (getCheckBoxChecked() > 0) {
+                $("#modalCategory").modal("hide");
+            }
+        } else {
+
+            fieldCheckCategory();
+            const content = document.getElementById('alert');
+            const alert = `
+                    <div class="alert alert-info" role="alert">
+                        No se pudieron borrar ${response.cant} registros<br>
+                        ${response.errores}
+                    </div>               
+                `;
+            content.innerHTML = alert;
+        }
+        getListCategory();
+
+
+        //console.log(data)
+    }
+</script>
+</body>
+
+</html>

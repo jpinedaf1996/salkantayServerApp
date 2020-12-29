@@ -1,0 +1,134 @@
+<!-- 
+    Autor Jesus pineda / "Otro autor"
+    14/08/2020
+    Proposito de esta pagina: Menu principal de inicio 
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/app.css">
+    <link rel="stylesheet" href="/node_modules/@fortawesome\fontawesome-free\css\all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <title></title>
+</head>
+
+<body>
+    <!-- Modal -->
+    <div class="modal fade show" id="myModal" tabindex="-1" role="dialog" aria-labelledby="locModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="locModalLabel">Inicio de sesion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <form id="login">
+                        <div class="form-group">
+                            <label for="user">Nombre de usuario</label>
+                            <input name="user" id="user" required type="text" class="form-control" id="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="pass"> Contraseña </label>
+                            <input name="pass" id="pass" required type="password" class="form-control" id="state">
+                        </div>
+                        <div id="alert">
+
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="close" type="button" class="btn border border-info" data-dismiss="modal">Cerrar</button>
+                    <input class="btnLogin btn border border-warning" id="btnLogin" type="submit" value="Enviar">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="width: 70%;" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center icon-center">SALKANTAY
+                </h1>
+            </div>
+            <div id="reportes" onclick="openNewWindow('reportes')" class="open buttom col-md-3 icon-center  bg-info">
+                <img class="icon-svg" src="/public/image/monitor.svg" alt="reports">
+            </div>
+            <div id="productos" onclick="openNewWindow('productos')"
+                class="open buttom col-md-3 icon-center  bg-danger">
+                <img class="icon-svg" src="/public/image/factory.svg" alt="stock">
+            </div>
+            <div id="clientes" onclick="openNewWindow('clientes')"
+                class="open buttom col-md-6 icon-center   bg-warning">
+                <img class="icon-svg" src="/public/image/values.svg" alt="customers">
+            </div>
+            <div id="ventas" onclick="openNewWindow('ventas')" class="open buttom col-md-6 icon-center   bg-secondary">
+                <img class="icon-svg" src="/public/image/money.svg" alt="sales">
+            </div>
+            <div id="ordenes" onclick="openNewWindow('ordenes')" class="open buttom col-md-3 icon-center  bg-success">
+                <img class="icon-svg" src="/public/image/invoice.svg" alt="orders">
+            </div>
+            <div id="config" onclick="openNewWindow('config')" class="open buttom col-md-3 icon-center  bg-dark">
+                <img class="icon-svg" src="/public/image/config.svg" alt="config">
+            </div>
+        </div>
+    </div>
+    <script src="/public/js/app.js"></script>
+    <script>
+        const formElement = document.getElementById('login');
+
+        let idMenu = null;
+        const openNewWindow = async (id) => {
+            idMenu = id;
+            let responseToken = await validarToken();
+
+            if (responseToken.error) {
+
+                $('#myModal').modal('show');
+
+            } else {
+
+                redirect(idMenu);
+
+            }
+
+        }
+        formElement.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const response = await fetch(url.apiuser + 'login', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'usuario': document.getElementById('user').value,
+                    'pass': document.getElementById('pass').value
+                })
+            });
+            
+            let result = await response.json();
+
+            if (result.error) {
+                const content = document.getElementById('alert');
+                const alert = `
+                            <div class="alert alert-primary" role="alert">
+                                ${result.error}
+                            </div>               
+                        `;
+                content.innerHTML = alert;
+            } else {
+
+                sessionStorage.setItem("token", result.success);
+                redirect(idMenu);
+            }
+        });
+    </script>
+</body>
+
+</html>

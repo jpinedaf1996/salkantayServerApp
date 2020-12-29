@@ -24,7 +24,7 @@ module.exports = (sequelize, type) => { // Esta es una funcion sin nombre que es
             defaultValue: type.NOW
         },
         estado: {
-            type: type.ENUM('0', '1'),
+            type: type.ENUM('0','1','2'),
             defaultValue: '1'
         }
 

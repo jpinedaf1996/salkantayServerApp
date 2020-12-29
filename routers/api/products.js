@@ -78,6 +78,7 @@ router.put('/:productId', upload.single('image'), async (req, res) => { //estas 
         }
     );
 });
+
 router.delete('/:productId', async (req, res) => { //estas rutas reciben parametros 
 
     await Producto.destroy({ // funcion para borrar 
@@ -86,4 +87,5 @@ router.delete('/:productId', async (req, res) => { //estas rutas reciben paramet
     res.json({ success: 'Se ha borrado un registro.' });
 
 });
+
 module.exports = router; // se exporta el router hacia api.js

@@ -1,17 +1,63 @@
 const router = require('express').Router();
-const { OrdenDet,Producto,Orden } = require('../../dbconfig');
+const { OrdenDet, Producto, Orden } = require('../../dbconfig');
 //Se crean las rutas para una API REST con los diferente metodos
 
 router.get('/', async (req, res) => {
-    console.log(req.ordendetId);
+    
     let ordendet = await OrdenDet.findAll();
     res.json(ordendet);
 });
 
 router.post('/', async (req, res) => {
-    let ordenDet = await OrdenDet.create(req.body);
+    try {   // try {
 
-    res.json(ordenDet);
+        let detalle = await OrdenDet.findOne({
+            where: {
+                nombrePoducto: req.body.nombrePoducto,
+                ordenId: req.body.ordenId
+            }
+        });
+
+        if (detalle != null) {
+
+            try {
+
+                await OrdenDet.update(
+                    {
+                        unidades: detalle.unidades + 1
+                    },
+                    {
+                        where: { ordendetId: detalle.ordendetId } // funcion para actualizar
+                    });
+
+                res.json({ success: "Actualizado con exito" });
+                
+            } catch (error) {
+
+                res.json(error.message);
+            }
+
+        } else {
+
+            try {
+
+                await OrdenDet.create(req.body);
+
+                res.json({ success: "Agregado con exito" });
+
+            } catch (error) {
+
+                res.json(error.message);
+            }
+
+        }
+
+
+    } catch (error) {
+
+        console.log(erro.message)
+    }
+
 
 });
 
@@ -21,16 +67,12 @@ router.get('/ordendetbyproducto/:id_orden', async (req, res) => {
             where: {
                 ordenId: req.params.id_orden
             },
-            include: [
-                {
-                model: Producto
-            }, 
+            include:
             {
                 model: Orden,
                 attributes: ['descuento'],
-                
+
             }
-        ],
         });
         //console.log(ordendetbyproducto);
         res.json(ordendetbyproducto);
@@ -42,15 +84,77 @@ router.get('/ordendetbyproducto/:id_orden', async (req, res) => {
 });
 
 router.put('/:ordendetId', async (req, res) => {
-    await OrdenDet.update(
-        {
-            precio: parseFloat(req.body.precio),
-            unidades: req.body.unidades
-        },
-        {
-            where: { ordendetId: req.params.ordendetId } // funcion para actualizar
+
+    try {
+        
+        var detalle = await OrdenDet.findOne({
+            where: {
+                ordendetId: req.params.ordendetId
+            }
         });
-    res.json({ success: 'Se ha actualizado un registro.' });
+
+        switch (req.body.op) {
+
+            case 'add':
+                await OrdenDet.update(
+                    {
+                        unidades: detalle.unidades + 1
+                    },
+                    {
+                        where: { ordendetId: req.params.ordendetId } // funcion para actualizar
+                    });
+                res.json({ success: "Se actualizo con exito!" });
+                break;
+
+            case 'remove':
+
+                if (detalle.unidades > 1) {
+
+                    await OrdenDet.update(
+                        {
+                            unidades: detalle.unidades - 1
+                        },
+                        {
+                            where: { ordendetId: req.params.ordendetId } // funcion para actualizar
+                        });
+
+                    res.json({ success: "Se actualizo con exito!" });
+                } else {
+
+                    res.json({ error: "No se puede quitar mas productos! Click en borro" });
+                }
+
+                break;
+        }
+
+    } catch (error) {
+
+        console.log(error.message)
+
+    }
+
+
+    // if(parseFloat(req.body.precio) > 0){
+    //     await OrdenDet.update(
+    //         {
+    //             precio: parseFloat(req.body.precio),
+    //             nombrePoducto: req.body.nombrePoducto,
+    //             unidades: req.body.unidades
+    //         },
+    //         {
+    //             where: { ordendetId: req.params.ordendetId } // funcion para actualizar
+    //         });
+    // }else{
+    //     await OrdenDet.update(
+    //         {
+    //             unidades: req.body.unidades
+    //         },
+    //         {
+    //             where: { ordendetId: req.params.ordendetId } // funcion para actualizar
+    //         });
+    // }
+
+    // res.json({ success: 'Se ha actualizado un registro.' });
 });
 
 router.delete('/:ordendetId', async (req, res) => { //estas rutas reciben parametros

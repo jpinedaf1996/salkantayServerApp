@@ -23,7 +23,7 @@ router.get('/ordenbymesa', async (req, res) => {
 
 //DUNCION PARA CAMBIAR EL ESTADO DE UNA MESA Y AGREGAR UN ANUVEA ORDEN 
 //ESTA PASA HACER DE ESTADO 1 OSEA ACTIVA
-router.put('/newOrden/:mesaId', async (req, res) => { 
+router.put('/newOrden/:mesaId', async (req, res) => {
     //Se cambia el estado de la mesa   
     if (req.body.estado === '0') {
         let response = await Mesa.update({
@@ -45,7 +45,7 @@ router.put('/newOrden/:mesaId', async (req, res) => {
 
 });
 ///////
-router.put('/descuento/:ordenId', async (req, res) => { 
+router.put('/descuento/:ordenId', async (req, res) => {
     //estas rutas reciben parametros 
     await Orden.update({
         'descuento': req.body.descuento
@@ -57,5 +57,45 @@ router.put('/descuento/:ordenId', async (req, res) => {
     res.json({ descuento: req.body.descuento });
 
 });
+router.put('/cancelorden/:ordenId', async (req, res) => {
+    //estas rutas reciben parametros 
+    try {
+        
 
+        await Orden.update({
+            'estado': req.body.estado
+        }, { // funcion para actualizar
+            where: { ordenId: req.params.ordenId }
+        });
+
+        
+        await Mesa.update({
+            'estado': '0'
+        }, { // funcion para actualizar
+            where: { mesaId: await getMesaId(req.params.ordenId) }
+        });
+
+    
+        //console.log(await getMesaId(req.params.ordenId));
+        res.status(202).send({ success: 'La orden ha sido cancelada!'});
+
+    } catch (error) {
+
+        res.status(500).send(error.message);
+
+    }
+
+});
+
+async function getMesaId (id){
+
+    let orden = await Orden.findOne({
+        attributes: ['mesaId'],
+        where: {
+            ordenId: id
+        }
+    });
+    //console.log(orden);
+    return orden.mesaId;
+}
 module.exports = router; // se exporta el router hacia api.js

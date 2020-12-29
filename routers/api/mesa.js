@@ -33,7 +33,7 @@ router.put('/:mesaId', async (req, res) => { //estas rutas reciben parametros
 });
 
 router.post('/', async (req, res) => {
-  console.log(req.body)
+  
   await Mesa.create(req.body);
   
   res.json({ success: 'Se ha actualizado un registro.' });

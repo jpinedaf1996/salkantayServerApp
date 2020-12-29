@@ -5,6 +5,7 @@ const { fraseAcceso } = require('../api/createToken');
  * Funcion para validar el token de inicio de sesion 
  */
 const validarToken = (req,res,next)=>{
+
     /**
      * El token se envia por medio de la cabezeras
      * en una petecion HTTP
@@ -14,7 +15,9 @@ const validarToken = (req,res,next)=>{
         res.status(403).send({ error: 'Token requerido' });
         // throw new Error('Token requerido');
     }
+
     const token = req.headers['token']; // Se almacena el token en una variable 
+
     let payload = {
         //Objeto basio 
     };
@@ -41,5 +44,7 @@ const validarToken = (req,res,next)=>{
 }
 
 module.exports = {
+
     validarToken : validarToken
+
 }

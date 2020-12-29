@@ -32,11 +32,11 @@ const Promociones = PromocionesModel(Conexion, Sequelize);
 
 // RELACIONES
 
-Categoria.hasMany(Producto,{as:'categorias',foreignKey:'categoriaId',onDelete:'restrict'})
-Orden.belongsTo(Cliente,{as:'cliente',foreignKey:'clienteId',onDelete:'cascade'})
-Orden.belongsTo(Mesa,{foreignKey:'mesaId',onDelete:'cascade'})
-OrdenDet.belongsTo(Orden,{foreignKey:'ordenId',onDelete:'cascade'})
-OrdenDet.belongsTo(Producto,{foreignKey:'productoId',onDelete:'cascade'})
+Categoria.hasMany(Producto,{as:'categorias',foreignKey:'categoriaId',onDelete:'restrict'});
+Orden.belongsTo(Cliente,{as:'cliente',foreignKey:'clienteId',onDelete:'cascade'});
+Orden.belongsTo(Mesa,{foreignKey:'mesaId',onDelete:'cascade'});
+OrdenDet.belongsTo(Orden,{foreignKey:'ordenId',onDelete:'cascade'});
+
 /**
  * Se sincroniza con la base de datos
  *
@@ -50,6 +50,7 @@ Conexion.sync({force:false})
  *
  */
 module.exports = {
+    Conexion,
     Producto,
     Mesa,
     Categoria,

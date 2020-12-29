@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css");
+@import "menu.css";
+@import "ventas.css";
+@import "clientes.css";
+
+/******
+
+Index Css
+
+
+*********/
+:root{
+    --side-menu: #0f0f0fdf;
+    --nav-bar:rgb(250, 176, 57);
+    --text-side:#ffff;
+    --hover-boder:var(--nav-bar);
+    --bg-hover:rgba(59, 59, 59, 0.301);
+    --body-color:#f2f1ef,
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Maven Pro', sans-serif;
+    background-color: #2a1657;
+}
+.modal-header{
+    
+    background-color: var(--nav-bar);
+}
+
+.product {
+    padding: 0!important;
+    margin: 1rem;
+    cursor: cell;
+    border: 0 !important;
+}
+.oprtions i{
+    color: #0f0f0f;
+    margin: 1rem;
+    font-size: 30px;
+}
+.oprtions {
+    margin-top: 35px!important;
+    margin: 1rem;
+    cursor: pointer;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#btn-delete{
+    border-radius: 0!important;
+}
+
+#container-list {
+    overflow: auto;
+    padding: 1%;
+    height: 150px;
+    margin: auto;
+    
+}
+.card-category {
+    margin: 1rem;
+    border-radius: 10px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: solid 3px rgb(250, 236, 43)!important; */
+}
+
+.text-category {
+    font-weight: 900;
+    font-size: 16px;
+}
+
+.card-category:hover {
+    cursor: pointer;
+    box-shadow: 5px 5px 8px var(--nav-bar);
+}
+.selected{
+    cursor: pointer;
+    box-shadow: 5px 5px 8px var(--nav-bar);
+}
+
+.icon-svg {
+    width: 80px;
+}
+
+.buttom:hover {
+    cursor: pointer;
+    border: 8px solid white;
+    
+}
+
+.icon-center {
+    font-size: 60px;
+    color: #f1aebc;
+    height: 200px;
+    box-sizing: border-box;
+    border: 7px solid transparent;
+    background-clip: padding-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
