@@ -38,7 +38,7 @@ const drawTable = async (id_orden) => {
             subTotal = (parseFloat(subTotal) + parseFloat(productos.precio) * productos.unidades).toFixed(2);
 
             let detalleOrden = `<tr>
-                                <td>${productos.nombrePoducto}  $${parseFloat(productos.precio)}</td>
+                                <td>${productos.nombreProducto}  $${parseFloat(productos.precio)}</td>
                                 <td>
                                 <div onClick='remove(${productos.ordendetId},${productos.unidades})' class="btn btn-danger btn-sm float-left">-</div>
                                 <span> ${productos.unidades} </span>
@@ -154,7 +154,7 @@ const saveProductToOrden = async (productoId, precio, product) => {
             new URLSearchParams({
                 'ordenId': ordenId,
                 'precio': precio,
-                'nombrePoducto': product,
+                'nombreProducto': product,
                 'productoId': productoId,
                 'unidades': 1,
             })
@@ -411,7 +411,7 @@ const cancelOrden = async () => {
 const preBill = async () => {
     //console.log(await )
 
-    window.open("http://localhost:3000/apiv0.1/reportes/precuenta/"+sessionStorage.getItem("token"), 
+    window.open("http://localhost:3000/apiv0.1/reportes/precuenta/"+sessionStorage.getItem("token")+ "/" + ordenId, 
     "PRECUENTA", 
     "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
     //

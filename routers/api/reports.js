@@ -2,9 +2,9 @@ const router = require('express').Router();
 const jwt = require('jwt-simple');
 const moment = require('moment');
 const { fraseAcceso } = require('../api/createToken');
-const { Orden, Mesa } = require('../../dbconfig');
+const { OrdenDet, Orden } = require('../../dbconfig');
 
-router.get('/precuenta/:TOKEN', function (req, res, next) {
+router.get('/precuenta/:TOKEN?/:ID', function (req, res, next) {
     
     //console.log('ID:', req.params.ID);
 
@@ -37,9 +37,21 @@ router.get('/precuenta/:TOKEN', function (req, res, next) {
 }, async function (req, res) {
 
     try { 
+        let ordendetbyproducto = await OrdenDet.findAll({
+            where: {
+                ordenId: req.params.ID
+            },
+            include:
+            {
+                model: Orden,
+                attributes: ['descuento'],
+
+            }
+        });
         
+    
         //const resu =  JSON.parse(ordenes)
-        res.render('precuenta')
+        res.render('precuenta',{detalle : JSON.stringify(ordendetbyproducto)})
         // const html = `<h1>${req.params.ID}</h1>`;
 
         // res.send(html);

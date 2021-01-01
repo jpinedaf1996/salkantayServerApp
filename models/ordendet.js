@@ -12,7 +12,7 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
             primaryKey: true,
             autoIncrement: true
         },
-        nombrePoducto: type.STRING(60),
+        nombreProducto: type.STRING(60),
         precio: type.DOUBLE(5, 2),// este campo es usado parta gennerar reportes
         unidades: type.INTEGER
         

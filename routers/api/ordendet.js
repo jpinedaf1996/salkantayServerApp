@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
 
         let detalle = await OrdenDet.findOne({
             where: {
-                nombrePoducto: req.body.nombrePoducto,
+                nombreProducto: req.body.nombreProducto,
                 ordenId: req.body.ordenId
             }
         });
@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
 
     } catch (error) {
 
-        console.log(erro.message)
+        console.log(error.message)
     }
 
 
@@ -138,7 +138,7 @@ router.put('/:ordendetId', async (req, res) => {
     //     await OrdenDet.update(
     //         {
     //             precio: parseFloat(req.body.precio),
-    //             nombrePoducto: req.body.nombrePoducto,
+    //             nombreProductoucto: req.body.nombreProductoucto,
     //             unidades: req.body.unidades
     //         },
     //         {
