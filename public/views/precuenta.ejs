@@ -19,28 +19,29 @@
         }
     </SCRIPT>
 </head>
-<% const orden=JSON.parse(detalle) %>
-    <style type="text/css" media="print">
-        #Imprime {
-            height: auto;
-            width: 377px;
-            margin: 0px;
-            padding: 0px;
-            float: left;
-            font-family: "Comic Sans MS", cursive;
-            font-size: 7px;
-            font-style: normal;
-            line-height: normal;
-            font-weight: normal;
-            font-variant: normal;
-            text-transform: none;
-            color: #000;
-        }
 
-        @page {
-            margin: 0;
-        }
-    </style>
+<style type="text/css" media="print">
+    #Imprime {
+        height: auto;
+        width: 377px;
+        margin: 0px;
+        padding: 0px;
+        float: left;
+        font-family: "Comic Sans MS", cursive;
+        font-size: 7px;
+        font-style: normal;
+        line-height: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        color: #000;
+    }
+
+    @page {
+        margin: 0;
+    }
+</style>
+<% const orden=JSON.parse(detalle) %>
 
     <BODY onload="imprimir();">
         <div id="Imprime">
@@ -55,23 +56,28 @@
                                     <center>
                                         <br /><br />
                                         <h2>SALCANTAY &amp; CAFE</h2>
+                                        ***<strong>PRE-CUENTA</strong>***
+                                        <hr>
+                                        
                                         <!--<img style="width: 200px;" src="../../img/logot.jpg"><br/>--><br />
-                                        Nit: 782992-90039<br />
+                                        <!-- Nit: 782992-90039<br />
                                         Dirección: los laureles Cr:47-67 <br />
                                         Telefono: 31234122323<br />
-                                        BOLIVAR - EL CARMEN DE BOLIVAR
+                                        BOLIVAR - EL CARMEN DE BOLIVAR -->
                                     </center>
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td colspan="2"><BR />
-                                    <b>Factura No.</b> 00000135<br />
-                                    <b>Fecha:</b> 2020-11-22, 03:54:46 pm<br />
-                                    <b>CLIENTE:</b> <br />
-                                    <b>MESERO:</b> HUMBERTO YEPES<br />
-                                    <b>MESA:</b> 1<br />
+                                    <b>Factura No.</b>
+                                    <%= orden[0].ordenId %>5<br />
+                                        <b>Fecha:</b>
+                                        <%= new Date(orden[0].orden.fecha_hora) %> <br />
+                                            <b>CLIENTE:</b> <br />
+                                            <b>MESERO:</b> N/A<br />
+                                            <b>MESA:</b>SA-2<br />
                                 </td>
-                            </tr>
+                            </tr> -->
                         </table>
                         <br />
                         <table width="100%"
@@ -89,101 +95,126 @@
                                     <div align="right"><b>TOTAL</b></div>
                                 </td>
                             </tr>
-                            <% let subtotal = 0; %>
-                            <% orden.forEach(function(ordenDetalle){ %>
-                                <%  subtotal = (parseFloat(subtotal) + parseFloat(ordenDetalle.precio * ordenDetalle.unidades)).toFixed(2) ; %>
-                                <tr>
-                                    <td><%= ordenDetalle.unidades %></td>
-                                    <td><%= ordenDetalle.nombreProducto %></td>
-                                    <td>
-                                        <div align="right"><%= ordenDetalle.precio %></div>
-                                    </td>
-                                    <td>
-                                        <div align="right" style="font-size: 12px;"><%= ordenDetalle.orden.descuento %></div>
-                                    </td>
-                                    <td>
-                                        <div align="right"><%= ordenDetalle.precio %></div>
-                                    </td>
-                                </tr>
-                                <% }); %>
-                                    <tr style="font-size: 14px;">
-                                        <td colspan="4">
-                                            <div align="right"><b>SUBTOTAL</b></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b>$<%= subtotal %></b></div>
-                                        </td>
-                                    </tr>
-                                    <tr style="font-size: 14px;">
-                                        <td colspan="4">
-                                            <div align="right"><b style="font-size: 14px;">IVA 8%</b></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b style="font-size: 14px;">$0</b></div>
-                                        </td>
-                                    </tr>
-                                    <tr style="font-size: 14px;">
-                                        <td colspan="4">
-                                            <div align="right"><b>DESCUENTO</b></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b>$0</b></div>
-                                        </td>
-                                    </tr>
-                                    <tr style="font-size: 14px;">
-                                        <td colspan="4">
-                                            <div align="right"><b>PROPINA</b></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b>$0</b></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <div align="right"></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b></div>
-                                        </td>
-                                    </tr>
-                                    <tr style="font-size: 17px;">
-                                        <td colspan="4">
-                                            <div align="right"><b>TOTAL</b></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b>$3.600</b></div>
-                                        </td>
-                                    </tr>
-                                    <tr style="font-size: 14px;">
-                                        <td colspan="4">
-                                            <div align="right"><b>EFECTIVO</b></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b>0</b></div>
-                                        </td>
-                                    <tr style="font-size: 14px;">
-                                        <td colspan="4">
-                                            <div align="right"><b>CAMBIO</b></div>
-                                        </td>
-                                        <td>
-                                            <div align="right"><b>0</b></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">
-                                            <div align="center" style="font-size: 15px;"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">
-                                            <div align="center" style="font-size: 15px;"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">
-                                            <div align="center" style="font-size: 15px;"></div>
-                                        </td>
-                                    </tr>
+                            
+                            <% let subtotal =0; %>
+                            
+                            <% const descuento = parseFloat(orden[0].orden.descuento).toFixed(2) ; %>
+
+                            <% let descuentoEfectivo = 0; %>
+
+
+                                <% orden.forEach(function(ordenDetalle){ %>
+                                    <% subtotal=(parseFloat(subtotal) + parseFloat(ordenDetalle.precio *
+                                        ordenDetalle.unidades)).toFixed(2) ; %>
+                                        <tr>
+                                            <td>
+                                                <%= ordenDetalle.unidades %>
+                                            </td>
+                                            <td>
+                                                <%= ordenDetalle.nombreProducto %>
+                                            </td>
+                                            <td>
+                                                <div align="right">
+                                                    <%= ordenDetalle.precio %>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="right" style="font-size: 12px;">
+                                                    <%= ordenDetalle.orden.descuento %>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div align="right">
+                                                    <%= parseFloat(ordenDetalle.precio * ordenDetalle.unidades).toFixed(2) %>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <% }); %>
+                                        <tr>
+                                            <td colspan="5">
+                                                <hr>
+                                            </td>
+                                        </tr>
+                                        
+                                            <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>SUBTOTAL</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>$<%= subtotal %></b></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b style="font-size: 14px;">Descuento <%= parseInt(descuento*100)  %>%</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b style="font-size: 14px;">$<%= descuentoEfectivo = parseFloat((subtotal * descuento)).toFixed(2)  %> </b></div>
+                                                </td>
+                                            </tr>
+                                            <!-- <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>DESCUENTO</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>$0</b></div>
+                                                </td>
+                                            </tr> -->
+                                            <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>PROPINA</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>$0</b></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <div align="right"></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b></div>
+                                                </td>
+                                            </tr>
+                                            <tr style="font-size: 17px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>TOTAL</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>$<%= parseFloat(subtotal - descuentoEfectivo ).toFixed(2) %> </b></div>
+                                                </td>
+                                            </tr>
+                                            <!-- <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>EFECTIVO</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>0</b></div>
+                                                </td>
+                                            <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>CAMBIO</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>0</b></div>
+                                                </td>
+                                            </tr>
+                                            <tr> -->
+                                                <td colspan="5">
+                                                    <div align="center" style="font-size: 15px;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div align="center" style="font-size: 15px;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div align="center" style="font-size: 15px;"></div>
+                                                </td>
+                                            </tr>
                         </table>
                         <table width="100%"
                             style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">

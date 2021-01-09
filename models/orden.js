@@ -26,8 +26,22 @@ module.exports = (sequelize, type) => { // Esta es una funcion sin nombre que es
         estado: {
             type: type.ENUM('0','1','2'),
             defaultValue: '1'
+        },
+        tipo_pago: {
+            type: type.ENUM('e','t')
+        },
+        total: {
+            type: type.DOUBLE(5, 2),
+            defaultValue: 0
+        },
+        efectivo: {
+            type: type.DOUBLE(5, 2),
+            defaultValue: 0
+        },
+        cambio : {
+            type: type.DOUBLE(5, 2),
+            defaultValue: 0
         }
-
 
     }, { timestamps: false });
 };

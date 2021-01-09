@@ -44,7 +44,7 @@ router.get('/precuenta/:TOKEN?/:ID', function (req, res, next) {
             include:
             {
                 model: Orden,
-                attributes: ['descuento'],
+                attributes: ['descuento','fecha_hora'],
 
             }
         });

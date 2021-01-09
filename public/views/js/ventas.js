@@ -12,6 +12,7 @@ $(() => {
 });
 
 let listProductsInOrden = null;
+let totalApagar = 0;
 
 const drawTable = async (id_orden) => {
     try {
@@ -54,9 +55,9 @@ const drawTable = async (id_orden) => {
 
         subtotal.innerHTML = `$${subTotal}`;
         document.getElementById("promoValor").innerHTML = `${descuento * 100}%`;
-        totalapagarcontent.innerHTML = `$${parseFloat(subTotal - (subTotal * descuento)).toFixed(2)}`;
+        totalapagarcontent.innerHTML = `$${totalApagar = parseFloat(subTotal - (subTotal * descuento)).toFixed(2)}`;
 
-        return listProductsInOrden = response;
+        listProductsInOrden = response;
         //console.log(response);
     } catch (error) {
 
@@ -403,16 +404,153 @@ const cancelOrden = async () => {
             });
         //console.log(response.success);
 
+    } else {
+        alertify.error("Seleccione una orden.")
     }
+
 
 }
 ///////////////////////////////////////////PRE CUENTA//////////////////////////////////////////////
 
 const preBill = async () => {
     //console.log(await )
+    if (ordenId != 0) {
 
-    window.open("http://localhost:3000/apiv0.1/reportes/precuenta/"+sessionStorage.getItem("token")+ "/" + ordenId, 
-    "PRECUENTA", 
-    "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
+        window.open("http://localhost:3000/apiv0.1/reportes/precuenta/" + sessionStorage.getItem("token") + "/" + ordenId,
+            "PRECUENTA",
+            "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
+        //console.log(response.success);
+
+    } else {
+        alertify.error("Seleccione una orden.")
+    }
+
     //
+}
+///////////////////////////////////////////PAGAR//////////////////////////////////////////////
+const paymentCash = document.getElementById("paymentCash");
+const paymentCard = document.getElementById("paymentCard");
+
+const clienteinput = document.getElementById("clienteinput");
+const inputcash = document.getElementById("inputcash");
+const cambio = document.getElementById("cambio");
+const saldoApagar = document.getElementById("saldoApagar");
+
+let tipo_pago = 'e';
+let efectivo = 0;
+let cambioEfectivo = 0;
+
+
+function methodCard() {
+
+    if (!paymentCard.classList.contains("bt-selectd-mehod")) {
+
+        paymentCash.classList.remove("bt-selectd-mehod")
+        paymentCard.classList.add("bt-selectd-mehod");
+
+        inputcash.disabled = true;
+        inputcash.value = 0;
+
+        cambio.innerHTML = "$" + 0;
+
+        tipo_pago = 't';
+    }
+}
+
+function methodCash() {
+    if (!paymentCash.classList.contains("bt-selectd-mehod")) {
+
+        paymentCard.classList.remove("bt-selectd-mehod")
+        paymentCash.classList.add("bt-selectd-mehod");
+
+        clienteinput.disabled = false;
+        inputcash.disabled = false;
+
+        tipo_pago = 'e';
+    }
+}
+
+$("#inputcash").on('keyup', function () {
+
+    let cambioValue = parseFloat(inputcash.value - totalApagar).toFixed(2);
+    if (cambioValue > 0) {
+        cambio.innerHTML = "$" + cambioValue;
+    } else {
+        cambio.innerHTML = "$" + 0;
+    }
+
+    efectivo = parseFloat(inputcash.value).toFixed(2);
+    cambioEfectivo = parseFloat(cambioValue).toFixed(2);
+
+});
+
+
+const processPayment = async () => {
+    if (ordenId != 0) {
+
+        saldoApagar.innerHTML = totalApagar;
+        $("#modalPayment").modal("show");
+
+    } else {
+        alertify.error("Seleccione una orden.")
+    }
+
+}
+
+const savebtn = document.getElementById("savebtn");
+const savePayment = async () => {
+    const content = document.getElementById("container-table-producto");
+    let dsdClass = savebtn.classList.contains("disabled");
+
+
+    if (ordenId != 0 && !dsdClass) {
+        savebtn.classList.add("disabled");
+        try {
+            const response = await new GetInfoByFetch(`${url.apiordenes}/finalizarorden/${ordenId}`, 'PUT', new URLSearchParams(
+                {
+                    'estado': '0',
+                    'tipo_pago': tipo_pago,
+                    'total': totalApagar,
+                    'efectivo': efectivo,
+                    'cambio': cambioEfectivo
+                }
+            )).request();
+
+            if (response.success) {
+                getTableOrden();
+                content.innerHTML = " ";
+                alertify.success(`${response.success}`);
+
+                ordenId = 0;
+                tipo_pago = 'e';
+
+                clienteinput.value = "";
+                inputcash.value = "";
+                cambio.innerHTML = "";
+                cambio.innerHTML = "$0.00";
+
+                $("#modalPayment").modal("hide");
+
+                savebtn.classList.remove("disabled");
+
+            }else if(response.error){
+
+                alertify.error(response.error);
+                savebtn.classList.remove("disabled");
+
+            }
+        } catch (error) {
+
+            alertify.error("El servidor no responde. ERROR: " + error);
+
+        }
+
+
+
+
+
+    } else {
+        alertify.error("Seleccione una orden.")
+    }
+
 }

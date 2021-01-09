@@ -1,213 +1,306 @@
 <%- include('./templates/header'); -%>
-<!-- 
+    <!-- 
 Autor Jesus pineda / "Otro autor"
 14/08/2020
 Proposito de esta pagina: Esta es la pagina de productos 
 aqui se gestionanran los diferente produstos 
 -->
-<!-- Aqui Agregar el contenido para las paginas del sistemas  -->
+    <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
 
-<!-- Modal -->
-<div id="modalPromo" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
-    aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+    <!-- Modal -->
+    <div id="modalPromo" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
 
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">PROMOCIONES</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">PROMOCIONES</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-            <div id="cont-promo">
-                
-            </div>
+                <div id="cont-promo">
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal " id="modalOrden" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content ">
-            <div class="modal-header bg-white">
-                <h5 class="modal-title" style="width: 100%;text-align: center;font-size: 25px;"
-                    id="exampleModalLongTitle">TIPO DE ORDEN</h5>
-            </div>
-            <div class="modal-body ">
-                <div class="row ">
-                    <div class=" col-md-6  orden-option card-center-vh ">
-                        <span onclick="selecTable();" class="bg-primary card-center-vh btn-new-orden-mesa "> MESA
-                        </span>
-                    </div>
-                    <div class="col-md-6  orden-option card-center-vh">
-                        <span class="bg-primary card-center-vh btn-new-orden-mesa"> LLEVAR </span>
-                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
-            <hr>
         </div>
     </div>
-</div>
-<div class="modal " id="modalTables" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content ">
-            <div class="modal-header bg-white">
-                <h5 class="modal-title" style="width: 100%;text-align: center;font-size: 25px;"
-                    id="exampleModalLongTitle">MESAS DISPONIBLES
-                </h5>
+    <!-- Modal -->
+    <div id="modalPayment" class="modal fade bd-example-modal" tabindex="-1" role="dialog"
+        aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">PAGAR PEDIDO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div style= "height: 100px;"  class="without-margen row">
+
+                    <div id="paymentCash" onclick="methodCash(this);"  class="col-sm-6 btn-method-payment bg-success bt-selectd-mehod">
+
+                        <i class="far fa-money-bill-alt"></i> &nbsp;EFECTIVO
+
+                    </div>
+
+                    <div id="paymentCard" onclick="methodCard(this);"  class="col-sm-6 btn-method-payment bg-info"> 
+
+                        <i class="fab fa-cc-visa"></i> &nbsp;TARJETA 
+
+                    </div>
+
+                </div>
+
+                <div id="info pago">
+                    <div style="padding: 3%;" class="row">
+                        <div class="col-md-6">
+
+                            <label for="clienteinput"> Nombre o codigo cliente (opcional) </label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon2"><i class="fas fa-user"></i></span>
+                                </div>
+
+                                <input id="clienteinput" name="clientePayment"
+                                style="height: 60px !important;border-radius: 0 !important;font-size: 25px !important;" type="text"
+                                    class="form-control " placeholder="Nombre del cliente" aria-label="customer"
+                                    aria-describedby="basic-addon2">
+                            </div>
+
+                            <label for="inputcash"> Cantidad recivida  * </label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"> <i class="fas fa-dollar-sign"></i>
+                                    </span>
+                                </div>
+
+                                <input  id="inputcash" name="Cantidad-recivida"
+                                    style="height: 60px !important;border-radius: 0 !important;font-size: 25px !important;" type="number"
+                                    class="form-control " placeholder="0" aria-label="cash"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="width: 100%;font-size: 17px;" class="bg-white border border-danger info-payment" >
+                                <div >
+                                    <p class="text-danger" style="text-align: center;font-size: 30px;"> 
+                                        
+                                        CAMBIO A DAR
+                                        <br>
+                                        <strong id="cambio"  >
+                                            $0.00
+                                        </strong> 
+                                    
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100" style="text-align: center;font-size: 33px;">
+                        <strong>TOTAL A PAGAR: $</strong><strong id="saldoApagar" > </strong>
+                    </div>
+                    <hr>
+                    <div class="container">
+                        <div class="w-100" style="font-size: 30px; ;">
+                            <button id="savebtn" onclick="savePayment();" style="height: 60px !important" class="btn btn-success form-control" ><i class="fas fa-play"></i> PROCESAR PAGO </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                </div>
             </div>
-            <div class="modal-body ">
-                <div id="selectTable" style="padding: 25px;" class="row card-center-vh">
-
-
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal " id="modalOrden" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content ">
+                <div class="modal-header bg-white">
+                    <h5 class="modal-title" style="width: 100%;text-align: center;font-size: 25px;"
+                        id="exampleModalLongTitle">TIPO DE ORDEN</h5>
+                </div>
+                <div class="modal-body ">
+                    <div class="row ">
+                        <div class=" col-md-6  orden-option card-center-vh ">
+                            <span onclick="selecTable();" class="bg-primary card-center-vh btn-new-orden-mesa "> MESA
+                            </span>
+                        </div>
+                        <div class="col-md-6  orden-option card-center-vh">
+                            <span class="bg-primary card-center-vh btn-new-orden-mesa"> LLEVAR </span>
+                        </div>
+                    </div>
                 </div>
                 <hr>
             </div>
-
         </div>
     </div>
-</div>
-<div class="without-margen row orden-detail-content ">
-
-    <div class="without-margen main-pending-orders">
-
-        <div id="orden-tables" class="without-margen row list-tables">
-
-        </div>
-
-    </div>
-
-    <div class="list-products-orden">
-
-        <table class="borderless table text-white text-center ">
-            <thead>
-                <tr>
-                    <th scope="col">DESCRIPCION</th>
-                    <th scope="col">CANTIDAD</th>
-                    <th scope="col">TOTAL</th>
-                    <th scope="col">BORRAR</th>
-                </tr>
-            </thead>
-            <tbody id="container-table-producto">
-
-            </tbody>
-        </table>
-
-    </div>
-
-    <div class="totals row without-margen card-center-vh bg-info">
-        <div class="col-md-6 ">
-
-            <table class="borderless  table text-white">
-                <tbody>
-                    <tr>
-                        <th>
-                            Sub total
-                        </th>
-                        <td class="text-left">
-                            <strong style="font-size: 22px!important;" id="ct-subtotal">
-                                $0
-                            </strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th onclick="modalPromo();">
-                            <span style="cursor: pointer;">Descuento <i class="far fa-edit"></i> </span>
-                        </th>
-                        <td id="promoValor" class="text-left">
-                            0%
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Total a pagar
-                        </th>
-                        <td id="ct-totalApagar"class="text-left ">
-                            <strong style="font-size: 22px!important;">
-                                $0
-                            </strong>
-                        </td>
-
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-
-            <table class="borderless  table text-white">
-                <tbody>
-                    <tr>
-                        <th>
-                            <div class="btn btn-primary  form-control">
-                                COBRAR
-                            </div>
-                        </th>
-
-                    </tr>
-                    <tr>
-                        <th>
-                            <div onclick="preBill();"  class="btn btn-success  form-control">
-                                PRE CUENTA
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <div onclick="cancelOrden();" class="btn btn-danger  form-control">
-                                CANCELAR
-                            </div>
-                        </th>
-
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-
-</div>
-<div class="main-div-product without-margen">
-
-    <div class="content-products">
-        <div style="position: static;" class="row  without-margen">
-            <div onclick="allProducts();" class="type-products col-md-4 card-center-vh bg-info text-white">TODOS
-            </div>
-            <div onclick="productsByCategory();" class="type-products col-md-4 card-center-vh bg-warning text-white">
-                CATEGORIAS</div>
-            <div class=" type-products col-md-4 card-center-vh bg-danger text-white">COMBOS</div>
-
-        </div>
-        <div class="container w-75">
-            <div class="input-group form-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text bg-primary text-white" id="basic-addon1"><i
-                            class="fas fa-search"></i></span>
+    <div class="modal " id="modalTables" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content ">
+                <div class="modal-header bg-white">
+                    <h5 class="modal-title" style="width: 100%;text-align: center;font-size: 25px;"
+                        id="exampleModalLongTitle">MESAS DISPONIBLES
+                    </h5>
                 </div>
-                <input style="border: 0;" onkeyup="searchByname()" type="text" class="form-control" id="searchByNames"
-                    placeholder="Buscar producto" aria-label="buscar" aria-describedby="basic-addon1">
+                <div class="modal-body ">
+                    <div id="selectTable" style="padding: 25px;" class="row card-center-vh">
+
+
+                    </div>
+                    <hr>
+                </div>
+
             </div>
         </div>
-        <div id="container-productos" class="without-margen text-white row text-center justify-content-center">
+    </div>
+    <div class="without-margen row orden-detail-content ">
+
+        <div class="without-margen main-pending-orders">
+
+            <div id="orden-tables" class="without-margen row list-tables">
+
+            </div>
 
         </div>
-        <div id="container-list-product" class=" without-margen row container-list-product justify-content-center">
 
+        <div class="list-products-orden">
+
+            <table class="borderless table text-white text-center ">
+                <thead>
+                    <tr>
+                        <th scope="col">DESCRIPCION</th>
+                        <th scope="col">CANTIDAD</th>
+                        <th scope="col">TOTAL</th>
+                        <th scope="col">BORRAR</th>
+                    </tr>
+                </thead>
+                <tbody id="container-table-producto">
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="totals row without-margen card-center-vh bg-info">
+            <div class="col-md-6 ">
+
+                <table class="borderless  table text-white">
+                    <tbody>
+                        <tr>
+                            <th>
+                                Sub total
+                            </th>
+                            <td class="text-left">
+                                <strong style="font-size: 22px!important;" id="ct-subtotal">
+                                    $0
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th onclick="modalPromo();">
+                                <span style="cursor: pointer;">Descuento <i class="far fa-edit"></i> </span>
+                            </th>
+                            <td id="promoValor" class="text-left">
+                                0%
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Total a pagar
+                            </th>
+                            <td id="ct-totalApagar" class="text-left ">
+                                <strong style="font-size: 22px!important;">
+                                    $0
+                                </strong>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+
+                <table class="borderless  table text-white">
+                    <tbody>
+                        <tr>
+                            <th>
+                                <div onclick="processPayment();" class="btn btn-primary  form-control">
+                                    COBRAR
+                                </div>
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th>
+                                <div onclick="preBill();" class="btn btn-success  form-control">
+                                    PRE CUENTA
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <div onclick="cancelOrden();" class="btn btn-danger  form-control">
+                                    CANCELAR
+                                </div>
+                            </th>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="main-div-product without-margen">
+
+        <div class="content-products">
+            <div style="position: static;" class="row  without-margen">
+                <div onclick="allProducts();" class="type-products col-md-4 card-center-vh bg-info text-white">TODOS
+                </div>
+                <div onclick="productsByCategory();"
+                    class="type-products col-md-4 card-center-vh bg-warning text-white">
+                    CATEGORIAS</div>
+                <div class=" type-products col-md-4 card-center-vh bg-danger text-white">COMBOS</div>
+
+            </div>
+            <div class="container w-75">
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-primary text-white" id="basic-addon1"><i
+                                class="fas fa-search"></i></span>
+                    </div>
+                    <input style="border: 0;" onkeyup="searchByname()" type="text" class="form-control"
+                        id="searchByNames" placeholder="Buscar producto" aria-label="buscar"
+                        aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div id="container-productos" class="without-margen text-white row text-center justify-content-center">
+
+            </div>
+            <div id="container-list-product" class=" without-margen row container-list-product justify-content-center">
+
+            </div>
         </div>
     </div>
-</div>
-</div>
+    </div>
 
-<div onclick="newOrden();" data-toggle="tooltip" data-placement="left" title="NUEVA ORDEN"
-    class="btn-new-orden bg-primary">
-    <i class="fas fa-plus"></i>
-</div>
+    <div onclick="newOrden();" data-toggle="tooltip" data-placement="left" title="NUEVA ORDEN"
+        class="btn-new-orden bg-primary">
+        <i class="fas fa-plus"></i>
+    </div>
 
-<%- include('./templates/scripts.ejs'); -%>
-<script src="/public/js/ventas.js"></script>
+    <%- include('./templates/scripts.ejs'); -%>
+        <script src="/public/js/ventas.js"></script>

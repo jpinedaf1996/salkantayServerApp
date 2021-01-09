@@ -60,7 +60,7 @@ router.put('/descuento/:ordenId', async (req, res) => {
 router.put('/cancelorden/:ordenId', async (req, res) => {
     //estas rutas reciben parametros 
     try {
-        
+
 
         await Orden.update({
             'estado': req.body.estado
@@ -68,16 +68,16 @@ router.put('/cancelorden/:ordenId', async (req, res) => {
             where: { ordenId: req.params.ordenId }
         });
 
-        
+
         await Mesa.update({
             'estado': '0'
         }, { // funcion para actualizar
             where: { mesaId: await getMesaId(req.params.ordenId) }
         });
 
-    
+
         //console.log(await getMesaId(req.params.ordenId));
-        res.status(202).send({ success: 'La orden ha sido cancelada!'});
+        res.status(202).send({ success: 'La orden ha sido cancelada!' });
 
     } catch (error) {
 
@@ -87,7 +87,61 @@ router.put('/cancelorden/:ordenId', async (req, res) => {
 
 });
 
-async function getMesaId (id){
+router.put('/finalizarorden/:ordenId', async (req, res) => {
+    //estas rutas reciben parametros 
+    try {
+        switch ( req.body.tipo_pago ) {
+            case 'e':
+                if(parseFloat(req.body.efectivo) < 0 || (parseFloat(req.body.efectivo) < parseFloat(req.body.total))){
+                    return res.status(422).send({ error: 'Cantidad no valida!' });
+                }
+                await Orden.update({
+                    'estado': req.body.estado, // El estado cero de una orden es guardada con exito aparece en el reporte 
+                    'tipo_pago': req.body.tipo_pago, // E es efectivo y T es tarrjeta  
+                    'total': req.body.total, // EL  total pagado en la factura 
+                    'efectivo': req.body.efectivo, // EL  total pagado en la factura 
+                    'cambio': req.body.cambio, // El cambio que se retiro de caja 
+    
+                }, { // funcion para actualizar
+                    where: { ordenId: req.params.ordenId }
+                });
+    
+                await Mesa.update({
+                    'estado': '0'
+                }, { // funcion para actualizar
+                    where: { mesaId: await getMesaId(req.params.ordenId) }
+                });
+                break;
+            case 't':
+                await Orden.update({
+                    'estado': req.body.estado, // El estado cero de una orden es guardada con exito aparece en el reporte 
+                    'tipo_pago': req.body.tipo_pago // E es efectivo y T es tarrjeta  
+    
+                }, { // funcion para actualizar
+                    where: { ordenId: req.params.ordenId }
+                });
+    
+                await Mesa.update({
+                    'estado': '0'
+                }, { // funcion para actualizar
+                    where: { mesaId: await getMesaId(req.params.ordenId) }
+                });
+                break;
+            default:
+            // code block
+        }
+        //console.log(await getMesaId(req.params.ordenId));
+        res.status(200).send({ success: 'La orden ha sido guardada con exito!' });
+
+    } catch (error) {
+
+        res.status(500).send(error.message);
+
+    }
+
+});
+
+async function getMesaId(id) {
 
     let orden = await Orden.findOne({
         attributes: ['mesaId'],
