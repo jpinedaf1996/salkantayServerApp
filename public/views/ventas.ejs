@@ -33,7 +33,7 @@ aqui se gestionanran los diferente produstos
     <!-- Modal -->
     <div id="modalPayment" class="modal fade bd-example-modal" tabindex="-1" role="dialog"
         aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog">
+        <div class="modal-dialog modal-lg modal-dialog">
 
             <div class="modal-content">
                 <div class="modal-header">
@@ -43,17 +43,18 @@ aqui se gestionanran los diferente produstos
                     </button>
                 </div>
 
-                <div style= "height: 100px;"  class="without-margen row">
+                <div style="height: 100px;" class="without-margen row">
 
-                    <div id="paymentCash" onclick="methodCash(this);"  class="col-sm-6 btn-method-payment bg-success bt-selectd-mehod">
+                    <div id="paymentCash" onclick="methodCash(this);"
+                        class="col-sm-6 btn-method-payment bg-success bt-selectd-mehod">
 
                         <i class="far fa-money-bill-alt"></i> &nbsp;EFECTIVO
 
                     </div>
 
-                    <div id="paymentCard" onclick="methodCard(this);"  class="col-sm-6 btn-method-payment bg-info"> 
+                    <div id="paymentCard" onclick="methodCard(this);" class="col-sm-6 btn-method-payment bg-info">
 
-                        <i class="fab fa-cc-visa"></i> &nbsp;TARJETA 
+                        <i class="fab fa-cc-visa"></i> &nbsp;TARJETA
 
                     </div>
 
@@ -70,47 +71,49 @@ aqui se gestionanran los diferente produstos
                                 </div>
 
                                 <input id="clienteinput" name="clientePayment"
-                                style="height: 60px !important;border-radius: 0 !important;font-size: 25px !important;" type="text"
-                                    class="form-control " placeholder="Nombre del cliente" aria-label="customer"
-                                    aria-describedby="basic-addon2">
+                                    style="height: 60px !important;border-radius: 0 !important;font-size: 25px !important;"
+                                    type="text" class="form-control " placeholder="Nombre del cliente"
+                                    aria-label="customer" aria-describedby="basic-addon2">
                             </div>
 
-                            <label for="inputcash"> Cantidad recivida  * </label>
+                            <label for="inputcash"> Cantidad recivida * </label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"> <i class="fas fa-dollar-sign"></i>
                                     </span>
                                 </div>
 
-                                <input  id="inputcash" name="Cantidad-recivida"
-                                    style="height: 60px !important;border-radius: 0 !important;font-size: 25px !important;" type="number"
-                                    class="form-control " placeholder="0" aria-label="cash"
+                                <input id="inputcash" name="Cantidad-recivida"
+                                    style="height: 60px !important;border-radius: 0 !important;font-size: 25px !important;"
+                                    type="number" class="form-control " placeholder="0" aria-label="cash"
                                     aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div style="width: 100%;font-size: 17px;" class="bg-white border border-danger info-payment" >
-                                <div >
-                                    <p class="text-danger" style="text-align: center;font-size: 30px;"> 
-                                        
+                            <div style="width: 100%;font-size: 17px;"
+                                class="bg-white border border-danger info-payment">
+                                <div>
+                                    <p class="text-danger" style="text-align: center;font-size: 30px;">
+
                                         CAMBIO A DAR
                                         <br>
-                                        <strong id="cambio"  >
+                                        <strong id="cambio">
                                             $0.00
-                                        </strong> 
-                                    
+                                        </strong>
+
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="w-100" style="text-align: center;font-size: 33px;">
-                        <strong>TOTAL A PAGAR: $</strong><strong id="saldoApagar" > </strong>
+                        <strong>TOTAL A PAGAR: $</strong><strong id="saldoApagar"> </strong>
                     </div>
                     <hr>
                     <div class="container">
                         <div class="w-100" style="font-size: 30px; ;">
-                            <button id="savebtn" onclick="savePayment();" style="height: 60px !important" class="btn btn-success form-control" ><i class="fas fa-play"></i> PROCESAR PAGO </button>
+                            <button id="savebtn" onclick="savePayment();" style="height: 60px !important"
+                                class="btn btn-success form-control"><i class="fas fa-play"></i> PROCESAR PAGO </button>
                         </div>
                     </div>
                 </div>
@@ -265,37 +268,46 @@ aqui se gestionanran los diferente produstos
 
     </div>
     <div class="main-div-product without-margen">
-
-        <div class="content-products">
-            <div style="position: static;" class="row  without-margen">
-                <div onclick="allProducts();" class="type-products col-md-4 card-center-vh bg-info text-white">TODOS
-                </div>
-                <div onclick="productsByCategory();"
-                    class="type-products col-md-4 card-center-vh bg-warning text-white">
-                    CATEGORIAS</div>
-                <div class=" type-products col-md-4 card-center-vh bg-danger text-white">COMBOS</div>
-
+        <div class="row h-100 without-margen">
+            <div id="content-cetegory" class="col-md-2 without-margen content-overflow">
+                
+                
             </div>
-            <div class="container w-75">
-                <div class="input-group form-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-primary text-white" id="basic-addon1"><i
-                                class="fas fa-search"></i></span>
+            <div class="col-md-10">
+                <div class="content-products">
+                    <!-- <div style="position: static;" class="row  without-margen">
+                        <div onclick="allProducts();" class="type-products col-md-4 card-center-vh bg-info text-white">TODOS
+                        </div>
+                        <div onclick="productsByCategory();"
+                            class="type-products col-md-4 card-center-vh bg-warning text-white">
+                            CATEGORIAS</div>
+                        <div class=" type-products col-md-4 card-center-vh bg-danger text-white">COMBOS</div>
+        
+                    </div> -->
+                    <br>
+                    <h1 class="text-white text-center"><strong>LISTA DE PRODUCTOS</strong></h1>
+                    <hr>
+                    <!-- <div class="container w-75">
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-white" id="basic-addon1"><i
+                                        class="fas fa-search"></i></span>
+                            </div>
+                            <input style="border: 0;" onkeyup="searchByname()" type="text" class="form-control"
+                                id="searchByNames" placeholder="Buscar producto" aria-label="buscar"
+                                aria-describedby="basic-addon1">
+                        </div>
+                    </div> -->
+                    <div id="container-productos" class="without-margen text-white row text-center justify-content-center">
+        
                     </div>
-                    <input style="border: 0;" onkeyup="searchByname()" type="text" class="form-control"
-                        id="searchByNames" placeholder="Buscar producto" aria-label="buscar"
-                        aria-describedby="basic-addon1">
+        
                 </div>
-            </div>
-            <div id="container-productos" class="without-margen text-white row text-center justify-content-center">
-
-            </div>
-            <div id="container-list-product" class=" without-margen row container-list-product justify-content-center">
-
             </div>
         </div>
+        
     </div>
-    </div>
+
 
     <div onclick="newOrden();" data-toggle="tooltip" data-placement="left" title="NUEVA ORDEN"
         class="btn-new-orden bg-primary">

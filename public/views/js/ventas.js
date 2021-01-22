@@ -1,4 +1,5 @@
 const newOrden = () => $("#modalOrden").modal("show");
+
 const modalPromo = () => {
     getPromociones();
     $("#modalPromo").modal("show");
@@ -6,9 +7,10 @@ const modalPromo = () => {
 
 
 $(() => {
-    allProducts();
-    getTableOrden();
 
+    //allProducts();
+    getTableOrden();
+    getCategories();
 });
 
 let listProductsInOrden = null;
@@ -232,18 +234,19 @@ const selecTable = async () => {
 
 }
 
-const productsByCategory = async () => {
+const getCategories = async () => {
     let response = await new GetInfoByFetch(url.apicategory).request();
-    const ct = document.getElementById('container-productos');
-    document.getElementById('container-list-product').innerHTML = " ";
+    const ct = document.getElementById('content-cetegory');
+    //document.getElementById('container-list-product').innerHTML = " ";
 
     ct.innerHTML = " ";
     response.map((category) => {
         const categoria = `
-            <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="animate__animated animate__bounce text-warning  col-sm-2 card-category border border-warning">
+            <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="animate__animated animate__bounce text-warning card-category border border-warning">
                 <p class="text-category" >${category.categoria.toUpperCase()}</p>
                 
-            </div>`;
+            </div>
+            `;
 
         ct.insertAdjacentHTML('beforeEnd', categoria);
 
@@ -253,7 +256,7 @@ const productsByCategory = async () => {
 let selectedCat = null;
 
 const getProductsByCategory = async (id) => {
-    const content = document.getElementById('container-list-product');
+    const content = document.getElementById('container-productos');
     let response = await new GetInfoByFetch(`${url.products}productosBycategori/${id}`).request();
     //HACE EL FOCUS AL HACER CLICK A UNA TARGETA DE CATEGORIAS
     if (selectedCat === null) {
@@ -276,7 +279,7 @@ const getProductsByCategory = async (id) => {
 
 const allProducts = async () => {
     const content = document.getElementById('container-productos');
-    document.getElementById('container-list-product').innerHTML = " ";
+    //document.getElementById('container-list-product').innerHTML = " ";
 
     let response = await new GetInfoByFetch(`${url.products}`).request();
 
@@ -449,7 +452,7 @@ function methodCard() {
         paymentCard.classList.add("bt-selectd-mehod");
 
         inputcash.disabled = true;
-        inputcash.value = 0;
+        inputcash.value = "";
 
         cambio.innerHTML = "$" + 0;
 
@@ -473,6 +476,7 @@ function methodCash() {
 $("#inputcash").on('keyup', function () {
 
     let cambioValue = parseFloat(inputcash.value - totalApagar).toFixed(2);
+
     if (cambioValue > 0) {
         cambio.innerHTML = "$" + cambioValue;
     } else {
@@ -485,11 +489,16 @@ $("#inputcash").on('keyup', function () {
 });
 
 
-const processPayment = async () => {
-    if (ordenId != 0) {
+const processPayment = () => {
 
-        saldoApagar.innerHTML = totalApagar;
+    if (ordenId != 0) {
         $("#modalPayment").modal("show");
+        saldoApagar.innerHTML = totalApagar;
+        methodCash();
+        inputcash.innerHTML="";
+        
+        
+
 
     } else {
         alertify.error("Seleccione una orden.")
@@ -498,56 +507,62 @@ const processPayment = async () => {
 }
 
 const savebtn = document.getElementById("savebtn");
+
 const savePayment = async () => {
+
     const content = document.getElementById("container-table-producto");
-    let dsdClass = savebtn.classList.contains("disabled");
+    let has_disabled_class = savebtn.classList.contains("disabled");
 
 
-    if (ordenId != 0 && !dsdClass) {
-        savebtn.classList.add("disabled");
-        try {
-            const response = await new GetInfoByFetch(`${url.apiordenes}/finalizarorden/${ordenId}`, 'PUT', new URLSearchParams(
-                {
-                    'estado': '0',
-                    'tipo_pago': tipo_pago,
-                    'total': totalApagar,
-                    'efectivo': efectivo,
-                    'cambio': cambioEfectivo
+    if (ordenId != 0) {
+        if (!has_disabled_class) {
+
+            if (parseFloat($("#inputcash").val()) >= totalApagar || tipo_pago === 't') {
+
+                savebtn.classList.add("disabled");
+
+                try {
+                    const response = await new GetInfoByFetch(`${url.apiordenes}/finalizarorden/${ordenId}`, 'PUT', new URLSearchParams(
+                        {
+                            'estado': '0',
+                            'tipo_pago': tipo_pago,
+                            'total': totalApagar,
+                            'efectivo': efectivo,
+                            'cambio': cambioEfectivo
+                        }
+                    )).request();
+
+                    if (response.success) {
+                        getTableOrden();
+                        content.innerHTML = " ";
+                        alertify.success(`${response.success}`);
+
+                        ordenId = 0;
+
+                        clienteinput.value = "";
+                        inputcash.value = "";
+                        cambio.innerHTML = "";
+                        cambio.innerHTML = "$0.00";
+
+                        methodCash();
+
+                        $("#modalPayment").modal("hide");
+
+                        savebtn.classList.remove("disabled");
+
+                    } else if (response.error) {
+
+                        alertify.error(response.error);
+                        savebtn.classList.remove("disabled");
+
+                    }
+                } catch (error) {
+
+                    alertify.error("El servidor no responde. ERROR: " + error);
+
                 }
-            )).request();
-
-            if (response.success) {
-                getTableOrden();
-                content.innerHTML = " ";
-                alertify.success(`${response.success}`);
-
-                ordenId = 0;
-                tipo_pago = 'e';
-
-                clienteinput.value = "";
-                inputcash.value = "";
-                cambio.innerHTML = "";
-                cambio.innerHTML = "$0.00";
-
-                $("#modalPayment").modal("hide");
-
-                savebtn.classList.remove("disabled");
-
-            }else if(response.error){
-
-                alertify.error(response.error);
-                savebtn.classList.remove("disabled");
-
             }
-        } catch (error) {
-
-            alertify.error("El servidor no responde. ERROR: " + error);
-
         }
-
-
-
-
 
     } else {
         alertify.error("Seleccione una orden.")

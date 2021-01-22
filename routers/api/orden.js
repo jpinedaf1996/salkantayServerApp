@@ -114,7 +114,8 @@ router.put('/finalizarorden/:ordenId', async (req, res) => {
                 break;
             case 't':
                 await Orden.update({
-                    'estado': req.body.estado, // El estado cero de una orden es guardada con exito aparece en el reporte 
+                    'estado': req.body.estado,
+                    'total': req.body.total, // El estado cero de una orden es guardada con exito aparece en el reporte 
                     'tipo_pago': req.body.tipo_pago // E es efectivo y T es tarrjeta  
     
                 }, { // funcion para actualizar

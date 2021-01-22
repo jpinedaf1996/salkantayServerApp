@@ -16,7 +16,7 @@ Index Css
     --text-side:#ffff;
     --hover-boder:var(--nav-bar);
     --bg-hover:rgba(59, 59, 59, 0.301);
-    --body-color:#f2f1ef,
+    --body-color:#0000,
 }
 body {
     margin: 0;
@@ -61,6 +61,7 @@ body {
     
 }
 .card-category {
+    text-align: center;
     margin: 1rem;
     border-radius: 10px;
     height: 75px;
