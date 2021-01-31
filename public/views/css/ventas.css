@@ -1,5 +1,13 @@
-
+:root{
+    --table-header: #ffffff;
+    --border: white;
+    --text: #1f5476 ;
+    --sky-blue: #1f5476;
+    --totals: rgb(226, 9, 9);
+}
 .orden-detail-content{
+    font-size: 22px;
+    color: black!important;
     height: 100%;
     width: 40%;
     position: absolute;
@@ -10,11 +18,12 @@
     padding: 0;
 }
 .main-pending-orders{
+    color: black!important;
     width: 100%;
     overflow: auto;
     height: 15%;
-    background-color: #1f5476;
-    border-bottom: solid 2px white;  
+    background-color: var(--table-header);
+    border-bottom: solid 2px var(--border);  
 }
 ::-webkit-scrollbar {
     width: 0;
@@ -32,13 +41,14 @@
     width: 100%;
     height: 55%;
     overflow: auto;
-    background-color: #1f5476;
-    color: white;    
+    background-color: var(--border);
+    color: black;    
 }
 .totals{
+    color: white!important;
     font-size: 22px!important;
     overflow: auto;
-    background-color: #7bb7ab;
+    background-color: var(--border);
     width: 100%;
     height: 30%;
     border-top: solid 2px white;
@@ -47,16 +57,19 @@
     cursor: pointer;
     height: 40px;
     width: 20%;
-    color: white;
+    color: black;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .pending-orders:hover{
-    background-color: #7bb7ab;
+    font-weight: bolder !important;
+    background-color: var(--nav-bar);
 }
 .selected-table{
-    background-color: #7bb7ab;
+    font-weight: bolder !important;
+    background-color:  var(--nav-bar);
+    color: white;
 }
 .borderless td, .borderless th {
     border: none;
@@ -89,7 +102,9 @@
     right: 0;
     width: 60%;
     height: 100%;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0) 0px 18px 36px -18px inset;
+    overflow: auto;
+    
 }
 .cursor{
     cursor: pointer;
@@ -107,8 +122,14 @@
     width: 100;
     max-height: auto;
 }
-
+.content-products h2{
+    color:  var(--text) !important;
+}
+.card-category p {
+    color:  var(--text) !important;
+}
 .btn-new-orden{
+    background-color: var(--nav-bar);
     color: white;
     font-size: 30px;
     position: fixed;
@@ -174,7 +195,7 @@
     
 }
 .content-overflow{
-    height: 100% !important;
+    height: 100%;
     overflow: auto;
 }
 .btn-method-payment{

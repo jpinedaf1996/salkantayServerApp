@@ -1,0 +1,249 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ticket No. 00000135</title>
+    <SCRIPT language="javascript">
+        function imprimir() {
+
+            if ((navigator.appName == "Netscape")) {
+                window.print();
+            }
+            else {
+                var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+                document.body.insertAdjacentHTML('beforeEnd', WebBrowser); WebBrowser1.ExecWB(6, -1); WebBrowser1.outerHTML = "";
+            }
+        }
+    </SCRIPT>
+</head>
+
+<style type="text/css" media="print">
+    #Imprime {
+        height: auto;
+        width: 377px;
+        margin: 0px;
+        padding: 0px;
+        float: left;
+        font-family: "Comic Sans MS", cursive;
+        font-size: 7px;
+        font-style: normal;
+        line-height: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        color: #000;
+    }
+
+    @page {
+        margin: 0;
+    }
+</style>
+<% const orden=JSON.parse(detalle) %>
+    <% const PadLeft=(value, length)=> (value.toString().length < length) ? PadLeft("0" + value, length) : value; %>
+
+            <BODY onload="imprimir();">
+                <div id="Imprime">
+                    <table width="300px">
+                        <tr>
+                            <td>
+                                <table width="100%"
+                                    style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                                    <tr>
+                                        <td rowspan="5" width="9%"></td>
+                                        <td colspan="2">
+                                            <center>
+                                                <br /><br />
+                                                <h2>SALCANTAY</h2>
+
+
+                                                Nit: 782992-90039<br />
+                                                <center>
+                                                    Dirección: los laureles Cr:47-67 <br />
+                                                    Telefono: 31234122323<br />
+                                                    BOLIVAR - EL CARMEN DE BOLIVAR
+                                                </center>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><BR />
+                                            <b>Ticket No.</b>
+                                            <% const number=PadLeft(orden.headers.tikectId , 5) %>
+                                            <%= number %> <br />
+                                            <b>Orden No.</b>
+                                            <%= orden.headers.orden.ordenId %>  <br>                                            
+                                                    <b>Fecha:</b>
+                                                    <%= orden.headers.orden.fecha %>  <strong><%= orden.headers.orden.hora %> </strong> <br />
+                                                    <b>CLIENTE:N/A</b> <br />
+                                                    <b>MESERO:</b> N/A<br />
+                                                    <b>MESA: </b><%= orden.headers.orden.mesaId ? orden.headers.orden.mesaId : 'LLEVAR' %><br />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <table width="100%"
+                                    style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                                    <tr style="border:2px solid #000;">
+                                        <td><b>CAN</b></td>
+                                        <td><b>DESCRIPCIÓN</b></td>
+                                        <td>
+                                            <div align="right"><b>VALOR</b></div>
+                                        </td>
+                                        <td>
+                                            <div align="right" style="font-size: 12px;"><b>DESC</b></div>
+                                        </td>
+                                        <td>
+                                            <div align="right"><b>TOTAL</b></div>
+                                        </td>
+                                    </tr>
+
+                                    <% let subtotal=0; %>
+
+                                        <% const descuento=parseFloat(orden.headers.orden.descuento).toFixed(2) ; %>
+
+                                            <% let descuentoEfectivo=0; %>
+
+
+                                                <% orden.detalle.forEach(function(ordenDetalle){ %>
+                                                    <% subtotal=(parseFloat(subtotal) + parseFloat(ordenDetalle.precio *
+                                                        ordenDetalle.unidades)).toFixed(2) ; %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= ordenDetalle.unidades %>
+                                                            </td>
+                                                            <td>
+                                                                <%= ordenDetalle.nombreProducto %>
+                                                            </td>
+                                                            <td>
+                                                                <div align="right">
+                                                                    <%= ordenDetalle.precio %>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div align="right" style="font-size: 12px;">
+                                                                    <%=  orden.headers.orden.descuento %>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div align="right">
+                                                                    <%= parseFloat(ordenDetalle.precio *
+                                                                        ordenDetalle.unidades).toFixed(2) %>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <% }); %>
+                                                            <tr>
+                                                                <td colspan="5">
+                                                                    <hr>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr style="font-size: 14px;">
+                                                                <td colspan="4">
+                                                                    <div align="right"><b>SUBTOTAL</b></div>
+                                                                </td>
+                                                                <td>
+                                                                    <div align="right"><b>$<%= subtotal %></b></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="font-size: 14px;">
+                                                                <td colspan="4">
+                                                                    <div align="right"><b
+                                                                            style="font-size: 14px;">Descuento <%=
+                                                                                parseInt(descuento*100) %>%</b></div>
+                                                                </td>
+                                                                <td>
+                                                                    <div align="right"><b style="font-size: 14px;">$<%=
+                                                                                descuentoEfectivo=parseFloat((subtotal *
+                                                                                descuento)).toFixed(2) %> </b></div>
+                                                                </td>
+                                                            </tr>
+                                                            <!-- <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>DESCUENTO</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>$0</b></div>
+                                                </td>
+                                            </tr> -->
+                                                            <tr style="font-size: 14px;">
+                                                                <td colspan="4">
+                                                                    <div align="right"><b>PROPINA</b></div>
+                                                                </td>
+                                                                <td>
+                                                                    <div align="right"><b>$0</b></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="4">
+                                                                    <div align="right"></div>
+                                                                </td>
+                                                                <td>
+                                                                    <div align="right"><b></div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="font-size: 17px;">
+                                                                <td colspan="4">
+                                                                    <div align="right"><b>TOTAL</b></div>
+                                                                </td>
+                                                                <td>
+                                                                    <div align="right"><b>$<%= parseFloat(subtotal -
+                                                                                descuentoEfectivo ).toFixed(2) %> </b>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <!-- <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>EFECTIVO</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>0</b></div>
+                                                </td>
+                                            <tr style="font-size: 14px;">
+                                                <td colspan="4">
+                                                    <div align="right"><b>CAMBIO</b></div>
+                                                </td>
+                                                <td>
+                                                    <div align="right"><b>0</b></div>
+                                                </td>
+                                            </tr>
+                                            <tr> -->
+                                                            <td colspan="5">
+                                                                <div align="center" style="font-size: 15px;"></div>
+                                                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div align="center" style="font-size: 15px;"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div align="center" style="font-size: 15px;"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%"
+                        style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                        <tr>
+                            <td rowspan="5" width="3%"></td>
+                            <td colspan="2">
+                                <br /><br />
+                                <center><b>***GRACIAS POR SU COMPRA***<center></center>
+                                        <center><b style="font-size: 13px;">Software PUVESOFT.com <BR>Cel: 301 648
+                                                3525
+                                                <center></center>
+                                                <center><b style="font-size: 11px;">Fecha y hora de impresión:
+                                                        29/12/2020 05:33:41 pm</b></center>
+                            </td>
+                        </tr>
+                    </table>
+
+
+            </body>
+
+</html>

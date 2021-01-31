@@ -140,7 +140,7 @@ aqui se gestionanran los diferente produstos
                             </span>
                         </div>
                         <div class="col-md-6  orden-option card-center-vh">
-                            <span class="bg-primary card-center-vh btn-new-orden-mesa"> LLEVAR </span>
+                            <span onclick="addNewOrdenLlevar()" class="bg-primary card-center-vh btn-new-orden-mesa"> LLEVAR </span>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@ aqui se gestionanran los diferente produstos
 
         <div class="list-products-orden">
 
-            <table class="borderless table text-white text-center ">
+            <table class="borderless table text-center ">
                 <thead>
                     <tr>
                         <th scope="col">DESCRIPCION</th>
@@ -195,75 +195,64 @@ aqui se gestionanran los diferente produstos
             </table>
 
         </div>
+        
+        <div class="row without-margen bg-white w-100">
+            <div class="col-md-4">
+                <div onclick="preBill();" class="btn btn-success  form-control">
+                    PRE CUENTA
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div onclick="processPayment();" class="btn btn-primary  form-control">
+                    COBRAR
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div onclick="cancelOrden();" class="btn btn-danger  form-control">
+                    CANCELAR
+                </div>
+            </div>
+        </div>
+        <div class="totals row without-margen card-center-vh ">
+            
+            <div class="col-md-12 ">
 
-        <div class="totals row without-margen card-center-vh bg-info">
-            <div class="col-md-6 ">
-
-                <table class="borderless  table text-white">
+                <table class="borderless table ">
                     <tbody>
                         <tr>
-                            <th>
+                            <th class="text-right">
+                                <strong>Total a pagar</strong>
+                            </th>
+                            <td  class="text-right">
+                                <strong id="ct-totalApagar"">
+                                    $0
+                                </strong>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <th  class="text-right">
                                 Sub total
                             </th>
-                            <td class="text-left">
-                                <strong style="font-size: 22px!important;" id="ct-subtotal">
+                            <td class="text-right">
+                                <strong id="ct-subtotal">
                                     $0
                                 </strong>
                             </td>
                         </tr>
                         <tr>
-                            <th onclick="modalPromo();">
+                            <th onclick="modalPromo();"  class="text-right">
                                 <span style="cursor: pointer;">Descuento <i class="far fa-edit"></i> </span>
                             </th>
-                            <td id="promoValor" class="text-left">
+                            <td id="promoValor" class="text-right">
                                 0%
                             </td>
                         </tr>
-                        <tr>
-                            <th>
-                                Total a pagar
-                            </th>
-                            <td id="ct-totalApagar" class="text-left ">
-                                <strong style="font-size: 22px!important;">
-                                    $0
-                                </strong>
-                            </td>
-
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6">
-
-                <table class="borderless  table text-white">
-                    <tbody>
-                        <tr>
-                            <th>
-                                <div onclick="processPayment();" class="btn btn-primary  form-control">
-                                    COBRAR
-                                </div>
-                            </th>
-
-                        </tr>
-                        <tr>
-                            <th>
-                                <div onclick="preBill();" class="btn btn-success  form-control">
-                                    PRE CUENTA
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div onclick="cancelOrden();" class="btn btn-danger  form-control">
-                                    CANCELAR
-                                </div>
-                            </th>
-
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
+            
         </div>
 
     </div>
@@ -285,7 +274,7 @@ aqui se gestionanran los diferente produstos
         
                     </div> -->
                     <br>
-                    <h1 class="text-white text-center"><strong>LISTA DE PRODUCTOS</strong></h1>
+                    <h2 class="text-center"><strong>LISTA DE PRODUCTOS</strong></h2>
                     <hr>
                     <!-- <div class="container w-75">
                         <div class="input-group form-group">
@@ -298,7 +287,7 @@ aqui se gestionanran los diferente produstos
                                 aria-describedby="basic-addon1">
                         </div>
                     </div> -->
-                    <div id="container-productos" class="without-margen text-white row text-center justify-content-center">
+                    <div id="container-productos" class="without-margen  row text-center justify-content-center">
         
                     </div>
         
@@ -310,7 +299,7 @@ aqui se gestionanran los diferente produstos
 
 
     <div onclick="newOrden();" data-toggle="tooltip" data-placement="left" title="NUEVA ORDEN"
-        class="btn-new-orden bg-primary">
+        class="btn-new-orden">
         <i class="fas fa-plus"></i>
     </div>
 

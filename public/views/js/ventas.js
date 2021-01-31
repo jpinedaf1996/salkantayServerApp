@@ -71,7 +71,7 @@ const drawTable = async (id_orden) => {
 
 const deleteDatail = async (detalleId) => {
 
-    alertify.confirm("<i class='fas fa-exclamation-circle text-danger'></i> Advertencia ", "¿Seguro decea borrar este prodcuto?.",
+    alertify.confirm("<i class='fas fa-exclamation-circle text-danger'></i> Advertencia ", "¿Seguro decea borrar este producto?.",
         async function () {
             try {
 
@@ -196,14 +196,14 @@ const getTableOrden = async () => {
         let content = document.getElementById('orden-tables');
 
         content.innerHTML = " ";
-        content.innerHTML = `<div class="pending-orders bg-info text-white">
-                            LLEVAR
-                        </div>`;
+        content.innerHTML = `<div onclick="changeTypeOrden();" class="pending-orders bg-dark text-white">
+                                LLEVAR
+                            </div>`;
 
         response.map((tables) => {
             let table = `
-                <div data-promo = "${tables.descuento}" onclick="detailOrden(${tables.ordenId});" class="pending-orders text-white">
-                ${tables.mesa.num_mesa}
+                <div data-promo = "${tables.descuento}" onclick="detailOrden(${tables.ordenId});" class="pending-orders">
+                <strong>${tables.mesa.num_mesa}</strong>
                 </div>
             `;
             content.insertAdjacentHTML('beforeEnd', table);
@@ -242,7 +242,7 @@ const getCategories = async () => {
     ct.innerHTML = " ";
     response.map((category) => {
         const categoria = `
-            <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="animate__animated animate__bounce text-warning card-category border border-warning">
+            <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="animate__animated animate__bounce card-category">
                 <p class="text-category" >${category.categoria.toUpperCase()}</p>
                 
             </div>
@@ -495,9 +495,9 @@ const processPayment = () => {
         $("#modalPayment").modal("show");
         saldoApagar.innerHTML = totalApagar;
         methodCash();
-        inputcash.innerHTML="";
-        
-        
+        inputcash.innerHTML = "";
+
+
 
 
     } else {
@@ -533,7 +533,12 @@ const savePayment = async () => {
                     )).request();
 
                     if (response.success) {
+
+                        finalTicket();
+                        //debugger
+                        methodCash();
                         getTableOrden();
+
                         content.innerHTML = " ";
                         alertify.success(`${response.success}`);
 
@@ -544,7 +549,7 @@ const savePayment = async () => {
                         cambio.innerHTML = "";
                         cambio.innerHTML = "$0.00";
 
-                        methodCash();
+
 
                         $("#modalPayment").modal("hide");
 
@@ -568,4 +573,59 @@ const savePayment = async () => {
         alertify.error("Seleccione una orden.")
     }
 
+}
+
+const finalTicket = () => {
+    //console.log(await )
+    if (ordenId != 0) {
+
+        window.open("http://localhost:3000/apiv0.1/reportes/ticket/" + sessionStorage.getItem("token") + "/" + ordenId,
+            "PRECUENTA",
+            "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
+        //console.log(response.success);
+
+    } else {
+        alertify.error("Seleccione una orden.")
+    }
+
+    //
+}
+
+// function PadLeft(value, length) {
+//     return (value.toString().length < length) ? PadLeft("0" + value, length) : value;
+// }
+////////////////CAMBIAR TIPO DE ORDEN //////////////////////////////////
+
+const changeTypeOrden = async() => {
+
+    try {
+        let response = await new GetInfoByFetch(`${url.apiordenes}parallevar`).request();
+        let content = document.getElementById('orden-tables');
+
+        content.innerHTML = " ";
+        content.innerHTML = `<div onclick="getTableOrden();" class="pending-orders bg-dark text-white">
+                                MESAS
+                            </div>`;
+
+        response.map((tables) => {
+            let table = `
+                <div data-promo = "${tables.descuento}" onclick="detailOrden(${tables.ordenId});" class="pending-orders">
+                    <strong>#${tables.ordenId}</strong>
+                </div>
+            `;
+            content.insertAdjacentHTML('beforeEnd', table);
+        });
+
+    } catch (error) {
+        alertify.error(error + "<br>El servidor no responde")
+    }
+}
+
+const addNewOrdenLlevar = async( ) =>{
+    
+    let response = await new GetInfoByFetch(`${url.apiordenes}/newOrden/llevar`, 'POST').request();
+    if (response.success) {
+        $("#modalOrden").modal("hide");
+        changeTypeOrden();
+    }
 }

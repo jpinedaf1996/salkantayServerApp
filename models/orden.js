@@ -18,8 +18,13 @@ module.exports = (sequelize, type) => { // Esta es una funcion sin nombre que es
             type: type.DOUBLE(5, 2),
             defaultValue: 0
         },
-        fecha_hora: {
-            type: type.DATE,
+        fecha: {
+            type: type.DATEONLY,
+            allowNull: false,
+            defaultValue: type.NOW
+        },
+        hora: {
+            type: type.TIME,
             allowNull: false,
             defaultValue: type.NOW
         },
@@ -41,7 +46,11 @@ module.exports = (sequelize, type) => { // Esta es una funcion sin nombre que es
         cambio : {
             type: type.DOUBLE(5, 2),
             defaultValue: 0
-        }
+        },
+        tipo_orden: {
+            type: type.ENUM('M','L'),
+            defaultValue: 'M'
+        },
 
     }, { timestamps: false });
 };

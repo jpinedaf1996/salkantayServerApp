@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Orden, Mesa } = require('../../dbconfig');
+const { Orden, Mesa, ticketVenta } = require('../../dbconfig');
 //Se crean las rutas para una API REST con los diferente metodos
 
 router.get('/', async (req, res) => {
@@ -10,16 +10,32 @@ router.get('/', async (req, res) => {
 //FUNCION PARA LLAMAR A LAS MESAS QUE ESTEN OCUPADAS OSEA ESTADO 1 
 //CON LA ORDEN ACTIVAS OSEA ESTADO 1
 router.get('/ordenbymesa', async (req, res) => {
+
     let ordenbymesa = await Orden.findAll({
         include: {
             model: Mesa,
             where: { estado: '1' }
         },
-        where: { estado: '1' } // estado del orden activa
+        where: {
+            estado: '1',
+            tipo_orden: 'M'
+        } // estado del orden activa
     });
     res.json(ordenbymesa);
 
 });
+router.get('/parallevar', async (req, res) => {
+
+    let ordenbymesa = await Orden.findAll({
+        where: {
+            estado: '1',
+            tipo_orden: 'L'
+        } // estado del orden activa
+    });
+    res.json(ordenbymesa);
+
+});
+
 
 //DUNCION PARA CAMBIAR EL ESTADO DE UNA MESA Y AGREGAR UN ANUVEA ORDEN 
 //ESTA PASA HACER DE ESTADO 1 OSEA ACTIVA
@@ -44,6 +60,15 @@ router.put('/newOrden/:mesaId', async (req, res) => {
     }
 
 });
+router.post('/newOrden/llevar', async (req, res) => {
+    //Se cambia el estado de la mesa   
+    await Orden.create({
+        'tipo_orden': 'L'
+    });
+    res.json({ success: 'Se ha creado la orden.' });
+
+});
+
 ///////
 router.put('/descuento/:ordenId', async (req, res) => {
     //estas rutas reciben parametros 
@@ -90,42 +115,70 @@ router.put('/cancelorden/:ordenId', async (req, res) => {
 router.put('/finalizarorden/:ordenId', async (req, res) => {
     //estas rutas reciben parametros 
     try {
-        switch ( req.body.tipo_pago ) {
+        switch (req.body.tipo_pago) {
             case 'e':
-                if(parseFloat(req.body.efectivo) < 0 || (parseFloat(req.body.efectivo) < parseFloat(req.body.total))){
+                if (parseFloat(req.body.efectivo) < 0 || (parseFloat(req.body.efectivo) < parseFloat(req.body.total))) {
                     return res.status(422).send({ error: 'Cantidad no valida!' });
                 }
+                /***
+                                 * 
+                                 * Se cierra la orden 
+                                 * 
+                                 */
                 await Orden.update({
                     'estado': req.body.estado, // El estado cero de una orden es guardada con exito aparece en el reporte 
                     'tipo_pago': req.body.tipo_pago, // E es efectivo y T es tarrjeta  
                     'total': req.body.total, // EL  total pagado en la factura 
                     'efectivo': req.body.efectivo, // EL  total pagado en la factura 
                     'cambio': req.body.cambio, // El cambio que se retiro de caja 
-    
+
                 }, { // funcion para actualizar
                     where: { ordenId: req.params.ordenId }
                 });
-    
+                /***
+                                 * 
+                                 * Se actuliza la mesa 0
+                                 * 
+                                 */
+
                 await Mesa.update({
                     'estado': '0'
                 }, { // funcion para actualizar
                     where: { mesaId: await getMesaId(req.params.ordenId) }
                 });
+                /***
+                 * 
+                 * Creacion del ticket
+                 * 
+                 */
+                await ticketVenta.create({
+                    'ordenId': req.params.ordenId
+                });
+
                 break;
             case 't':
                 await Orden.update({
                     'estado': req.body.estado,
                     'total': req.body.total, // El estado cero de una orden es guardada con exito aparece en el reporte 
                     'tipo_pago': req.body.tipo_pago // E es efectivo y T es tarrjeta  
-    
+
                 }, { // funcion para actualizar
                     where: { ordenId: req.params.ordenId }
                 });
-    
+
                 await Mesa.update({
                     'estado': '0'
                 }, { // funcion para actualizar
                     where: { mesaId: await getMesaId(req.params.ordenId) }
+                });
+
+                /*
+                 * 
+                 * Creacion del ticket
+                 * 
+                 */
+                await ticketVenta.create({
+                    'ordenId': req.params.ordenId
                 });
                 break;
             default:
