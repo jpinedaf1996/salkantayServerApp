@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <SCRIPT language="javascript">
+        function imprimir() {
+
+            if ((navigator.appName == "Netscape")) {
+                window.print();
+            }
+            else {
+                var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+                document.body.insertAdjacentHTML('beforeEnd', WebBrowser); WebBrowser1.ExecWB(6, -1); WebBrowser1.outerHTML = "";
+            }
+        }
+    </SCRIPT>
+</head>
+
+<!--Aqui va el estilo-->
+<body onload="imprimir();">
+
+    <div>
+    <center>
+        <table width="100%" style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+          <tr>
+                                      <td colspan="2">
+                                          <center>
+                                              <br /><br />
+                                              <h2>SALCANTAY &amp; CAFE</h2>
+                                              ***<strong>Reporte X</strong>***
+                                              <hr>
+                                              <br />
+                                              Nit: 782992-90039<br />
+                                              Dirección: los laureles Cr:47-67 <br />
+                                              Telefono: 31234122323<br />
+                                              BOLIVAR - EL CARMEN DE BOLIVAR
+                                          </center>
+                                      </td>
+                                  </tr>
+        </table>
+        <table width="100%"
+                                  style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                                  <tr style="border:2px solid #000;">
+                                      <td><b>Items:</b></td>
+                                  </tr>
+          <tr>
+            <td>Ticktet de apertura: </td>
+            <td><%= reportex.Apertura[0].minimo %> </td>
+          </tr>
+          
+          <tr>
+            <td>Ticktet de cierre: </td>
+            <td><%= reportex.Cierre[0].maximo %> </td>
+          </tr>
+          
+          <tr>
+            <td>Ventas en efectivo: </td>
+            <td>$<%= reportex.VentEfectivo[0].ventasE %> </td>
+          </tr>
+          
+          <tr>
+            <td>Ventas con tarjeta: </td>
+            <td>$<%= reportex.VentTarjeta[0].ventasT %> </td>
+          </tr>
+          
+          <tr>
+            <td>Descuentos: </td>
+            <td>$<%= reportex.Descuentos[0].descuentoT %> </td>
+          </tr>
+          
+          <tr>
+            <td>N# de ventas realizadas: </td>
+            <td><%= reportex.TickesGen[0].TicketT %> </td>
+          </tr>
+          
+          <tr>
+            <td>Ventas Totales sin descuento: </td>
+            <td>$<%= reportex.VentasTot[0].TotalSin %> </td>
+          </tr>
+          
+          <tr>
+            <td>Ventas Totales: </td>
+            <td>$<%= reportex.VentasTotDes[0].TotalCon %> </td>
+          </tr>
+          
+        </table>
+        <table width="100%"
+                                  style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                                  <tr>
+                                      
+                                      <td colspan="2">
+                                          <br /><br />
+                                          <center><b>***GRACIAS POR SU COMPRA***<center></center>
+                                                  <center><b style="font-size: 13px;">Software PUVESOFT.com <BR>Cel: 301 648
+                                                          3525
+                                                          <center></center>
+                                                          <center><b style="font-size: 11px;">Fecha y hora de impresión:
+                                                                  29/12/2020 05:33:41 pm</b></center>
+                                      </td>
+                                  </tr>
+                              </table>
+      </center>
+    </div> 
+</body>
+</html>
+

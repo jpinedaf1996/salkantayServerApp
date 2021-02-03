@@ -7,6 +7,7 @@ const url = {
      apiordenes: 'http://localhost:3000/apiv0.1/orden/',
      apiordendetalle: 'http://localhost:3000/apiv0.1/ordendet/',
      apiclientes: 'http://localhost:3000/apiv0.1/cliente',
+     apiinfo: 'http://localhost:3000/apiv0.1/info',
      apipromo: 'http://localhost:3000/apiv0.1/promociones/' 
 }
 
@@ -46,6 +47,9 @@ const redirect = (id) => {
                window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
                break;
           case 'config':
+               window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
+               break;
+          case 'info':
                window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
                break;
           default:

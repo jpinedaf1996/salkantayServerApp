@@ -8,6 +8,7 @@ const OrdenModel = require('./models/orden');
 const OrdenDetModel = require('./models/ordendet');
 const PromocionesModel = require('./models/promociones');
 const ticketventaModel = require('./models/ticketventa');
+const InformacionModel = require('./models/informacion');
 
 
 
@@ -15,7 +16,7 @@ const ticketventaModel = require('./models/ticketventa');
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('salkantaydb', 'root', 'catolica', {
+const Conexion = new Sequelize('pruebadb', 'root', '2125', {
     host: 'localhost',
     dialect: 'mariadb',
     dialectOptions: {
@@ -38,6 +39,7 @@ const Orden = OrdenModel(Conexion, Sequelize);
 const OrdenDet = OrdenDetModel(Conexion, Sequelize);
 const Promociones = PromocionesModel(Conexion, Sequelize);
 const ticketVenta = ticketventaModel(Conexion, Sequelize);
+const Info = InformacionModel(Conexion, Sequelize);
 
 // RELACIONES
 
@@ -71,5 +73,6 @@ module.exports = {
     Orden,
     OrdenDet,
     ticketVenta,
-    Promociones
+    Promociones,
+    Info
 };

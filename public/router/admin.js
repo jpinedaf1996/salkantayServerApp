@@ -40,6 +40,12 @@ router.get('/clientes', (req, res)=>{
     
 } );
 
+router.get('/info', (req, res)=>{
+
+    res.render('info');
+    
+} );
+
 
 
 module.exports = router; 
