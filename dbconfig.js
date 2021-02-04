@@ -15,9 +15,9 @@ const ticketventaModel = require('./models/ticketventa');
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('salkantaydb', 'root', 'catolica', {
+const Conexion = new Sequelize('salkantaydb', 'admin', 'password', {
     host: 'localhost',
-    dialect: 'mariadb',
+    dialect: 'mysql',
     dialectOptions: {
         timezone: 'America/El_Salvador',
     }
