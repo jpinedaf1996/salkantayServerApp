@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <SCRIPT language="javascript">
+        function imprimir() {
+
+            if ((navigator.appName == "Netscape")) {
+                window.print();
+            }
+            else {
+                var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+                document.body.insertAdjacentHTML('beforeEnd', WebBrowser); WebBrowser1.ExecWB(6, -1); WebBrowser1.outerHTML = "";
+            }
+        }
+    </SCRIPT>
+</head>
+<% const DetList = JSON.parse(VentaDet) %>
+<!--Aqui va el estilo-->
+<style id="CustomT">
+    #MasTable {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #MasTable td, #MasTable th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #MasTable tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #MasTable tr:hover {background-color: #ddd;}
+    
+    #MasTable th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #023374;
+      color: white;
+    }
+    </style>
+<body onload="imprimir();">
+
+                    <center><h3 class="text-dark text-center">DETALLE DE VENTAS</h3></center>
+                    <table id="MasTable" class="borderless table table-responsive-lg text-dark text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th><strong>Producto</strong></th>
+                                <th><strong>Mesa</strong></th>
+                                <th><strong>Cantidad</strong></th>
+                                <th><strong>Precio</strong></th>
+                                <th><strong>Fecha</strong></th>
+                                <th><strong>Hora</strong></th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% DetList.forEach(function(detalle){ %>
+                            <tr >
+                                <td><%= detalle.Producto %></td>
+                                <td><%= detalle.Mesa %></td>
+                                <td>$<%= detalle.Cantidad %></td>
+                                <td><%= detalle.Precio %></td>
+                                <td><%= detalle.Fecha %></td>
+                                <td>$<%= detalle.Hora %></td>
+                                     
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <!-- 
+                    <table width="100%"
+                            style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                            <tr>
+                                <td>SubTotal:</td>
+                                <td><b></b></td>
+                            </tr>
+                        </table> -->
+</body>
+</html>

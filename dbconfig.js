@@ -8,6 +8,7 @@ const OrdenModel = require('./models/orden');
 const OrdenDetModel = require('./models/ordendet');
 const PromocionesModel = require('./models/promociones');
 const ticketventaModel = require('./models/ticketventa');
+const InformacionModel = require('./models/informacion');
 
 
 
@@ -38,6 +39,7 @@ const Orden = OrdenModel(Conexion, Sequelize);
 const OrdenDet = OrdenDetModel(Conexion, Sequelize);
 const Promociones = PromocionesModel(Conexion, Sequelize);
 const ticketVenta = ticketventaModel(Conexion, Sequelize);
+const Info = InformacionModel(Conexion, Sequelize);
 
 // RELACIONES
 
@@ -71,5 +73,6 @@ module.exports = {
     Orden,
     OrdenDet,
     ticketVenta,
-    Promociones
+    Promociones,
+    Info
 };

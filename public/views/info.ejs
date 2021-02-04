@@ -1,0 +1,244 @@
+<%- include('./templates/header'); -%>
+
+<!-- Product Form  <main class="container-fluid"> -->
+
+<div class="row without-margen">
+  <div class="formulario">
+    <strong>
+      <h1 class="card-title text-white w-100">ADMINISTRAR "ACERCA DE"</h1>
+    </strong>
+    <hr>
+    <div class="card">
+      <div class="card-body">
+        <div id="alert-edit">
+
+        </div>
+        <h3 class="text-dark text-center">Datos del negocio</h3>
+        <!-- Product Form -->
+        <form id="InfoForm" class="card card-body">
+          <div class="form-group">
+            <a>Empresa</a>
+            <input type="text" id="empresa" name="empresa" placeholder="------" class="form-control" required
+              autofocus>
+          </div>
+
+          <div class="form-group">
+            <a>Direccion</a>
+            <input type="text" id="direccion" name="direccion" placeholder="------" class="form-control" required
+              autofocus>
+          </div>
+
+          <div class="form-group">
+            <a>N# Telefono</a>
+            <input type="number" id="telefono" name="telefono" placeholder="------" required
+              class="form-control" autofocus>
+          </div>
+
+          <div class="form-group">
+            <a>Nit</a>
+            <input type="text" id="nit" name="nit" placeholder="------" class="form-control" required
+              autofocus>
+          </div>
+
+          <div class="form-group">
+            <a>NRC</a>
+            <input type="text" id="nrc" name="nrc" placeholder="------" class="form-control" required
+              autofocus>
+          </div>
+
+          <div class="form-group">
+            <a>GIRO</a>
+            <input type="text" id="giro" name="giro" placeholder="------" class="form-control" required
+              autofocus>
+          </div>
+
+          <div class="form-group">
+            <a>Sucursal</a>
+            <input type="text" id="sucursal" name="sucursal" placeholder="------" class="form-control" required
+              autofocus>
+          </div>
+
+          <div>
+            <input type="hidden" value="0" name="idforedit" id="idforedit">
+          </div>
+
+          <button id="btn-Cte" type="submit" class="btn btn-primary">
+            Guardar
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- Product List -->
+  <div class="listado">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="text-dark text-center">Datos del negocio</h3>
+        <table id="ClienteTable" class="text-center table table-responsive-sm table-hover ">
+          <thead class="thead-dark">
+            <tr>
+              <th>Empresa</th>
+              <th>Direccion</th>
+              <th>Telefono</th>
+              <th>Nit</th>
+              <th>NRC</th>
+              <th>Giro</th>
+              <th>Sucursal</th>
+              <th colspan="2">Opciones</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%- include('./templates/scripts.ejs'); -%>
+
+
+
+</body>
+<script>
+
+
+  $(document).ready(async () => {
+    getListInfo();
+  });
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const getListInfo = async (infoId) => {
+    let content = document.getElementById("myTable");
+    let response = await new GetInfoByFetch(`${url.apiInfo}`).request();
+    content.innerHTML = " ";
+    response.forEach(info => {
+      let Info = ` <tr > 
+                        <td>#${info.empresa}</td>
+                        <td>${info.direccion}</td>
+                        <td>#${info.telefono}</td>
+                        <td>${info.nit}</td>
+                        <td>#${info.nrc}</td>
+                        <td>${info.giro}</td>
+                        <td>${info.sucursal}</td>
+                        <td>
+                          <i style="cursor: pointer;" onclick="editTable(${info.infoId})" class="text-warning fas fa-edit"></i> 
+                        </td>
+                        <td>
+                          <i style="cursor: pointer;" onclick="deleteInfo(${info.infoId})" class="text-danger fas fa-trash"></i> 
+                        </td>
+                        
+                    </tr>`;
+      content.insertAdjacentHTML('beforeEnd', Info);
+    });
+    return ListInfo = response;
+  }
+
+  /////////////////////////////////////NO ES NECESARIO EL TENER UN BOTON DE BORRAR////////////////////////////////////////////////////////////////////
+  const deleteInfo = (infoId) => {
+
+    alertify.confirm("<i class='fas fa-exclamation-circle text-danger'></i> Advertencia ", "¿Decea borrar la informacion del negocio ?.",
+      async function () {
+        let response = await new GetInfoByFetch(`${url.apiInfo}${infoId}`, 'DELETE').request();
+        alertify.success(response.success);
+
+        getListInfo();
+      },
+      function () {
+      });
+
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  document.querySelector("#InfoForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    let data = new FormData(event.currentTarget);
+
+    if (parseInt(data.get("idforedit")) === 0) {
+      editOsaveTable(
+        new URLSearchParams({
+          'empresa': data.get("empresa"),
+          'direccion': data.get("direccion"),
+          'telefono': data.get("telefono"),
+          'nit': data.get("nit"),
+          'nrc': data.get("nrc"),
+          'giro': data.get("giro"),
+          'sucursal': data.get("sucursal")
+        }),
+        method = 'POST',
+        link = url.apiInfo);
+
+    } else {
+      editOsaveTable(
+        new URLSearchParams({
+          'empresa': data.get("empresa"),
+          'direccion': data.get("direccion"),
+          'telefono': data.get("telefono"),
+          'nit': data.get("nit"),
+          'nrc': data.get("nrc"),
+          'giro': data.get("giro"),
+          'sucursal': data.get("sucursal")
+        }),
+        method = 'PUT',
+        link = `${url.apiInfo}${data.get('idforedit')}`);
+    }
+
+  });
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+  const editOsaveTable = async (data, method, link) => {
+
+    let response = await new GetInfoByFetch(`${link}`, method, data).request();
+
+    if (response.ok === false) {
+      alertify.alert("<i class='fas fa-exclamation-circle text-danger'></i> Error al enviar el formulario ",
+        "Recomendaciones:<br>Tamaño maximo de la imagen 5Mb<br>Formato : jpeg jpg png o gif!");
+    } else {
+      getListInfo();
+      alertify.success(response.success)
+      $("#idforedit").val(0);
+      $("#alert-edit").html(" ");
+      document.querySelector("#InfoForm").reset();
+
+    }
+  }
+  ////////////////////////////////////Editar//////////////////////////////////////////////////////////////////////
+  const editTable = async (infoId) => {
+    document.querySelector("#InfoForm").reset();
+
+    const response = await new GetInfoByFetch(`${url.apiInfo}findOne/${infoId}`).request();
+    
+
+    Object.entries(response).forEach(([key, value]) => {
+      $(`#${key}`).val(`${value}`);
+
+    });
+    $("#idforedit").val(infoId);
+    
+    $("#alert-edit").html(`<div class="alert alert-warning" role="alert">
+              <h5 class="alert-heading w-100">
+                Estado: Editando... 
+                <span  style="cursor: pointer;" onclick="cancelEdit()" class="text-primary float-right">
+                  Canelar edicion
+                  </span>
+                </h5> 
+            </div>
+        `);
+  }
+  const cancelEdit = () => {
+    $("#alert-edit").html(" ");
+    $("#idforedit").val(0);
+    document.querySelector("#InfoForm").reset();
+  }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+</html>
