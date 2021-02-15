@@ -100,8 +100,11 @@ router.get('/ticket/:TOKEN?/:ID', function (req, res, next) {
     try { 
 
         let ticket = await ticketVenta.findOne({
+
             where: {
+
                 ordenId: req.params.ID
+                
             },
             include:
             {

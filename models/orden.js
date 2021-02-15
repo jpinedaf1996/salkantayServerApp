@@ -48,8 +48,11 @@ module.exports = (sequelize, type) => { // Esta es una funcion sin nombre que es
             defaultValue: 0
         },
         tipo_orden: {
-            type: type.ENUM('M','L'),
+            type: type.ENUM('M','L','P'),
             defaultValue: 'M'
+        },
+        socket: {
+            type:type.STRING, 
         },
 
     }, { timestamps: false });

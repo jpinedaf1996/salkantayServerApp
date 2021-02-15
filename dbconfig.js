@@ -16,9 +16,9 @@ const InformacionModel = require('./models/informacion');
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('salkantaydb', 'admin', 'password', {
+const Conexion = new Sequelize('salkantaydb', 'root', 'catolica', {
     host: 'localhost',
-    dialect: 'mysql',
+    dialect: 'mariadb',
     dialectOptions: {
         timezone: 'America/El_Salvador',
     }

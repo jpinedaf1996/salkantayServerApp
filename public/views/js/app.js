@@ -1,14 +1,16 @@
+const IPV4 = 'http://192.168.0.3:3000';
 
 const url = {
-     apiuser: 'http://localhost:3000/apiv0.1/users/',
-     products: 'http://localhost:3000/apiv0.1/products/',
-     apicategory: 'http://localhost:3000/apiv0.1/category/',
-     apimesas: 'http://localhost:3000/apiv0.1/mesas/',
-     apiordenes: 'http://localhost:3000/apiv0.1/orden/',
-     apiordendetalle: 'http://localhost:3000/apiv0.1/ordendet/',
-     apiclientes: 'http://localhost:3000/apiv0.1/cliente',
-     apiinfo: 'http://localhost:3000/apiv0.1/info',
-     apipromo: 'http://localhost:3000/apiv0.1/promociones/' 
+     apiuser: IPV4 + '/apiv0.1/users/',
+     products: IPV4 + '/apiv0.1/products/',
+     apicategory: IPV4 + '/apiv0.1/category/',
+     apimesas: IPV4 + '/apiv0.1/mesas/',
+     apiordenes: IPV4 + '/apiv0.1/orden/',
+     apiordendetalle: IPV4 + '/apiv0.1/ordendet/',
+     apiclientes: IPV4 + '/apiv0.1/cliente',
+     apiinfo: IPV4 + '/apiv0.1/info',
+     apipromo: IPV4 + '/apiv0.1/promociones/',
+     apiMenu: IPV4 + '/apiv0.1/menu/'
 }
 
 function GetInfoByFetch(url, method = 'GET', body) {
@@ -35,25 +37,28 @@ const closeSesion = () => {
 const redirect = (id) => {
      switch (id) {
           case 'reportes':
-               window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
+               window.location.href = IPV4 + `/coffecode/admin/${id}`;
+               break;
+          case 'ordenes':
+               window.location.href = IPV4 + `/coffecode/admin/${id}`;
                break;
           case 'productos':
-               window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
+               window.location.href = IPV4 + `/coffecode/admin/${id}`;
                break;
           case 'clientes':
-               window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
+               window.location.href = IPV4 + `/coffecode/admin/${id}`;
                break;
           case 'ventas':
-               window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
+               window.location.href = IPV4 + `/coffecode/admin/${id}`;
                break;
           case 'config':
-               window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
+               window.location.href = IPV4 + `/coffecode/admin/${id}`;
                break;
           case 'info':
-               window.location.href = `http://localhost:3000/coffecode/admin/${id}`;
+               window.location.href = IPV4 + `/coffecode/admin/${id}`;
                break;
           default:
-               window.location.href = "http://localhost:3000/coffecode/admin/index";
+               window.location.href = IPV4 + "/coffecode/admin/index";
                break;
      }
 }
@@ -94,6 +99,3 @@ if (btnMenu) {
      };
 
 }
-
-
-

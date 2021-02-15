@@ -4,7 +4,7 @@
 const jwt = require('jwt-simple');
 const moment = require('moment');
 
-const fraseAcceso  = 'coffeandcode'; 
+const fraseAcceso  = 'coffeandcode';
 const createToken= (user) => {
     const payload = {
         usuarioId: user.usuarioId,

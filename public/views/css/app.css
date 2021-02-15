@@ -18,7 +18,7 @@ Index Css
     --hover-boder:var(--nav-bar);
     --bg-hover:rgba(59, 59, 59, 0.301);
     --body-color:#ffffff;
-    
+
 }
 
 body {
@@ -28,8 +28,24 @@ body {
     background-color: var(--body-color);
 }
 
+.orden-pending h4 {
+  margin-top: 25px;
+  color: white;
+
+}
+.orden-pending{
+    border-radius: 25px;
+    text-align: center;
+    border: 5px solid white;
+    height: 100%;
+}
+.desc-orden-cont{
+    height: 77%;
+    overflow: auto;
+    background-color: black;
+}
 .modal-header{
-    
+
     background-color: var(--nav-bar);
 }
 
@@ -37,7 +53,7 @@ body {
     padding: 0!important;
     margin: 1rem;
     cursor: cell;
-    border: 1px dotted var(--nav-bar) !important; 
+    border: 1px dotted var(--nav-bar) !important;
 }
 .oprtions i{
     color: #0f0f0f;
@@ -62,7 +78,7 @@ body {
     padding: 1%;
     height: 150px;
     margin: auto;
-    
+
 }
 .card-category {
     border:1px solid var(--nav-bar);
@@ -82,12 +98,12 @@ body {
 }
 
 .card-category:hover {
-    
+
     cursor: pointer;
     box-shadow: 5px 5px 8px var(--nav-bar);
 }
 .selected{
-    
+
     cursor: pointer;
     box-shadow: 5px 5px 8px var(--nav-bar);
 }
@@ -99,7 +115,7 @@ body {
 .buttom:hover {
     cursor: pointer;
     border: 8px solid white;
-    
+
 }
 
 .icon-center {

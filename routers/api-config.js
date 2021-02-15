@@ -15,6 +15,7 @@ const apiOrdenDetRouter = require('./api/ordendet');
 const apiPromoRouter = require('./api/promo');
 const apiReports = require('./api/reports');
 const apiInfo = require('./api/info');
+const menuRouter = require('./api/getMenu');
 
 /***
  * Se indica que debe escuchar todas las rutas.
@@ -30,6 +31,7 @@ router.use('/orden',middleware.validarToken ,apiOrdenRouter);
 router.use('/ordendet',middleware.validarToken ,apiOrdenDetRouter); 
 router.use('/promociones',middleware.validarToken ,apiPromoRouter); 
 router.use('/info',middleware.validarToken ,apiInfo); 
+router.use('/menu',menuRouter); 
 router.use('/reportes', apiReports);
 
 

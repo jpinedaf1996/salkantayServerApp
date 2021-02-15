@@ -47,7 +47,7 @@ router.delete('/', async (req, res) => {
     }
     if (errores > 0) {
         return res.status(422).json(
-            {   
+            {
                 cant: errores,
                 errores: 'Verifique que las categorias no tengan productos'
             }

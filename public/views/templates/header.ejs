@@ -1,7 +1,7 @@
-<!-- 
+<!--
     Autor Jesus pineda / "Otro autor"
     14/08/2020
-    Proposito de esta pagina: Este es el menu y la barra de navegacion del sitio 
+    Proposito de esta pagina: Este es el menu y la barra de navegacion del sitio
     Aqui se pueden modificar los enlaces a las paginas para gestionar el sistema
 -->
 <!-- Aqui se edita la parte del sidemenu incluye la parte de links CSS para los estilos  -->
@@ -9,7 +9,7 @@
 <html lang="es">
 
 <head>
-    
+
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/@fortawesome\fontawesome-free\css\all.css">
@@ -17,12 +17,15 @@
     <link rel="stylesheet" href="/node_modules/alertifyjs/build/css/themes/bootstrap.css">
     <link rel="stylesheet" href="/public/css/app.css">
     <link rel="shortcut icon" href="/previews/logo.jpg" />
-        
+
     <title>SALKANTAY</title>
-    <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
+
 </head>
 
 <body>
+  <audio id="play" src="/previews/ding.mp3">
+
+  </audio>
     <nav class="navbar nav-bar-color">
         <i style="font-size: 30px; cursor: pointer;" id="btnMenu" class="fas fa-bars text-white"></i>
         <div style="cursor: pointer;" onclick="closeSesion();" class="text-white">Cerrer sesion <i class="fas fa-door-open"></i> </div>
@@ -33,12 +36,12 @@
                 <div class="row">
                     <div class="col-md-12 tittle">
                         <a href="index.ejs">SALKANTAY</a>
-                    </div>               
+                    </div>
                     <div id="ventas" onclick="openNewWindow(this.id)" class="option col-md-12">
                         <i class="fas fa-money-bill-alt"></i>
                         <span>Ventas</span>
                     </div>
-                    <div onclick="openNewWindow(this.id)" class="option col-md-12">
+                    <div id="ordenes" onclick="openNewWindow(this.id)" class="option col-md-12">
                         <i class="fas fa-file-invoice-dollar"></i>
                         <span>&nbspOrdenes</span>
                     </div>
@@ -67,6 +70,6 @@
                 </div>
             </div>
             <div id="contentPage" class="mairginContent col-md-12 ">
-                
+
                 <!-- <img class="navbar-brand" src="../../image/logo.jpg" width="30px"> -->
                 <!-- No editar nada mas desde aqui eto se refleja en las demas paginas  -->

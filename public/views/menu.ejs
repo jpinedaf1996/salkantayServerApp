@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Digital</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/node_modules/@fortawesome\fontawesome-free\css\all.css">
+    <link rel="stylesheet" href="/node_modules/alertifyjs/build/css/alertify.min.css">
+    <link rel="stylesheet" href="/node_modules/alertifyjs/build/css/themes/bootstrap.css">
+    <script src="/public/js/app.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-light">
+
+        <div class="redes row float-riht">
+            <a class="navbar-brand" href="#">SALKANTAY </a>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-instagram"></i>
+        </div>
+        <div onclick="openCar()" class="">
+            <i class="fas fa-shopping-cart carshopicon"></i>&nbsp;$5.99
+        </div>
+    </nav>
+
+    <input type="hidden" id="mesaid" value="<%= mesa %>">
+    <h1> MESA :  <%= mesa %></h1>
+    <div class="main-class ">
+        <div class="main-content-category" style="width: 100%">
+            <div onclick="none()" class="name-category  bg-dark ">
+                Categoria &nbsp;&nbsp;<i class="fas fa-angle-down  bg-dark"></i>
+            </div>
+            <div onclick="none()" class="list-category  bg-dark d-none">
+                <div id="content-category" class="row  bg-dark">
+
+
+                </div>
+            </div>
+        </div>
+        <div class="container ">
+            <br>
+            <div id="container-productos" class="row  main-prod justify-content-center">
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="car-shop d-none">
+
+        <div onclick="openCar()" class="car-close">
+            <span>
+                <i class="far fa-times-circle"></i>
+            </span>
+        </div>
+
+        <div class="tittle">
+            <h5>ORDEN PENDIENTE</h>
+        </div>
+        <br>
+        <div class="main-product-to-orden">
+
+            <table class="table w-100">
+                <tr>
+                    <td style="vertical-align:middle; color:red">
+                        <i class="far fa-trash-alt"></i>
+                    </td>
+                    <td>
+                        CAFED
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td style="vertical-align:middle; color:red">
+                        <i class="far fa-trash-alt"></i>
+                    </td>
+                    <td>
+                        CAFED hhhhhhhh
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+        <div class="container">
+            <button style="height: 50px;margin: auto;" class="btn btn-success form-control ">
+                ENVIAR
+            </button>
+        </div>
+
+    </div>
+
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/alertifyjs/build/alertify.min.js"></script>
+    <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
+    <script src="/public/js/conection.js"></script>
+</body>
+
+<script>
+
+    $(() => {
+
+        getCategories();
+
+    });
+
+    const getCategories = async () => {
+        let response = await new GetInfoByFetch(url.apiMenu + "categorias").request();
+        const ct = document.getElementById('content-category');
+
+        ct.innerHTML = "";
+        response.map((category) => {
+            const categoria = `
+                <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="col-md-12 category bg-dark">
+                    ${category.categoria.toUpperCase()}
+                </div>
+            `;
+
+            ct.insertAdjacentHTML('beforeEnd', categoria);
+
+        })
+    };
+
+    const getProductsByCategory = async (id) => {
+
+        const content = document.getElementById('container-productos');
+        let response = await new GetInfoByFetch(`${url.apiMenu}productoporcategoria/${id}`).request();
+        content.innerHTML = "";
+        //HACE EL FOCUS AL HACER CLICK A UNA TARGETA DE CATEGORIAS
+        drawProduct(response, content);
+    }
+
+    const drawProduct = (data, ct) => {
+
+        data.map((productos) => {
+            let prodchar = JSON.stringify(productos.producto);
+            const products = `
+            <div class="col-md-3">
+                <div onclick='addProduct(${JSON.stringify(productos)})' class="card product text-dark animate__animated animate__bounce "
+                    style="width: 11rem; margin: auto; margin-bottom: 25px;">
+                    <img class="card-img-top" height="125px" src="${IPV4}/previews/${productos.imagen}" alt="Card image cap">
+                    <div class="card-body ">
+                        <center>
+                            <p class="card-text">
+                            <strong>${productos.producto.toUpperCase()}</strong><br>(${productos.desc})
+                            </p>
+                            <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio}</span></p>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        `;
+            ct.insertAdjacentHTML('beforeEnd', products);
+
+        });
+
+    }
+
+    function addProduct(productos) {
+
+      socket.emit('add-prod', {
+          producto: productos,
+          ordenId: localStorage.getItem('ordenId'),
+          socket: localStorage.getItem('socket')
+      });
+
+        //alert(localStorage.getItem('ordenId'))
+
+    }
+
+    function openCar() {
+        if ($(".car-shop").hasClass('d-none')) {
+
+            $(".car-shop").removeClass('d-none');
+
+        } else {
+            $(".car-shop").addClass('d-none');
+        }
+    }
+    function none() {
+
+        if ($(".list-category").hasClass('d-none')) {
+
+            $(".list-category").removeClass('d-none');
+
+        } else {
+            $(".list-category").addClass('d-none');
+        }
+    }
+</script>
+
+</html>
