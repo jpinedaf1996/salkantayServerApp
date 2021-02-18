@@ -11,7 +11,6 @@ const ticketventaModel = require('./models/ticketventa');
 const InformacionModel = require('./models/informacion');
 
 
-
 /**
  * se genera la Conexion de la DB
  *
@@ -54,7 +53,7 @@ ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
  * Se sincroniza con la base de datos
  *
  *
- */ 
+ */
 Conexion.sync({ force: false })
     .then(() => {
         console.log('Databases has been updated!!')
