@@ -188,6 +188,7 @@
     }
 
   });
+  
   ///////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
   const editOsaveTable = async (data, method, link) => {
@@ -236,7 +237,21 @@
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
+const editOsaveTable = async (data, method, link) => {
 
+let response = await new GetInfoByFetch(`${link}`, method, data).request();
+
+if (response.ok === false) {
+    alertify.alert("<i class='fas fa-exclamation-circle text-danger'></i> Error al enviar el formulario ",
+        "Error al enviar el formulario!");
+} else {
+    getListTable();
+    alertify.success(response.success);
+    document.querySelector("#formTable").reset();
+    $("#idforedit").val(0);
+    $("#alert-edit-info").html(" ");
+}
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>

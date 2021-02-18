@@ -8,7 +8,7 @@ const url = {
      apiordenes: IPV4 + '/apiv0.1/orden/',
      apiordendetalle: IPV4 + '/apiv0.1/ordendet/',
      apiclientes: IPV4 + '/apiv0.1/cliente',
-     apiinfo: IPV4 + '/apiv0.1/info',
+     apiInfo: IPV4 + '/apiv0.1/info',
      apipromo: IPV4 + '/apiv0.1/promociones/',
      apiMenu: IPV4 + '/apiv0.1/menu/'
 }

@@ -73,6 +73,7 @@ app.get('/menu/:ID', (req, res) => {
 
   Se ejecuta el servidor
 
+
 **/
 
 const server  = app.listen(3000, () => {
@@ -107,7 +108,7 @@ io.on('connection', function (socket) {
            'ordenId':  data.ordenId,
          });
 
-                  
+
          io.sockets.emit('update-detalle', data.ordenId );
          io.sockets.to(socket.id).emit('update-detalle', data.ordenId );
 
@@ -147,31 +148,6 @@ io.on('connection', function (socket) {
          return true
         // console.log("socket: "+ JSON.stringify(socketdb.socket));
 
-       } catch (e) {
-
-
-         console.log('error: ' + e);
-
-         return false
-       }
-
-
-  });
-  socket.on('close-orden', async function (data) {
-
-      /**
-        * Regresa una respuesta con el evento que se va a recivir al cliente orden
-       */
-       try {
-
-
-         await Orden.update({
-             'estado': '2'
-         }, { // funcion para actualizar
-             where: { ordenId: data.data }
-         });
-
-         return true
        } catch (e) {
 
 

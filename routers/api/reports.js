@@ -542,5 +542,108 @@ router.get('/repX/:TOKEN?/:FECHA1?/:FECHA2', function (req, res, next) {
         res.send(error.message)
     }
 });
+/////////////////////////////////////////REPORTE X CURDATE///////////////////////////////
+router.get('/repXDia/:TOKEN?', function (req, res, next) {
+    
 
+    const token = req.params.TOKEN; // Se almacena el token en una variable 
+
+    let payload = {
+        //Objeto basio 
+    };
+    /**
+     * Se valida en token con al funcion JWT.decode
+     */
+    try {
+
+        payload = jwt.decode(token,fraseAcceso);
+
+    }catch (error) {
+        
+        res.status(403).send({ error: 'El token es incorrecto' });
+        
+    }
+    if (payload.expireAt < moment().unix()) {
+
+        res.status(403).send({ error: 'El token expiro' });
+
+    }
+    
+    req.usuarioId =  payload.usuarioId;
+    //console.log(payload.usuarioId);
+    next();
+}, async function (req, res) {
+
+
+    try { 
+
+        //Apertura de turno 
+        const Apertura = await Conexion.query(`
+        SELECT MIN(ordenId) AS minimo FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+        
+        //Cierre de turno
+        const Cierre = await Conexion.query(`
+        SELECT MAX(ordenId) AS maximo FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+
+        //Ventas en efectivo
+        const VentEfectivo = await Conexion.query(`
+        SELECT SUM(total) AS ventasE FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+
+        //Ventas con tarjeta
+        const VentTarjeta = await Conexion.query(`
+        SELECT SUM(total) AS ventasT FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+
+        //Descuentos
+        const Descuentos = await Conexion.query(`
+        SELECT SUM(descuento) AS descuentoT FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+
+        //Total de tickets generados o ventas realizadas
+        const TickesGen = await Conexion.query(`
+        SELECT COUNT(ordenID) TicketT FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+
+        //Ventas Totales sin descuento
+        const VentasTot = await Conexion.query(`
+        SELECT SUM(total) AS TotalSin FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+
+        //Ventas Totales con Descuento
+        const VentasTotDes = await Conexion.query(`
+        SELECT SUM(total-descuento) AS TotalCon FROM ordens WHERE fecha=CURDATE()
+        `
+        , {type:QueryTypes.SELECT});
+
+        let reportexd={
+            Apertura,
+            Cierre,
+            VentEfectivo,
+            Descuentos,
+            VentasTot,
+            VentasTotDes,
+            TickesGen,
+            VentTarjeta
+        };
+
+        ////////////////////////////////////////////////////////
+        
+        res.render('repXDia',{reportexd})
+        r
+        
+    } catch (error) {
+    
+        res.send(error.message)
+    }
+});
 module.exports = router; 
