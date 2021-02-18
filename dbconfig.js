@@ -11,13 +11,14 @@ const ticketventaModel = require('./models/ticketventa');
 const InformacionModel = require('./models/informacion');
 
 
+
 /**
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('basefinal1', 'root', '2125', {
+const Conexion = new Sequelize('salkantaydb', 'admin', 'password', {
     host: 'localhost',
-    dialect: 'mariadb',
+    dialect: 'mysql',
     dialectOptions: {
         timezone: 'America/El_Salvador',
     }
@@ -30,7 +31,6 @@ const Conexion = new Sequelize('basefinal1', 'root', '2125', {
  */
 
 const Producto = ProdModel(Conexion, Sequelize);
-const T_informacion = ProdModel(Conexion, Sequelize);
 const Categoria = CateModel(Conexion, Sequelize);
 const Usuarios = UserModel(Conexion, Sequelize);
 const Mesa = MesaModel(Conexion, Sequelize);
