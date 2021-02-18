@@ -30,18 +30,7 @@ router.get('/ordenbymesa', async (req, res) => {
 });
 router.get('/pendientes', async (req, res) => {
     try {
-        // let getDetalle = await OrdenDet.findAll({
-        //     //attributes: ['ordenId'],
-        //     include: {
-        //         attributes: ['ordenId'],
-        //         model: Orden,
-        //         where: {
-        //             estado: '1',
-        //             tipo_orden: 'P'
-        //         } // estado del orden activa
-        //     },
-        //
-        // });
+
         let getOrden = await Orden.findAll({
             attributes: ['ordenId'],
             include: {
@@ -54,7 +43,6 @@ router.get('/pendientes', async (req, res) => {
         });
 
         let orden = JSON.parse(JSON.stringify(getOrden));
-        //let detalle = JSON.parse(JSON.stringify(getDetalle));
 
 
         res.json({orden});
@@ -110,10 +98,16 @@ router.put('/newOrden/:mesaId', async (req, res) => {
         let response = await Mesa.update({
             'estado': '1'
         }, { // funcion para actualizar
-            where: { mesaId: req.params.mesaId }
+            where: {
+              mesaId: req.params.mesaId
+            }
         });
-        //SE CREA UN NUEVA ORDEN Y SE LE AÑADE LA MESA
-        //QUE QUE SE LE CAMBIO EL ESTADOD
+
+        /**
+        *SE CREA UN NUEVA ORDEN Y SE LE AÑADE LA MESA
+        *QUE QUE SE LE CAMBIO EL ESTADOD
+        **/
+
         if (response) {
             await Orden.create({
                 'mesaId': req.params.mesaId
@@ -177,6 +171,8 @@ router.put('/cancelorden/:ordenId', async (req, res) => {
 
 });
 
+
+
 router.put('/finalizarorden/:ordenId', async (req, res) => {
     //estas rutas reciben parametros
     try {
@@ -185,11 +181,11 @@ router.put('/finalizarorden/:ordenId', async (req, res) => {
                 if (parseFloat(req.body.efectivo) < 0 || (parseFloat(req.body.efectivo) < parseFloat(req.body.total))) {
                     return res.status(422).send({ error: 'Cantidad no valida!' });
                 }
-                /***
-                                 *
-                                 * Se cierra la orden
-                                 *
-                                 */
+                /**
+                 *
+                 * Se cierra la orden
+                 *
+                 */
                 await Orden.update({
                     'estado': req.body.estado, // El estado cero de una orden es guardada con exito aparece en el reporte
                     'tipo_pago': req.body.tipo_pago, // E es efectivo y T es tarrjeta

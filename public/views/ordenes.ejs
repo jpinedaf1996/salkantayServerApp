@@ -9,15 +9,14 @@ aqui se gestionanran los diferente produstos
 
     <!-- Modal -->
 
-    <div class="container">
-
-
-
         <br>
-        <div  id="content-orden-pending" class="row justify-content-center">
+
+        <div class="container">
+          <div  id="content-orden-pending" class="row justify-content-center">
 
 
 
+          </div>
         </div>
 
         <%- include('./templates/scripts.ejs'); -%>
@@ -27,88 +26,173 @@ aqui se gestionanran los diferente produstos
                 $(() => {
 
                     drawOrden();
-                    // //drawListsProduct();
 
                 });
-
 
                 socket.on('update-orden', function (data) {
 
                   drawOrden();
 
                 });
+                socket.on('finished', function (data) {
 
-                const drawOrden = async () => {
+                  if(data.success === 'ok'){
+                    alertify.confirm('Informacion', data.data, function(){
+                      window.location.replace(IPV4+"/coffecode/admin/ventas");
+                    }
+                    , function(){ alertify.error('Cancelado')});
+                  }else {
 
+                    alertify.alert('Informacion', data.data);
+
+                  }
+
+
+                });
+
+                socket.on('delete-response', function (data) {
+
+                  getDetallebySocket(parseInt(data.id));
+
+                });
+
+                socket.on('update-detalle', function (data) {
+
+                   getDetallebySocket(parseInt(data));
+
+                });
+
+                  const drawOrden = async () => {
                     const response = await new GetInfoByFetch(url.apiordenes + "pendientes").request();
-                    //detalle  = response.detalle;
-
                     const ct = document.getElementById('content-orden-pending');
-                    console.log(response.orden.length);
 
-                    ct.innerHTML = "";
+                    ct.innerHTML = " ";
 
                     if(response.orden.length === 0 ){
                       const products = `
-
                       <div style='text-align: center;' class="w-100">
                         <h1 > <strong> No hay ordenes desde mesa </strong> </h1>
                       </div>
-
                       `;
                       ct.insertAdjacentHTML('beforeEnd', products);
                       return false;
                     }
-
                     response.orden.map((orden) => {
 
-                        const products = `
-                        <div  class="col-md-3 bg-primary orden-pending w-100" >
+                        let products = `
+                        <div  class="col-md-4 bg-primary orden-pending w-100 animate__animated animate__bounce" >
                           <h4 ><strong>N.${orden.ordenId} - ${orden.mesa.num_mesa} </strong></h4>
-                          <div class="container" id='${orden.ordenId}'>
+                          <h4 ><strong id="sumatoria${orden.ordenId}"></strong></h4>
+                          <div style='height:275px;overflow:auto;'  class="container d-none" id='${orden.ordenId}'>
 
                           </div>
                           <hr >
                           <div  class="container">
 
-                            <button type="button" class="btn btn-success form-control form-group"  name="button"> COBRAR </button><br>
-                            <button onclick="getDetalle(${orden.ordenId}) " type="button" class="btn btn-info form-control form-group"  name="button"> Ver orden</button><br>
+                            <button onclick="saveOrden(${orden.ordenId},${orden.mesa.mesaId}) " type="button" class="btn btn-success form-control form-group"  name="button"> COBRAR </button><br>
+                            <button  id='btndetalle' onclick="getDetalle(${orden.ordenId}) " type="button" class="btn btn-info form-control form-group"  name="button"> Ver orden</button><br>
                             <button onclick="closeOrden(${orden.ordenId}) " type="button" class="btn btn-danger form-control form-group"  name="button"> Cancelar </button>
-                            <br>
-                            <h4>Hora: 5:00 PM</h4>
-                          </div>
-                          <br>
 
+                          </div>
+                          <hr>
                         </div>
                     `;
 
                         ct.insertAdjacentHTML('beforeEnd', products);
 
-                        //getDetalle(orden.ordenId)
                     });
 
                   };
+                  function remove(detId, ordenId) {
+
+                    alertify.prompt( 'Eliminar producto de la orden', 'Escribir algun mensaje al cliente' , ''
+                     , function(evt, value) {
+
+                       socket.emit('delete-product', {detId, ordenId, value});
+
+                       alertify.success('El cliente fue notificado! ')
+
+                     }
+                     , function() { alertify.error('Cancelado') });
+
+                  }
+
 
                   async function getDetalle(id){
 
-                    const ct = document.getElementById(id);
-                    const response = await new GetInfoByFetch(url.apiordenes + "productos-en-orden-pendiente/"+ id).request();
-                    //console.log(response); debugger;
+                    let ct = document.getElementById(id);
+
+                    if(ct.classList.contains('d-none')){
+
+                      drawDatailOrden(ct,id);
+
+                      ct.classList.remove('d-none');
+
+                    }else{
+
+                      ct.classList.add('d-none');
+
+                    }
+
+                  }
+                  async function getDetallebySocket(id){
+                    let ct = document.getElementById(id);
+
+                    ct.classList.remove('d-none');
+
+                    drawDatailOrden(ct,id);
+
+
+                  }
+
+                  async function drawDatailOrden(ct,id) {
+
+                    //let ct = document.getElementById(id);
+                    const sumatoria = document.getElementById("sumatoria"+id);
+                    const response = await new GetInfoByFetch(url.apiMenu + "detalles-orden/"+ id).request();
+                    ct.innerHTML = "";
+
+                    let total = 0;
+
                     response.map((detalle) => {
+                      total = total + detalle.precio;
 
                         const products = `
-                          <p ><strong>N${detalle.nombreProducto} </strong></p>
+                        <table  class="table w-100 text-dark bg-white">
+                          <tr>
+                            <td onclick="remove(${detalle.ordendetId},${detalle.ordenId})" style='text-align: left; cursor:pointer'>
+                              Borrar
+                            </td>
 
-                          `;
+                            <th style='text-align: right;' >
+                              <strong>${detalle.nombreProducto} </strong>
+                            </th>
+
+                            <th style='text-align: right' >
+                              <strong>$${detalle.precio} </strong>
+                            </th>
+                          </tr>
+                        </table>`;
 
                           if(detalle.ordenId === id){
-
                             ct.insertAdjacentHTML('beforeEnd', products);
-
+                            sumatoria.innerHTML= '$'+parseFloat(total).toFixed(2);
                           }
-
                     });
-                    console.log(response);
+                  }
+                  async function saveOrden (ordenId,mesaId){
+
+                    alertify.confirm('Informacion', '¿Esta seguro de finalizar la orden?', function(){
+                      socket.emit('save-orden', {
+
+                        ordenId,
+                        mesaId,
+                       });
+                    }
+                    , function(){ alertify.error('Cancelado')});
+
+
+
 
                   }
 
@@ -122,10 +206,12 @@ aqui se gestionanran los diferente produstos
 
                        });
 
-                       drawOrden();
+                       window.location.replace(IPV4+"/coffecode/admin/ordenes");
+
                     }
                     , function(){ alertify.error('Cancelado')});
 
                   }
+
 
             </script>

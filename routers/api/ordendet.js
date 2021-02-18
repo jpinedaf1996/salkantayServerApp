@@ -3,7 +3,7 @@ const { OrdenDet, Producto, Orden } = require('../../dbconfig');
 //Se crean las rutas para una API REST con los diferente metodos
 
 router.get('/', async (req, res) => {
-    
+
     let ordendet = await OrdenDet.findAll();
     res.json(ordendet);
 });
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
                     });
 
                 res.json({ success: "Actualizado con exito" });
-                
+
             } catch (error) {
 
                 res.json(error.message);
@@ -62,6 +62,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/ordendetbyproducto/:id_orden', async (req, res) => {
+
     try {
         let ordendetbyproducto = await OrdenDet.findAll({
             where: {
@@ -74,8 +75,9 @@ router.get('/ordendetbyproducto/:id_orden', async (req, res) => {
 
             }
         });
-        //console.log(ordendetbyproducto);
+
         res.json(ordendetbyproducto);
+        
     } catch (error) {
         console.log("Error:" + error.message)
     }
@@ -86,7 +88,7 @@ router.get('/ordendetbyproducto/:id_orden', async (req, res) => {
 router.put('/:ordendetId', async (req, res) => {
 
     try {
-        
+
         var detalle = await OrdenDet.findOne({
             where: {
                 ordendetId: req.params.ordendetId
@@ -133,28 +135,6 @@ router.put('/:ordendetId', async (req, res) => {
 
     }
 
-
-    // if(parseFloat(req.body.precio) > 0){
-    //     await OrdenDet.update(
-    //         {
-    //             precio: parseFloat(req.body.precio),
-    //             nombreProductoucto: req.body.nombreProductoucto,
-    //             unidades: req.body.unidades
-    //         },
-    //         {
-    //             where: { ordendetId: req.params.ordendetId } // funcion para actualizar
-    //         });
-    // }else{
-    //     await OrdenDet.update(
-    //         {
-    //             unidades: req.body.unidades
-    //         },
-    //         {
-    //             where: { ordendetId: req.params.ordendetId } // funcion para actualizar
-    //         });
-    // }
-
-    // res.json({ success: 'Se ha actualizado un registro.' });
 });
 
 router.delete('/:ordendetId', async (req, res) => { //estas rutas reciben parametros
