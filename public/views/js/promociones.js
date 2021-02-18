@@ -34,6 +34,7 @@ const drawTablePromo = async () => {
 
     }
 }
+
 document.querySelector("#promoForm").addEventListener("submit", async (event) => {
     event.preventDefault();
 

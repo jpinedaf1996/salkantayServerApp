@@ -176,7 +176,7 @@
     }
     //FUNCION PARA TRAER LAS LISTA DE CATEGORIAS EN EL FOMRULARIO DE AGREGAR
     document.getElementById("btn-newProduct").addEventListener('click', async () => {
-        document.querySelector('#preview').setAttribute('src', "http://localhost:3000/previews/logo.jpg");
+        document.querySelector('#preview').setAttribute('src', IPV4+"/previews/logo.jpg");
         document.querySelector("#formProducto").reset();
         $("#idforedit").val(0)
         fieldInputCategory();
@@ -292,7 +292,7 @@
             response.map((productos) => {
                 const products = `
             <div id="productCard" class="card product text-dark animate__animated animate__bounce" style="width: 11rem;">
-                <img onclick="editProduct(${productos.productoId})"  class="card-img-top" height="125px" src="http://localhost:3000/previews/${productos.imagen}" alt="Card image cap">
+                <img onclick="editProduct(${productos.productoId})"  class="card-img-top" height="125px" src="${IPV4}/previews/${productos.imagen}" alt="Card image cap">
                 <div class="card-body" onclick="editProduct(${productos.productoId})" >
                     <p class="card-text"><strong>${productos.producto.toUpperCase()}(${productos.desc})</strong></p>
                     <p class="card-text"><strong>$${productos.precio}</strong></p>

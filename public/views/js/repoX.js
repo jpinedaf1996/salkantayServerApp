@@ -9,7 +9,7 @@
 }
 
 function makePdf51() {
-    window.open("http://localhost:3000/apiv0.1/reportes/repX/"+sessionStorage.getItem("token"), 
+    window.open("http://localhost:3000/apiv0.1/reportes/repXDia/"+sessionStorage.getItem("token"), 
     "PRECUENTA", 
     "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
 }

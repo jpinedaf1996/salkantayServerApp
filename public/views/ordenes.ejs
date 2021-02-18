@@ -1,0 +1,131 @@
+<%- include('./templates/header'); -%>
+    <!--
+Autor Jesus pineda / "Otro autor"
+14/08/2020
+Proposito de esta pagina: Esta es la pagina de productos
+aqui se gestionanran los diferente produstos
+-->
+    <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
+
+    <!-- Modal -->
+
+    <div class="container">
+
+
+
+        <br>
+        <div  id="content-orden-pending" class="row justify-content-center">
+
+
+
+        </div>
+
+        <%- include('./templates/scripts.ejs'); -%>
+
+            <script>
+
+                $(() => {
+
+                    drawOrden();
+                    // //drawListsProduct();
+
+                });
+
+
+                socket.on('update-orden', function (data) {
+
+                  drawOrden();
+
+                });
+
+                const drawOrden = async () => {
+
+                    const response = await new GetInfoByFetch(url.apiordenes + "pendientes").request();
+                    //detalle  = response.detalle;
+
+                    const ct = document.getElementById('content-orden-pending');
+                    console.log(response.orden.length);
+
+                    ct.innerHTML = "";
+
+                    if(response.orden.length === 0 ){
+                      const products = `
+
+                      <div style='text-align: center;' class="w-100">
+                        <h1 > <strong> No hay ordenes desde mesa </strong> </h1>
+                      </div>
+
+                      `;
+                      ct.insertAdjacentHTML('beforeEnd', products);
+                      return false;
+                    }
+
+                    response.orden.map((orden) => {
+
+                        const products = `
+                        <div  class="col-md-3 bg-primary orden-pending w-100" >
+                          <h4 ><strong>N.${orden.ordenId} - ${orden.mesa.num_mesa} </strong></h4>
+                          <div class="container" id='${orden.ordenId}'>
+
+                          </div>
+                          <hr >
+                          <div  class="container">
+
+                            <button type="button" class="btn btn-success form-control form-group"  name="button"> COBRAR </button><br>
+                            <button onclick="getDetalle(${orden.ordenId}) " type="button" class="btn btn-info form-control form-group"  name="button"> Ver orden</button><br>
+                            <button onclick="closeOrden(${orden.ordenId}) " type="button" class="btn btn-danger form-control form-group"  name="button"> Cancelar </button>
+                            <br>
+                            <h4>Hora: 5:00 PM</h4>
+                          </div>
+                          <br>
+
+                        </div>
+                    `;
+
+                        ct.insertAdjacentHTML('beforeEnd', products);
+
+                        //getDetalle(orden.ordenId)
+                    });
+
+                  };
+
+                  async function getDetalle(id){
+
+                    const ct = document.getElementById(id);
+                    const response = await new GetInfoByFetch(url.apiordenes + "productos-en-orden-pendiente/"+ id).request();
+                    //console.log(response); debugger;
+                    response.map((detalle) => {
+
+                        const products = `
+                          <p ><strong>N${detalle.nombreProducto} </strong></p>
+
+                          `;
+
+                          if(detalle.ordenId === id){
+
+                            ct.insertAdjacentHTML('beforeEnd', products);
+
+                          }
+
+                    });
+                    console.log(response);
+
+                  }
+
+
+                  function closeOrden(ordenId) {
+
+                    alertify.confirm('Cancelar', '¿Decea cancelar la orden?', function(){
+                      socket.emit('close-orden', {
+
+                        data: ordenId
+
+                       });
+
+                       drawOrden();
+                    }
+                    , function(){ alertify.error('Cancelado')});
+
+                  }
+
+            </script>

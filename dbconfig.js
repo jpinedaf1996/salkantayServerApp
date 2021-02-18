@@ -11,12 +11,11 @@ const ticketventaModel = require('./models/ticketventa');
 const InformacionModel = require('./models/informacion');
 
 
-
 /**
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('pruebadb', 'root', '2125', {
+const Conexion = new Sequelize('basefinal1', 'root', '2125', {
     host: 'localhost',
     dialect: 'mariadb',
     dialectOptions: {
@@ -31,6 +30,7 @@ const Conexion = new Sequelize('pruebadb', 'root', '2125', {
  */
 
 const Producto = ProdModel(Conexion, Sequelize);
+const T_informacion = ProdModel(Conexion, Sequelize);
 const Categoria = CateModel(Conexion, Sequelize);
 const Usuarios = UserModel(Conexion, Sequelize);
 const Mesa = MesaModel(Conexion, Sequelize);

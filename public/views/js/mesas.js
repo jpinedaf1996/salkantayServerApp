@@ -34,6 +34,7 @@ const DeleteTable = (tableId) => {
         },
         function () { });
 }
+
 document.querySelector("#formTable").addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -52,7 +53,7 @@ document.querySelector("#formTable").addEventListener("submit", async (event) =>
         }), method = 'PUT', link = `${url.apimesas}${data.get('idforedit')}`);
     }
 });
-
+//////////////////////////////////////////////////////////////////////////
 const editOsaveTable = async (data, method, link) => {
 
     let response = await new GetInfoByFetch(`${link}`, method, data).request();

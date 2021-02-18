@@ -11,6 +11,9 @@ $(() => {
     //allProducts();
     getTableOrden();
     getCategories();
+
+
+    
 });
 
 let listProductsInOrden = null;
@@ -311,7 +314,7 @@ const filterItems = query => {
     ).map(productos => {
         const products = `
             <div onClick='saveProductToOrden(${productos.productoId},${productos.precio},${JSON.stringify(productos.producto + '(' + productos.desc + ')')});' id="productCard" class="card product text-dark animate__animated animate__bounce" style="width: 11rem;">
-                <img   class="card-img-top" height="125px" src="http://localhost:3000/previews/${productos.imagen}" alt="Card image cap">
+                <img   class="card-img-top" height="125px" src="${IPV4}/previews/${productos.imagen}" alt="Card image cap">
                 <div  class="card-body"  >
                     <p class="card-text">
                     <strong>${productos.producto.toUpperCase()}</strong><br>
@@ -329,7 +332,7 @@ const drawProduct = (data, ct) => {
     data.map((productos) => {
         const products = `
             <div onClick='saveProductToOrden(${productos.productoId},${productos.precio},${JSON.stringify(productos.producto + '(' + productos.desc + ')')});' id="productCard" class="card product text-dark animate__animated animate__bounce" style="width: 11rem;">
-                <img   class="card-img-top" height="125px" src="http://localhost:3000/previews/${productos.imagen}" alt="Card image cap">
+                <img   class="card-img-top" height="125px" src="${IPV4}/previews/${productos.imagen}" alt="Card image cap">
                 <div  class="card-body"  >
                     <p class="card-text">
                     <strong>${productos.producto.toUpperCase()}</strong><br>
@@ -419,7 +422,7 @@ const preBill = async () => {
     //console.log(await )
     if (ordenId != 0) {
 
-        window.open("http://localhost:3000/apiv0.1/reportes/precuenta/" + sessionStorage.getItem("token") + "/" + ordenId,
+        window.open(IPV4+"/apiv0.1/reportes/precuenta/" + sessionStorage.getItem("token") + "/" + ordenId,
             "PRECUENTA",
             "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
         //console.log(response.success);
@@ -579,7 +582,7 @@ const finalTicket = () => {
     //console.log(await )
     if (ordenId != 0) {
 
-        window.open("http://localhost:3000/apiv0.1/reportes/ticket/" + sessionStorage.getItem("token") + "/" + ordenId,
+        window.open(IPV4+"/apiv0.1/reportes/ticket/" + sessionStorage.getItem("token") + "/" + ordenId,
             "PRECUENTA",
             "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
         //console.log(response.success);
