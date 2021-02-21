@@ -17,7 +17,7 @@
         }
     </SCRIPT>
 </head>
-<% const DetList = JSON.parse(VentaDet) %>
+<% const GenList = JSON.parse(VentaGen) %>
 <!--Aqui va el estilo-->
 <style id="CustomT">
     #MasTable {
@@ -45,28 +45,34 @@
     </style>
 <body onload="imprimir();">
 
-                    <center><h3 class="text-dark text-center">DETALLE DE VENTAS</h3></center>
+                    <center><h3 class="text-dark text-center">VENTAS GENERALES</h3></center>
                     <table id="MasTable" class="borderless table table-responsive-lg text-dark text-center">
                         <thead class="thead-dark">
                             <tr>
-                                <th><strong>Producto</strong></th>
+                                <th><strong>N# Orden</strong></th>
                                 <th><strong>Mesa</strong></th>
-                                <th><strong>Cantidad</strong></th>
-                                <th><strong>Precio</strong></th>
+                                <th><strong>Tipo de orden</strong></th>
+                                <th><strong>Tipo de pago</strong></th>
+                                <th><strong>Descuento</strong></th>
+                                <th><strong>Total</strong></th>
+                                <th><strong>Cambio</strong></th>
                                 <th><strong>Fecha</strong></th>
                                 <th><strong>Hora</strong></th>
                                 
                             </tr>
                         </thead>
                         <tbody>
-                            <% DetList.forEach(function(detalle){ %>
+                            <% GenList.forEach(function(general){ %>
                             <tr >
-                                <td><%= detalle.Producto %></td>
-                                <td><%= detalle.Mesa %></td>
-                                <td>$<%= detalle.Cantidad %></td>
-                                <td><%= detalle.Precio %></td>
-                                <td><%= detalle.Fecha %></td>
-                                <td>$<%= detalle.Hora %></td>
+                                <td>#<%= general.ordenId %></td>
+                                <td>#<%= general.mesaId %></td>
+                                <td><%= general.tipo_orden %></td>
+                                <td><%= general.tipo_pago %></td>
+                                <td>$<%= general.descuento %></td>
+                                <td>$<%= general.total %></td>
+                                <td>$<%= general.cambio %></td>
+                                <td><%= general.fecha %></td>
+                                <td><%= general.hora %></td>
                                      
                             </tr>
                             <% }); %>

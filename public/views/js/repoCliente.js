@@ -1,7 +1,7 @@
  // FUNCIONES PARA VISUALIZAR CLIENTES
  const getListTable = async () => {
-    let response = await new GetInfoByFetch(url.apiclientes).request();  
-    
+    let response = await new GetInfoByFetch(url.apiclientes).request();
+
     document.getElementById('container-list-table').innerHTML = " ";
     if (response.length === 0) {
 
@@ -14,7 +14,7 @@
                     <td>#${clientes.clienteId}</td>
                     <td>${clientes.nombre}</td>
                     <td>${clientes.telefono}</td>
-                    <td>${clientes.nit}</td>     
+                    <td>${clientes.nit}</td>
                 </tr>
             `;
         document.getElementById('container-list-table').insertAdjacentHTML('beforeEnd', table);
@@ -45,9 +45,9 @@ function retornarHora()
   var fecha
   fecha=new Date();
   var cadena=fecha.getHours()+':'+fecha.getMinutes()+':'+fecha.getSeconds();
-  return cadena; 
+  return cadena;
 }
 
-document.write('La fecha de hoy es:'+retornarFecha());
-document.write('<br>');
-document.write('La hora es:'+retornarHora());
+// document.write('La fecha de hoy es:'+retornarFecha());
+// document.write('<br>');
+// document.write('La hora es:'+retornarHora());

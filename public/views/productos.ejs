@@ -1,9 +1,9 @@
 <%- include('./templates/header'); -%>
-<!-- 
+<!--
                 Autor Jesus pineda / "Otro autor"
                 13/08/2020
-                Proposito de esta pagina: Esta es la pagina de productos 
-                aqui se gestionanran los diferente produstos 
+                Proposito de esta pagina: Esta es la pagina de productos
+                aqui se gestionanran los diferente produstos
               -->
 <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
 
@@ -121,12 +121,10 @@
 <div class="main-container-list">
     <div class="text-white row justify-content-center">
         <div style="margin: auto;">
-            <button style="margin: 10px;" class="btn btn-lg btn-info ">Combos <i class="fas fa-plus"></i></button>
+            <!-- <button style="margin: 10px;" class="btn btn-lg btn-info ">Combos <i class="fas fa-plus"></i></button> -->
             <button id="btn-newCategory" style="margin: 10px;" class="btn btn-lg btn-danger"><i
                 class="fas fa-cog"></i> Cateorias</button>
-            <button id="btn-newProduct" style="margin: 10px;" class="btn btn-lg btn-warning"></i>
-
-                Productos <i class="fas fa-plus"></i></button>
+            <button id="btn-newProduct" style="margin: 10px;" class="btn btn-lg btn-warning"> Productos <i class="fas fa-plus"></i></button>
         </div>
     </div>
     <!-- categorias -->
@@ -151,12 +149,12 @@
     const getListCategory = async () => {
         let response = await new GetInfoByFetch(url.apicategory).request();
         document.getElementById('container-list').innerHTML = " ";
-    
+
         response.map((category) => {
             const categoria = `
             <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="text-warning  col-sm-2 card-category border border-warning">
                 <p class="text-category" >${category.categoria.toUpperCase()}</p>
-                
+
             </div>`;
             document.getElementById('container-list').insertAdjacentHTML('beforeEnd', categoria);
 
@@ -240,7 +238,7 @@
             getProductsByCategory(data.get("categoriaId"));
         }
     }
-    //FUNCION PARA GUARDAR O EDITAR PRODUCTOS 
+    //FUNCION PARA GUARDAR O EDITAR PRODUCTOS
 
     document.querySelector("#formProducto").addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -254,7 +252,7 @@
         }
     });
 
-    //FUNCION PARA HACER PREVIEW DE LA IMAGEN EN EL FORMULARRIO 
+    //FUNCION PARA HACER PREVIEW DE LA IMAGEN EN EL FORMULARRIO
     const renderImage = (formData) => {
         const selectFile = formData.get('image');
         const preview = URL.createObjectURL(selectFile);
@@ -299,7 +297,7 @@
                 </div>
                 <button id="btn-delete" class="btn-danger form-control" onclick="DeleteProduct(${productos.productoId},${id})"><i
                     class="fas fa-trash"></i></button>
-            </div>               
+            </div>
                 `;
                 content.insertAdjacentHTML('beforeEnd', products);
 
@@ -313,9 +311,9 @@
 </script>
 <script>
     /*
-        
-        Funciones para categorias 
-    
+
+        Funciones para categorias
+
     */
     function getCheckBoxChecked() {
         let form = document.querySelector("#formWithCheck");
@@ -328,7 +326,7 @@
         }
         return listResult;
     }
-    
+
     document.querySelector("#formcategory").addEventListener("submit", async (event) => {
         event.preventDefault();
 
@@ -394,7 +392,7 @@
                     <div class="alert alert-info" role="alert">
                         No se pudieron borrar ${response.cant} registros<br>
                         ${response.errores}
-                    </div>               
+                    </div>
                 `;
             content.innerHTML = alert;
         }

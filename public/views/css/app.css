@@ -81,14 +81,16 @@ body {
 
 }
 .card-category {
+    word-wrap: break-word;
     border:1px solid var(--nav-bar);
     text-align: center;
-    margin: 1rem;
+    margin-top:20px;
     border-radius: 10px;
     height: 75px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width:100%
     /* border: solid 3px rgb(250, 236, 43)!important; */
 }
 

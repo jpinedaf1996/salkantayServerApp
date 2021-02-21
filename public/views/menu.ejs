@@ -17,14 +17,20 @@
 <body>
     <nav class="navbar navbar-light">
 
-        <div class="redes row float-riht">
-            <a class="navbar-brand" href="#">SALKANTAY </a>
+        <div class="redes row float-riht" >
+            <a class="navbar-brand" href="#"> SALKANTAY </a>
             <i class="fab fa-facebook"></i>
             <i class="fab fa-instagram"></i>
         </div>
-        <div onclick="openCar()" class="">
-            <i class="fas fa-shopping-cart carshopicon"></i>&nbsp;$5.99
+
+        <div onclick="openCar()" >
+
+            <div class="center">
+              <i  class="fas center fa-shopping-cart carshopicon animate__animated animate__bounce"></i>&nbsp;$<span  id="total">0.00</span>
+            </div>
+
         </div>
+
     </nav>
 
     <input type="hidden" id="mesaid" value="<%= mesa %>">
@@ -65,33 +71,17 @@
         <br>
         <div class="main-product-to-orden">
 
-            <table class="table w-100">
-                <tr>
-                    <td style="vertical-align:middle; color:red">
-                        <i class="far fa-trash-alt"></i>
-                    </td>
-                    <td>
-                        CAFED
-                    </td>
+            <table id="container-detalle-orden" class="table w-100">
 
 
-                </tr>
-                <tr>
-                    <td style="vertical-align:middle; color:red">
-                        <i class="far fa-trash-alt"></i>
-                    </td>
-                    <td>
-                        CAFED hhhhhhhh
-                    </td>
 
-                </tr>
             </table>
         </div>
-        <div class="container">
+        <!-- <div class="container">
             <button style="height: 50px;margin: auto;" class="btn btn-success form-control ">
                 ENVIAR
             </button>
-        </div>
+        </div> -->
 
     </div>
 
@@ -104,13 +94,34 @@
 
 <script>
 
-    $(() => {
+    $( async () => {
 
         getCategories();
 
+        if(localStorage.getItem('ordenId')!=null){
+          getTotal();
+        }
+
     });
 
+    socket.on('update-detalle', function (data) {
+
+       getTotal();
+
+    });
+
+    async function getTotal() {
+
+      let response = await new GetInfoByFetch(`${url.apiMenu}detalles-orden-total/${localStorage.getItem('ordenId')}`).request();
+      const sumatoria = document.getElementById('total');
+
+      sumatoria.innerHTML= "";
+      sumatoria.innerHTML= parseFloat(response).toFixed(2);
+
+    }
+
     const getCategories = async () => {
+
         let response = await new GetInfoByFetch(url.apiMenu + "categorias").request();
         const ct = document.getElementById('content-category');
 
@@ -139,9 +150,9 @@
     const drawProduct = (data, ct) => {
 
         data.map((productos) => {
-            let prodchar = JSON.stringify(productos.producto);
+
             const products = `
-            <div class="col-md-3">
+            <div class="col-md-3 ">
                 <div onclick='addProduct(${JSON.stringify(productos)})' class="card product text-dark animate__animated animate__bounce "
                     style="width: 11rem; margin: auto; margin-bottom: 25px;">
                     <img class="card-img-top" height="125px" src="${IPV4}/previews/${productos.imagen}" alt="Card image cap">
@@ -162,27 +173,100 @@
 
     }
 
-    function addProduct(productos) {
+     function addProduct(productos) {
 
-      socket.emit('add-prod', {
-          producto: productos,
-          ordenId: localStorage.getItem('ordenId'),
-          socket: localStorage.getItem('socket')
-      });
+      if( localStorage.getItem('ordenId') === null ){
+
+        alertify.alert('No hay una orden vigente! La orden fue finalizada');
+
+      }else{
+
+        socket.emit('add-prod', {
+            producto: productos,
+            ordenId: localStorage.getItem('ordenId'),
+            socket: localStorage.getItem('socket')
+        });
 
         //alert(localStorage.getItem('ordenId'))
 
     }
+  }
 
-    function openCar() {
+    async function openCar() {
+
+      //  const ct = document.getElementById('container-detalle-orden');
+
         if ($(".car-shop").hasClass('d-none')) {
 
+            drawDatailOrden();
             $(".car-shop").removeClass('d-none');
 
         } else {
+
             $(".car-shop").addClass('d-none');
+
+
         }
     }
+
+    async function drawDatailOrden(){
+      let total = 0;
+      const ct = document.getElementById('container-detalle-orden');
+      const CTtotal = document.getElementById('total');
+      ct.innerHTML=" ";
+      CTtotal.innerHTML=" ";
+
+      if( localStorage.getItem('ordenId') != null ){
+        let response = await new GetInfoByFetch(`${url.apiMenu}detalles-orden/${localStorage.getItem('ordenId')}`).request();
+        console.log(response);
+
+        response.map((detalleMenu) => {
+
+            total = parseFloat(parseFloat(total) + parseFloat(detalleMenu.precio));
+
+            let menu = `
+                        <tr>
+                            <td>
+
+                                $${ parseFloat(detalleMenu.precio).toFixed(2) }
+
+                            </td>
+                            <td>
+
+                                ${ detalleMenu.nombreProducto }
+
+                            </td>
+                            <td onclick="remove(${detalleMenu.ordendetId},${detalleMenu.ordenId});"  style="vertical-align:middle; color:red">
+                                <i class="far fa-trash-alt trash"></i>
+                            </td>
+                        </tr>
+                    `;
+
+            ct.insertAdjacentHTML('beforeEnd', menu);
+
+        });
+
+        CTtotal.insertAdjacentHTML('beforeEnd', parseFloat(total).toFixed(2));
+
+      }
+    }
+    function remove(detId,ordenId) {
+
+
+      socket.emit('delete-product', {detId, ordenId});
+
+
+    }
+
+    socket.on('response-delete-to-client', function (data) {
+
+      drawDatailOrden();
+
+      (data != null) ?  alertify.alert('Informacion', data)  :'Un producto fue eleminado'
+
+
+    });
+
     function none() {
 
         if ($(".list-category").hasClass('d-none')) {
@@ -193,6 +277,8 @@
             $(".list-category").addClass('d-none');
         }
     }
+
+
 </script>
 
 </html>
