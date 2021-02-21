@@ -46,15 +46,18 @@ Categoria.hasMany(Producto, { as: 'categorias', foreignKey: 'categoriaId', onDel
 Orden.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId', onDelete: 'cascade' });
 Orden.belongsTo(Mesa, { foreignKey: 'mesaId', onDelete: 'cascade' });
 OrdenDet.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
+
+Producto.belongsTo(Promociones, { foreignKey: 'promoId', onDelete: 'cascade' });
+
 ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
 
 
 /**
  * Se sincroniza con la base de datos
- *
+ *  
  *
  */
-Conexion.sync({ force: false })
+Conexion.sync({ force: true })
     .then(() => {
         console.log('Databases has been updated!!')
     });

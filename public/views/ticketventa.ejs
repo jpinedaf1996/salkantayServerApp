@@ -56,14 +56,16 @@
                                         <td colspan="2">
                                             <center>
                                                 <br /><br />
-                                                <h2>SALCANTAY</h2>
+                                                <h2><%= orden.empresa[0].empresa %></h2>
 
 
-                                                Nit: 782992-90039<br />
+                                                  Nit: <%= orden.empresa[0].nit %> <br/>
                                                 <center>
-                                                    Dirección: los laureles Cr:47-67 <br />
-                                                    Telefono: 31234122323<br />
-                                                    BOLIVAR - EL CARMEN DE BOLIVAR
+                                                  Dirección: <%= orden.empresa[0].direccion %> <br/>
+                                                  Telefono: <%= orden.empresa[0].telefono %><br />
+                                                  Giro: <%= orden.empresa[0].giro %><br />
+
+
                                                 </center>
                                             </center>
                                         </td>
@@ -74,11 +76,9 @@
                                             <% const number=PadLeft(orden.headers.tikectId , 5) %>
                                             <%= number %> <br />
                                             <b>Orden No.</b>
-                                            <%= orden.headers.orden.ordenId %>  <br>                                            
+                                            <%= orden.headers.orden.ordenId %>  <br>
                                                     <b>Fecha:</b>
                                                     <%= orden.headers.orden.fecha %>  <strong><%= orden.headers.orden.hora %> </strong> <br />
-                                                    <b>CLIENTE:N/A</b> <br />
-                                                    <b>MESERO:</b> N/A<br />
                                                     <b>MESA: </b><%= orden.headers.orden.mesaId ? orden.headers.orden.mesaId : 'LLEVAR' %><br />
                                         </td>
                                     </tr>
@@ -170,14 +170,14 @@
                                                     <div align="right"><b>$0</b></div>
                                                 </td>
                                             </tr> -->
-                                                            <tr style="font-size: 14px;">
+                                                            <!-- <tr style="font-size: 14px;">
                                                                 <td colspan="4">
                                                                     <div align="right"><b>PROPINA</b></div>
                                                                 </td>
                                                                 <td>
                                                                     <div align="right"><b>$0</b></div>
                                                                 </td>
-                                                            </tr>
+                                                            </tr> -->
                                                             <tr>
                                                                 <td colspan="4">
                                                                     <div align="right"></div>
@@ -234,11 +234,7 @@
                             <td colspan="2">
                                 <br /><br />
                                 <center><b>***GRACIAS POR SU COMPRA***<center></center>
-                                        <center><b style="font-size: 13px;">Software PUVESOFT.com <BR>Cel: 301 648
-                                                3525
-                                                <center></center>
-                                                <center><b style="font-size: 11px;">Fecha y hora de impresión:
-                                                        29/12/2020 05:33:41 pm</b></center>
+
                             </td>
                         </tr>
                     </table>

@@ -1,9 +1,9 @@
 <%- include('./templates/header'); -%>
-    <!-- 
+    <!--
 Autor Geovanny Valencia / "Otro autor"
 14/08/2020
 Proposito de esta pagina: Esta es la pagina de reportes
-aqui se gestionanran los reportes que se generan 
+aqui se gestionanran los reportes que se generan
 -->
     <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
     <style id="CustomT">
@@ -49,7 +49,7 @@ aqui se gestionanran los reportes que se generan
 
                 <div id="MasOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
                     onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <p class="card-text"><strong><i>MAS VENDIDOS</i></strong></p>
                     </div>
                 </div>
@@ -63,8 +63,8 @@ aqui se gestionanran los reportes que se generan
 
                 <div id="XOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
                     onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
-                    <div class="card-body">
-                        <p class="card-text"><strong><i>REPORTE X</i></strong></p>
+                    <div class="card-body text-center">
+                        <div class="card-text"><strong><i>REPORTE X</i></strong></div>
                     </div>
                 </div>
 
@@ -78,20 +78,20 @@ aqui se gestionanran los reportes que se generan
                 <center>
                     <table>
                         <tr>
-                            <td><button class="btn btn-success ver" onclick="makePdf1()">Cargar reporte</button> </td>
+                            <td><button class="btn btn-success ver" onclick="makePdf1()">Cargar reporte PDF</button> </td>
                         </tr>
                     </table>
                 </center>
 
                 <h1 class="text-white">Lista de productos</h1>
-                <hr>
-                <div class="row ">
-                    <div class="col-md-6">
+
+                <div class="row w-100">
+                    <div class="col-md-12">
                         <div class="card">
                             <div id="ProductoTable" class="card-body">
                                 <h3 class="text-dark text-center">Lista de productos</h3>
                                 <table id="TableUser"
-                                    class="borderless table table-responsive-lg text-dark text-center">
+                                    class="borderless table table-responsive-lg text-dark text-center border border-dark">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Producto</th>
@@ -135,21 +135,22 @@ aqui se gestionanran los reportes que se generan
                     </table>
                 </center>
                 <h1 class="text-white">PRODUCTOS MAS VENDIDOS</h1>
-                <hr>
-                <div class="row ">
-                    <div class="col-md-6">
+
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="card">
                             <div id="MasTable" class="card-body">
                                 <h3 class="text-dark text-center">LISTA DE PRODUCTOS MAS VENDIDOS DEL DIA</h3>
-                                <table id="TableUser"
-                                    class="borderless table table-responsive-lg text-dark text-center">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Total</th>
+                                <table style="text-align:center" id="TableUser" class="borderless table table-responsive-md text-dark text-center">
+                                    <thead   class="thead-dark">
+
+                                        <tr >
+                                            <th style="text-align:center" >Producto</th>
+                                            <th style="text-align:center" >Cantidad</th>
+                                            <th style="text-align:center"> Total</th>
 
                                         </tr>
+
                                     </thead>
                                     <tbody id="container-list-table3">
 
@@ -185,9 +186,9 @@ aqui se gestionanran los reportes que se generan
                     </table>
                 </center>
                 <h1 class="text-white">LISTA DE VENTAS DETALLADA DEL DIA</h1>
-                <hr>
+
                 <div class="row ">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card">
                             <div id="ListaVTable" class="card-body">
                                 <h3 class="text-dark text-center">LISTA DE VENTAS DETALLADA DEL DIA</h3>
@@ -257,7 +258,7 @@ aqui se gestionanran los reportes que se generan
                 $(document).ready(() => {
                     getListTable2();
                 });
-                //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS 
+                //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS
 
                 let lastElemnt = document.getElementById('ProdOp');
                 const changeOptionConfig = (option) => {

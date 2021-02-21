@@ -3,7 +3,7 @@ const { Info } = require('../../dbconfig');
 const upload = require('../middlewares/storage')
 const {QueryTypes} = require('sequelize');
 
-//Se crean las rutas para una API REST con los diferente metodos 
+//Se crean las rutas para una API REST con los diferente metodos
 
 router.get('/', async (req, res) => {
     let info = await Info.findAll({
@@ -20,12 +20,26 @@ router.get('/findOne/:infoId', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    await Info.create(req.body);
-    res.json({ success: 'Se ha guardado con registro.' });
+
+    let info = await Info.findAll({});
+    const valInfo = JSON.parse(JSON.stringify(info));
+
+    if(parseInt(Object.keys(valInfo).length) < 1 ){
+
+       await Info.create(req.body);
+        res.json({ success: 'Se ha guardado con registro.' });
+
+    }else {
+
+       res.json({ error: 'La informacion de la empresa ya existe.' });
+    }
+
+
 });
 
-router.put('/:infoId', async (req, res) => { //estas rutas reciben parametros 
-    await Info.update(req.body, { // funcion para actualizar 
+router.put('/:infoId', async (req, res) => { //estas rutas reciben parametros
+
+    await Info.update(req.body, { // funcion para actualizar
         where: {
             infoId: req.params.infoId
         }
@@ -34,8 +48,8 @@ router.put('/:infoId', async (req, res) => { //estas rutas reciben parametros
 
 });
 
-router.delete('/:infoId', async (req, res) => { //estas rutas reciben parametros 
-    await Info.destroy({ // funcion para borrar 
+router.delete('/:infoId', async (req, res) => { //estas rutas reciben parametros
+    await Info.destroy({ // funcion para borrar
         where: { infoId: req.params.infoId }
     });
     res.json({ success: 'Se ha borrado un registro.' });

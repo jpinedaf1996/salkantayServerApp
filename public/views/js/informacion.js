@@ -2,19 +2,19 @@
     const getListInfo = async () => {
         const content = document.getElementById("container-list-info");
         content.innerHTML = " ";
-    
+
         try {
             const response = await new GetInfoByFetch(url.apiInfo).request();
             if (Object.keys(response).length < 1) {
-                let List = 
-                            ` <tr> 
-                                <td colspan="5">Sin Informacion</td>  
+                let List =
+                            ` <tr>
+                                <td colspan="5">Sin Informacion</td>
                             </tr>`;
                 content.insertAdjacentHTML('beforeEnd', List);
             }
             response.forEach(info => {
-                let List = ` 
-                <tr > 
+                let List = `
+                <tr >
                 <td>${info.empresa}</td>
                 <td>${info.direccion}</td>
                 <td>${info.telefono}</td>
@@ -23,35 +23,35 @@
                 <td>${info.giro}</td>
                 <td>${info.sucursal}</td>
                 <td>
-                  <i style="cursor: pointer;" onclick="editInfo(${info.infoId})" class="text-warning fas fa-edit"></i> 
+                  <i style="cursor: pointer;" onclick="editInfo(${info.infoId})" class="text-warning fas fa-edit"></i>
                 </td>
                 <td>
-                  <i style="cursor: pointer;" onclick="deleteInfo(${info.infoId})" class="text-danger fas fa-trash"></i> 
+                  <i style="cursor: pointer;" onclick="deleteInfo(${info.infoId})" class="text-danger fas fa-trash"></i>
                 </td>
-                
-            </tr>
-                        `;
+
+            </tr>`;
                 content.insertAdjacentHTML('beforeEnd', List);
             });
         } catch (error) {
-    
+
             alertify.error("Error : "+ error +"<br> El servidor no responde." );
-    
+
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
     const deleteInfo = (infoId) => {
 
         alertify.confirm("<i class='fas fa-exclamation-circle text-danger'></i> Advertencia ", "¿Decea borrar la informacion del negocio ?.",
           async function () {
             let response = await new GetInfoByFetch(`${url.apiInfo}${infoId}`, 'DELETE').request();
             alertify.success(response.success);
-    
+
             getListInfo();
           },
           function () {
           });
-    
+
       }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,7 +59,7 @@
     event.preventDefault();
     let data = new FormData(event.currentTarget);
 
-    if (parseInt(data.get("idforedit")) === 0) {
+    if (parseInt(data.get("idforeditInfo")) === 0) {
       editOsaveInfo(
         new URLSearchParams({
           'empresa': data.get("empresa"),
@@ -71,7 +71,7 @@
           'sucursal': data.get("sucursal")
         }),
         method = 'POST',
-        link = url.apiInfo);
+        link = `${url.apiInfo}`);
 
     } else {
       editOsaveInfo(
@@ -85,20 +85,21 @@
           'sucursal': data.get("sucursal")
         }),
         method = 'PUT',
-        link = `${url.apiInfo}${data.get('idforedit')}`);
-    }
+        link = `${url.apiInfo}${data.get('idforeditInfo')}`
+      );}
 
   });
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////// 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const editOsaveInfo = async (data, method, link) => {
 
     let response = await new GetInfoByFetch(`${link}`, method, data).request();
 
-    if (response.ok === false) {
-      alertify.alert("<i class='fas fa-exclamation-circle text-danger'></i> Error al enviar el formulario ",
-        "Recomendaciones:<br>Tamaño maximo de la imagen 5Mb<br>Formato : jpeg jpg png o gif!");
+    if (response.error) {
+      alertify.error(response.error);
+      document.querySelector("#InfoForm").reset();
+
     } else {
       getListInfo();
       alertify.success(response.success)
@@ -113,21 +114,22 @@
     document.querySelector("#InfoForm").reset();
 
     const response = await new GetInfoByFetch(`${url.apiInfo}findOne/${infoId}`).request();
-    
+
 
     Object.entries(response).forEach(([key, value]) => {
       $(`#${key}`).val(`${value}`);
 
     });
-    $("#idforedit").val(infoId);
-    
+
+    $("#idforeditInfo").val(infoId);
+
     $("#alert-edit-info").html(`<div class="alert alert-warning" role="alert">
               <h5 class="alert-heading w-100">
-                Estado: Editando... 
+                Estado: Editando...
                 <span  style="cursor: pointer;" onclick="cancelEdit()" class="text-primary float-right">
                   Canelar edicion
                   </span>
-                </h5> 
+                </h5>
             </div>
         `);
   }

@@ -13,7 +13,7 @@ $(() => {
     getCategories();
 
 
-    
+
 });
 
 let listProductsInOrden = null;
@@ -122,11 +122,11 @@ const add = async (ordendetId) => {
     drawTable(ordenId);
 }
 
-let beforElement = null; // Este elemento se actualiza con el elemento HTML seleccionado  
-// para validar cual fue la ultima selecionada para que se pinte en pantalla 
+let beforElement = null; // Este elemento se actualiza con el elemento HTML seleccionado
+// para validar cual fue la ultima selecionada para que se pinte en pantalla
 // estp es pa poder quitar la clase selected-table del ultimo y agregarla a uno nuevo
 
-let ordenId = 0; //Ninguna mesa a sido seleccionado 
+let ordenId = 0; //Ninguna mesa a sido seleccionado
 
 const detailOrden = async (id_orden) => {
 
@@ -134,7 +134,7 @@ const detailOrden = async (id_orden) => {
     ordenId = id_orden; //La mesa seleccionada se guarda ena variable global
     //alert(element.getAttribute("data-promo"));
     if (ordenId != 0) {
-        drawTable(id_orden); // Se pinta la tabla en pantalla 
+        drawTable(id_orden); // Se pinta la tabla en pantalla
     }
     if (beforElement === null) {
         element.classList.add("selected-table");
@@ -247,7 +247,7 @@ const getCategories = async () => {
         const categoria = `
             <div id="${category.categoriaId}" onclick="getProductsByCategory(${category.categoriaId})" class="animate__animated animate__bounce card-category">
                 <p class="text-category" >${category.categoria.toUpperCase()}</p>
-                
+
             </div>
             `;
 
@@ -301,8 +301,8 @@ let listProducts = null;
 
 const filterItems = query => {
     /***
-     * FUNCVION PARA HACER BUSQUEDA DE PRODUCTOS 
-     * EN ITMEPO REAL EN LA BASE DE DATOS 
+     * FUNCVION PARA HACER BUSQUEDA DE PRODUCTOS
+     * EN ITMEPO REAL EN LA BASE DE DATOS
      * * */
     const ct = document.getElementById('container-productos');
     document.getElementById('container-list-product').innerHTML = " ";
@@ -322,7 +322,7 @@ const filterItems = query => {
                     </p>
                     <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio}</span></p>
                 </div>
-            </div>               
+            </div>
                 `;
         ct.insertAdjacentHTML('beforeEnd', products);
     })
@@ -340,7 +340,7 @@ const drawProduct = (data, ct) => {
                     </p>
                     <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio}</span></p>
                 </div>
-            </div>               
+            </div>
             `;
         ct.insertAdjacentHTML('beforeEnd', products);
 
@@ -350,13 +350,13 @@ const drawProduct = (data, ct) => {
 ///////////////////////////////////////////PROMOCIONES//////////////////////////////////////////////
 const getPromociones = async () => {
     const ct = document.getElementById("cont-promo");
-    let response = await new GetInfoByFetch(url.apipromo).request();
+    let response = await new GetInfoByFetch(url.apipromo+"activas").request();
     ct.innerHTML = " ";
     response.forEach((promo) => {
         const promoList = `
                 <div onclick="addPromoInORden(${promo.valor});" class="card-promociones">
                     ${promo.desc} - ${promo.valor * 100}%
-                </div>                
+                </div>
             `;
         ct.insertAdjacentHTML('beforeEnd', promoList);
 
@@ -625,7 +625,7 @@ const changeTypeOrden = async() => {
 }
 
 const addNewOrdenLlevar = async( ) =>{
-    
+
     let response = await new GetInfoByFetch(`${url.apiordenes}/newOrden/llevar`, 'POST').request();
     if (response.success) {
         $("#modalOrden").modal("hide");

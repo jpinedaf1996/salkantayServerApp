@@ -1,9 +1,9 @@
 <%- include('./templates/header'); -%>
-<!-- 
+<!--
 Autor Jesus pineda / "Otro autor"
 14/08/2020
-Proposito de esta pagina: Esta es la pagina de productos 
-aqui se gestionanran los diferente produstos 
+Proposito de esta pagina: Esta es la pagina de productos
+aqui se gestionanran los diferente produstos
 -->
 <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
 
@@ -33,7 +33,7 @@ aqui se gestionanran los diferente produstos
         <div id="InformationOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR SOBRE NOSOTROS"
             onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
             <div class="card-body">
-                <p class="card-text"><i class="fas fa-wallet"></i></strong></p>
+                <p class="card-text"><i class="fas fa-info-circle"></i></strong></p>
             </div>
         </div>
 
@@ -42,7 +42,7 @@ aqui se gestionanran los diferente produstos
 <hr>
 <div class="container-fuid">
     <div id="optables" class="main-container-list">
-        <h1 class="card-title text-white w-100">ADMINISTRAR MESAS</h1>
+        <h1 class="card-title text-dark w-100">ADMINISTRAR MESAS</h1>
         <hr>
         <div class="row">
             <div class="col-md-6">
@@ -103,7 +103,7 @@ aqui se gestionanran los diferente produstos
     </div>
 
     <div id="opUser" class="d-none main-container-list">
-        <h1 class="text-white">ADMINISTRAR USUARIOS</h1>
+        <h1 class="text-dark">ADMINISTRAR USUARIOS</h1>
         <hr>
         <div class="row ">
             <div class="col-md-6">
@@ -155,7 +155,7 @@ aqui se gestionanran los diferente produstos
                 <div class="card">
                     <div class="card-body">
                         <h3 class="text-dark text-center">Lista de usuario</h3>
-                        <table id="TableUser" class="borderless table table-responsive-lg text-dark text-center">
+                        <table id="TableUser" class="borderless table table-responsive-md text-dark text-center">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Usuario</th>
@@ -174,7 +174,7 @@ aqui se gestionanran los diferente produstos
     </div>
 
     <div id="opProm" class="d-none main-container-list">
-        <h1 class="text-white">ADMINISTRAR PROMOCIONES</h1>
+        <h1 class="text-dark">ADMINISTRAR PROMOCIONES</h1>
         <hr>
         <div class="row ">
             <div class="col-md-6">
@@ -242,13 +242,11 @@ aqui se gestionanran los diferente produstos
         </div>
     </div>
 
-
-
     <div id="opinfo" class="d-none main-container-list">
-        <h1 class="text-white">SOBRE NOSOTROS</h1>
+        <h1 class="text-dark">SOBRE NOSOTROS</h1>
         <hr>
         <div class="row ">
-            <div class="col-md-10">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
                         <div id="alert-edit-info">
@@ -264,61 +262,59 @@ aqui se gestionanran los diferente produstos
                                 <input type="text" id="empresa" name="empresa" placeholder="------" class="form-control" required
                                     autofocus>
                                 </div>
-                    
+
                                 <div class="form-group">
                                 <a>Direccion</a>
                                 <input type="text" id="direccion" name="direccion" placeholder="------" class="form-control" required
                                     autofocus>
                                 </div>
-                    
+
                                 <div class="form-group">
                                 <a>N# Telefono</a>
                                 <input type="number" id="telefono" name="telefono" placeholder="------" required
                                     class="form-control" autofocus>
                                 </div>
-                    
+
                                 <div class="form-group">
                                 <a>Nit</a>
                                 <input type="text" id="nit" name="nit" placeholder="------" class="form-control" required
                                     autofocus>
                                 </div>
-                    
+
                                 <div class="form-group">
                                 <a>NRC</a>
                                 <input type="text" id="nrc" name="nrc" placeholder="------" class="form-control" required
                                     autofocus>
                                 </div>
-                    
+
                                 <div class="form-group">
                                 <a>GIRO</a>
                                 <input type="text" id="giro" name="giro" placeholder="------" class="form-control" required
                                     autofocus>
                                 </div>
-                    
+
                                 <div class="form-group">
                                 <a>Sucursal</a>
                                 <input type="text" id="sucursal" name="sucursal" placeholder="------" class="form-control" required
                                     autofocus>
                                 </div>
-                    
+
                                 <div>
-                                <input type="hidden" value="0" name="idforedit" id="idforedit">
+                                <input type="hidden" value="0" name="idforeditInfo" id="idforeditInfo">
                                 </div>
-                    
-                                <button id="btn-info" type="submit" class="btn btn-primary">
+
+                                <button id="btn-info" type="submit" class="btn btn-primary form-control">
                                 Guardar
                                 </button>
                             </form>
                         </div>
                 </div>
             </div>
-            
-          
-                <div class="col-md-10">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
                             <h3 class="text-dark text-center">SOBRE NOSOTROS </h3>
-                            <table id="TableInfo" class="borderless table table-responsive-lg text-dark text-center">
+                            <table id="TableInfo" class="borderless w-100 text-dark text-center">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Empresa</th>
@@ -332,13 +328,13 @@ aqui se gestionanran los diferente produstos
                                     </tr>
                                 </thead>
                                 <tbody id="container-list-info">
-        
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            
+
         </div>
 
     </div>
@@ -358,7 +354,7 @@ aqui se gestionanran los diferente produstos
     $(document).ready(() => {
         getListTable();
     });
-    //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS 
+    //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS
 
     let lastElemnt = document.getElementById('optables');
     const changeOptionConfig = (option) => {

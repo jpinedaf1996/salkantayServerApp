@@ -134,7 +134,7 @@ router.put('/descuento/:ordenId', async (req, res) => {
     await Orden.update({
         'descuento': req.body.descuento
     }, { // funcion para actualizar
-        where: { ordenId: req.params.ordenId }
+        where: { ordenId: req.params.ordenId, }
     });
     //console.log(req.params.ordenId)
 
