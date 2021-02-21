@@ -11,13 +11,14 @@ const ticketventaModel = require('./models/ticketventa');
 const InformacionModel = require('./models/informacion');
 
 
+
 /**
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('salkantaydb', 'root', '2125', {
+const Conexion = new Sequelize('salkantaydb', 'admin', 'password', {
     host: 'localhost',
-    dialect: 'mariadb',
+    dialect: 'mysql',
     dialectOptions: {
         timezone: 'America/El_Salvador',
     }
@@ -46,18 +47,15 @@ Categoria.hasMany(Producto, { as: 'categorias', foreignKey: 'categoriaId', onDel
 Orden.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId', onDelete: 'cascade' });
 Orden.belongsTo(Mesa, { foreignKey: 'mesaId', onDelete: 'cascade' });
 OrdenDet.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
-
-Producto.belongsTo(Promociones, { foreignKey: 'promoId', onDelete: 'cascade' });
-
 ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
 
 
 /**
  * Se sincroniza con la base de datos
- *  
  *
- */
-Conexion.sync({ force: true })
+ *
+ */ 
+Conexion.sync({ force: false })
     .then(() => {
         console.log('Databases has been updated!!')
     });
