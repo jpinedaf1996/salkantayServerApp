@@ -73,6 +73,7 @@ app.get('/menu/:ID', (req, res) => {
 
   Se ejecuta el servidor
 
+
 **/
 
 const server  = app.listen(3000, () => {
@@ -89,6 +90,10 @@ const io = require('socket.io')( server );
 
 io.on('connection', function (socket) {
 
+  let clients = [ ];
+
+
+
   socket.on('add-prod', async function (data) {
 
       /**
@@ -96,23 +101,22 @@ io.on('connection', function (socket) {
        */
        try {
 
-
-         await OrdenDet.create({
+            await OrdenDet.create({
            'nombreProducto': data.producto.producto+`(${data.producto.desc})`,
-           'precio': data.producto.nombreProducto,
+           'precio': data.producto.precio,
            'unidades': 1,
            'ordenId':  data.ordenId,
          });
 
-         //io.sockets.emit('update-orden', {  });
-         //console.log(data.producto);
-         //io.sockets.to(socketdb.socket).emit("orden-canceled", "La orden fue cancelada por el administrador! <br> Consulte con su mesero Gracias." );
-         // console.log("socket: "+ JSON.stringify(socketdb.socket));
+
+         io.sockets.emit('update-detalle', data.ordenId );
+         io.sockets.to(socket.id).emit('update-detalle', data.ordenId );
+
+         console.log(clients);
+
          return true
 
-
        } catch (e) {
-
 
          console.log('error: ' + e);
 
@@ -154,21 +158,90 @@ io.on('connection', function (socket) {
 
 
   });
-  socket.on('close-orden', async function (data) {
+
+  socket.on('save-orden', async function (data) {
+
+    try {
+
+        const result  = await Mesa.findOne({
+             attributes: ['estado'],
+             where: {
+               mesaId: data.mesaId
+             }
+        });
+
+        const sock  = await Orden.findOne({
+             attributes: ['socket'],
+             where: {
+               ordenId: data.ordenId
+             }
+        });
+
+        let state = JSON.parse(JSON.stringify(result));
+        let ordenSocket = JSON.parse(JSON.stringify(sock));
+
+        if( state.estado === '0' ){
+
+          await Orden.update({
+              'tipo_orden': 'M',
+          }, { // funcion para actualizar
+              where: { ordenId: data.ordenId }
+          });
+
+          await Mesa.update({
+              'estado': '1'
+          }, { // funcion para actualizar
+              where: { mesaId: data.mesaId }
+          });
+
+
+          io.sockets.to(socket.id).emit("finished", {success: 'ok', data: '¿Decesa ir a cobrar la orden?' } );
+          io.sockets.to(ordenSocket.socket).emit("finished-to-client", {data: 'La orden ha finalizado!' } );
+          return false;
+
+        }else {
+
+          io.sockets.to(socket.id).emit("finished", {data: 'La mesa parece estar ya ocupada' } );
+          return false;
+
+        }
+
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+
+  });
+
+  socket.on('delete-product', async function (data) {
 
       /**
         * Regresa una respuesta con el evento que se va a recivir al cliente orden
        */
        try {
 
+         console.log(data);
 
-         await Orden.update({
-             'estado': '2'
-         }, { // funcion para actualizar
-             where: { ordenId: data.data }
+         await OrdenDet.destroy({
+
+             where: { ordendetId: data.detId }
+
          });
 
+         const socketdb  = await Orden.findOne({
+             attributes: ['socket'],
+              where: { ordenId: data.ordenId }
+         });
+
+         io.sockets.to(socketdb.socket).emit("response-delete-to-client", data.value );
+
+         io.sockets.emit('delete-response', { id: data.ordenId });
+
          return true
+
        } catch (e) {
 
 
@@ -178,7 +251,7 @@ io.on('connection', function (socket) {
        }
 
 
-  })
+  });
     //console.log(socket.id);
 
     //io.sockets.to(socket.id).emit("welcome", socket.id );
@@ -188,9 +261,9 @@ io.on('connection', function (socket) {
      * RESIVE EL MENSAJE DEL CLIENTE CON EL NOMBRE NEW-MENSAJE
      */
     socket.on('open-orden', async function (data) {
-        /**c
+        /*
         * Regresa una respuesta con el evento que se va a recivir al cliente orden
-         */
+        */
         if (data) {
             try {
 
