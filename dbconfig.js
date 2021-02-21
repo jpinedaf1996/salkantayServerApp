@@ -10,6 +10,8 @@ const PromocionesModel = require('./models/promociones');
 const ticketventaModel = require('./models/ticketventa');
 const InformacionModel = require('./models/informacion');
 
+const bcrypt = require('bcryptjs');
+
 
 /**
  * se genera la Conexion de la DB
@@ -54,17 +56,42 @@ ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
 
 /**
  * Se sincroniza con la base de datos
- *  
+ *
  *
  */
-Conexion.sync({ force: true })
+Conexion.sync({ force: false })
     .then(() => {
+        createInit()
         console.log('Databases has been updated!!')
     });
 /**
  *se exportan los objetos para ser reutilizados
  *
  */
+ async function createInit() {
+
+   try {
+
+     Promociones.create({
+       promoId: '1',
+       desc : 'Sin promo',
+       valor:'0.00'
+     });
+     Usuarios.create({
+       usuarioId: '1',
+       usuario : '@admin',
+       pass: bcrypt.hashSync('catolica2021', 10),
+       tipo: '1'
+     });
+
+   } catch (e) {
+
+     console.log('ERROR EN :'+e.message);
+
+   }
+ }
+
+
 module.exports = {
     Conexion,
     Producto,

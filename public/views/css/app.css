@@ -21,6 +21,16 @@ Index Css
 
 }
 
+/* .oprtions:hover{
+  background: gray
+}
+.oprtions:focus{
+  background: red
+}
+.oprtions:active{
+  background: blue
+} */
+
 body {
     margin: 0;
     padding: 0;

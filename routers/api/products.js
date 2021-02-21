@@ -1,23 +1,45 @@
 const router = require('express').Router();
-const { Producto,Conexion } = require('../../dbconfig');
+const { Producto,Conexion, Promociones} = require('../../dbconfig');
 const upload = require('../middlewares/storage')
 const {QueryTypes} = require('sequelize');
-//Se crean las rutas para una API REST con los diferente metodos 
+//Se crean las rutas para una API REST con los diferente metodos
 
 router.get('/', async (req, res) => {
+
+
     console.log(req.usuarioId);
-    let productos = await Producto.findAll();
+    let productos = await Producto.findAll({
+      include:{
+        model: Promociones
+      }
+    });
     res.json(productos);
+
+
 });
 
 router.get('/productosBycategori/:categoriaId', async (req, res) => {
 
     let productbycategory = await Producto.findAll({
+      include:{
+        model: Promociones
+      },
         where: {
             categoriaId: req.params.categoriaId
         }
     });
-    res.json(productbycategory);
+    let result = JSON.parse(JSON.stringify(productbycategory));
+
+    result.map((item,i ) => {
+        //console.log(json[i]);
+
+        result[i].precio = parseFloat(item.precio - ( item.precio * item.promocione.valor )).toFixed(2)
+
+    });
+
+    //console.log(result)
+
+    res.json(result);
 
 });
 
@@ -30,7 +52,7 @@ router.get('/ProdXCat', async (req, res) => { //Consulta para productos
 
 
 router.get('/ProdMasV', async (req, res) => { //Consulta para productos mas vendidos Falta el WHERE o.fecha=CURDATE()
-    const ProdMasV = await Conexion.query(`SELECT d.nombreProducto as Producto, SUM(d.unidades) AS Cantidad, ROUND(SUM(d.precio * d.unidades) , 2) AS Total, o.fecha AS Fecha FROM 
+    const ProdMasV = await Conexion.query(`SELECT d.nombreProducto as Producto, SUM(d.unidades) AS Cantidad, ROUND(SUM(d.precio * d.unidades) , 2) AS Total, o.fecha AS Fecha FROM
     ordens o INNER JOIN ordendetalles d USING(ordenId)
     WHERE Fecha=CURDATE()
     GROUP BY Producto ORDER BY Cantidad DESC`, {type:QueryTypes.SELECT});
@@ -40,7 +62,7 @@ router.get('/ProdMasV', async (req, res) => { //Consulta para productos mas vend
 
 router.get('/VentasD', async (req, res) => { //Consulta para detalle de lo que se vendio Falta el WHERE o.fecha=CURDATE()
     const VentasD = await Conexion.query(`
-    SELECT d.nombreProducto as Producto, d.unidades AS Cantidad, m.num_mesa AS Mesa, d.precio AS Precio, o.fecha AS Fecha, o.hora AS Hora 
+    SELECT d.nombreProducto as Producto, d.unidades AS Cantidad, m.num_mesa AS Mesa, d.precio AS Precio, o.fecha AS Fecha, o.hora AS Hora
     FROM (ordens o INNER JOIN ordendetalles d USING(ordenId)) INNER JOIN mesas m USING(mesaId)
     WHERE o.fecha=CURDATE() ORDER BY Hora,Fecha DESC
     `, {type:QueryTypes.SELECT});
@@ -80,8 +102,8 @@ router.post('/', upload.single('image'), async (req, res) => {
     }
 
 });
-router.put('/:productId', upload.single('image'), async (req, res) => { //estas rutas reciben parametros 
-    // funcion para actualizar 
+router.put('/:productId', upload.single('image'), async (req, res) => { //estas rutas reciben parametros
+    // funcion para actualizar
     if (req.file != undefined) {
         await Producto.update(
             {
@@ -94,24 +116,24 @@ router.put('/:productId', upload.single('image'), async (req, res) => { //estas 
             }, {
             where: { productoId: req.params.productId }
         });
-        
+
     } else {
         await Producto.update(req.body, {
             where: { productoId: req.params.productId }
         });
-        
+
     }
 
     return res.status(200).json(
-        {   
+        {
             success: 'Se actualizo de forma correcta!'
         }
     );
 });
 
-router.delete('/:productId', async (req, res) => { //estas rutas reciben parametros 
+router.delete('/:productId', async (req, res) => { //estas rutas reciben parametros
 
-    await Producto.destroy({ // funcion para borrar 
+    await Producto.destroy({ // funcion para borrar
         where: { productoId: req.params.productId }
     });
     res.json({ success: 'Se ha borrado un registro.' });

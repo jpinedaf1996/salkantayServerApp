@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const { Promociones } = require('../../dbconfig')
+const { Producto,Promociones } = require('../../dbconfig')
+const {queryType , Sequelize} = require('sequelize');
+const Op = Sequelize.Op;
 
 //Se crean las rutas para una API REST con los diferente metodos
 
@@ -7,7 +9,12 @@ router.get('/', async (req, res) => {
     let promo = await Promociones.findAll({
         order: [
             ['PromoId', 'DESC']
-        ]
+        ],where:{
+          promoId :{
+              [Op.gt]: 1
+            },
+        }
+
     });
     res.json(promo);
 });
@@ -26,6 +33,42 @@ router.post('/', async (req, res) => {
 
     res.json({ success: 'Se ha guardado con exito.' });
 });
+router.put('/descuentoporproducto/:promoId', async (req, res) => { //estas rutas reciben parametros
+
+
+    const listToAdd = req.body.data.split(","); //estas rutas reciben parametros
+    // var errores = 0;
+    for (let i = 0; i < listToAdd.length; i++) {
+
+      console.log(parseInt(listToAdd[i]));
+
+        try {
+            await Producto.update({ // funcion para borrar
+                promoId: req.params.promoId
+
+            },{where: { productoId: parseInt(listToAdd[i]) }});
+
+        } catch (error) {
+            // errores = errores + 1;
+            console.log(error.message);
+        }
+    }
+
+    // if (errores > 0) {
+    //     return res.status(422).json(
+    //         {
+    //             cant: errores,
+    //             errores: 'Verifique que las categorias no tengan productos'
+    //         }
+    //     );
+    // }
+
+    return res.status(200).json({ success: 'Se han actualizado las promociones con exito!' });
+
+
+});
+
+
 router.put('/:promoId', async (req, res) => { //estas rutas reciben parametros
     await Promociones.update(req.body, { // funcion para actualizar
         where: {

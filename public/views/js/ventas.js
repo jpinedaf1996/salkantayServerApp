@@ -261,6 +261,8 @@ let selectedCat = null;
 const getProductsByCategory = async (id) => {
     const content = document.getElementById('container-productos');
     let response = await new GetInfoByFetch(`${url.products}productosBycategori/${id}`).request();
+
+    console.log(response);
     //HACE EL FOCUS AL HACER CLICK A UNA TARGETA DE CATEGORIAS
     if (selectedCat === null) {
         $(`#${id}`).addClass("selected");

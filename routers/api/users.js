@@ -6,6 +6,9 @@ const { check, validationResult } = require('express-validator');
 const token = require('./createToken');
 const middleware = require('../middlewares/middlewares');
 
+const {queryType , Sequelize} = require('sequelize');
+const Op = Sequelize.Op;
+
 //Funcion para validar el incio de sesion
 
 router.get('/validarToken', middleware.validarToken, async (req, res) => {
@@ -67,18 +70,24 @@ router.post('/', [
         return res.status(422).json({ errores: erros.array() });
 
     }
-    //Funcion para encriptar la cotraseña 
+    //Funcion para encriptar la cotraseña
     req.body.pass = bcrypt.hashSync(req.body.pass, 10);
 
     // HAce el insert a la DB
     let usuarios = await Usuarios.create(req.body);
 
-    //Devuelve el ultimo insertado en la DB 
+    //Devuelve el ultimo insertado en la DB
     res.json(usuarios);
 });
 
 router.get('/', async (req, res) => {
-    let usuarios = await Usuarios.findAll();
+    let usuarios = await Usuarios.findAll({
+      where:{
+        usuarioId :{
+            [Op.gt]: 1
+          }
+      }
+    });
     res.json(usuarios);
 });
 router.get('/findOne/:id', async (req, res) => {
@@ -92,7 +101,7 @@ router.get('/findOne/:id', async (req, res) => {
     }else{
         res.json({error: "Se produjo un error al intentar actualizar ", code: 20 });
     }
-    
+
 });
 
 router.put('/:usuarioId',[
@@ -100,7 +109,7 @@ router.put('/:usuarioId',[
     check('usuario', 'El nombre del usario es obligatorio').not().isEmpty(),
     check('pass', 'La contraseña es obligatoria').not().isEmpty(),
 
-], async (req, res) => { //estas rutas reciben parametros 
+], async (req, res) => { //estas rutas reciben parametros
     const erros = validationResult(req);
 
     if (!erros.isEmpty()) {
@@ -108,18 +117,18 @@ router.put('/:usuarioId',[
         return res.status(422).json({ errores: erros.array() });
 
     }
-    //Funcion para encriptar la cotraseña 
+    //Funcion para encriptar la cotraseña
     req.body.pass = bcrypt.hashSync(req.body.pass, 10);
-    
-    await Usuarios.update(req.body, { // funcion para actualizar 
+
+    await Usuarios.update(req.body, { // funcion para actualizar
         where: { usuarioId: req.params.usuarioId }
     });
     res.json({ success: 'Se ha actualizado un registro.' });
 
 });
 
-router.delete('/:usuarioId', async (req, res) => { //estas rutas reciben parametros 
-    await Usuarios.destroy({ // funcion para borrar 
+router.delete('/:usuarioId', async (req, res) => { //estas rutas reciben parametros
+    await Usuarios.destroy({ // funcion para borrar
         where: { usuarioId: req.params.usuarioId }
     });
     res.json({ success: 'Se ha borrado un registro.' });
