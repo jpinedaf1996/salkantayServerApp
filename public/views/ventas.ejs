@@ -219,8 +219,27 @@ aqui se gestionanran los diferente produstos
 
                 <table class="borderless table ">
                     <tbody>
+                        
+                        <tr>
+                            <th  class="text-right float-left">
+                                Sub total
+                            </th>
+                            <td class="text-right  ">
+                                <strong id="ct-subtotal">
+                                    $0
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th onclick="modalPromo();"  class="text-right  float-left">
+                                <span style="cursor: pointer;">Descuento <i class="far fa-edit"></i> </span>
+                            </th>
+                            <td id="promoValor" class="text-right">
+                                0%
+                            </td>
+                        </tr>
                         <tr class="alert alert-success">
-                            <th class="text-right">
+                            <th class="text-right float-left">
                                 <strong>Total a pagar</strong>
                             </th>
                             <td  class="text-right">
@@ -229,24 +248,6 @@ aqui se gestionanran los diferente produstos
                                 </strong>
                             </td>
 
-                        </tr>
-                        <tr>
-                            <th  class="text-right">
-                                Sub total
-                            </th>
-                            <td class="text-right">
-                                <strong id="ct-subtotal">
-                                    $0
-                                </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th onclick="modalPromo();"  class="text-right">
-                                <span style="cursor: pointer;">Descuento <i class="far fa-edit"></i> </span>
-                            </th>
-                            <td id="promoValor" class="text-right">
-                                0%
-                            </td>
                         </tr>
 
                     </tbody>

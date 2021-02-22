@@ -322,7 +322,7 @@ const filterItems = query => {
                     <strong>${productos.producto.toUpperCase()}</strong><br>
                     (${productos.desc})
                     </p>
-                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio}</span></p>
+                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio} ${productos.promoId == 1 ? ' ' : '<i class="text-warning fas fa-star"></i>'}</span></p>
                 </div>
             </div>
                 `;
@@ -340,7 +340,7 @@ const drawProduct = (data, ct) => {
                     <strong>${productos.producto.toUpperCase()}</strong><br>
                     (${productos.desc})
                     </p>
-                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio}</span></p>
+                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio} ${productos.promoId == 1 ? ' ' : '<i class="text-warning fas fa-star"></i>'}</span></p>
                 </div>
             </div>
             `;

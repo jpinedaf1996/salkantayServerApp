@@ -297,8 +297,8 @@
             <div id="productCard" class="card product text-dark animate__animated animate__bounce" style="width: 11rem;">
                 <img onclick="editProduct(${productos.productoId})"  class="card-img-top" height="125px" src="${IPV4}/previews/${productos.imagen}" alt="Card image cap">
                 <div class="card-body" onclick="editProduct(${productos.productoId})" >
-                    <p class="card-text"><strong>${productos.producto.toUpperCase()}(${productos.desc})</strong></p>
-                    <p class="card-text"><strong>$${productos.precio}</strong></p>
+                    <p class="card-text"><strong>${productos.producto.toUpperCase()}(${productos.desc}) </strong></p>
+                    <p class="card-text"><strong>$${productos.precio} ${productos.promoId == 1 ? ' ' : '<i class="text-warning fas fa-star"></i>'}</strong></p>
                 </div>
                 <button id="btn-delete" class="btn-danger form-control" onclick="DeleteProduct(${productos.productoId},${id})"><i
                     class="fas fa-trash"></i></button>

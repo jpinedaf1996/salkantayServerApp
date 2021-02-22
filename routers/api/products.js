@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const { Producto,Conexion, Promociones} = require('../../dbconfig');
+const { Producto, Conexion, Promociones, Categoria } = require('../../dbconfig');
 const upload = require('../middlewares/storage')
-const {QueryTypes} = require('sequelize');
+const { queryType, Sequelize } = require('sequelize');
+const Op = Sequelize.Op;
+
 //Se crean las rutas para una API REST con los diferente metodos
 
 router.get('/', async (req, res) => {
@@ -9,31 +11,63 @@ router.get('/', async (req, res) => {
 
     console.log(req.usuarioId);
     let productos = await Producto.findAll({
-      include:{
-        model: Promociones
-      }
+        include: {
+            model: Promociones
+        }
     });
     res.json(productos);
 
 
 });
 
+router.get('/productossinpromocion/:categoriaId', async (req, res) => {
+
+    let result = await Producto.findAll({
+        where: {
+            categoriaId: req.params.categoriaId,
+            promoId: '1'
+        }
+    });
+
+    res.json(result);
+
+});
+router.get('/productosenpromocion/:promoId', async (req, res) => {
+
+    try {
+        let result = await Producto.findAll({
+            include: {
+                model: Categoria
+            },
+            where: {
+                promoId: req.params.promoId,
+            }
+        });
+
+        res.json(result);
+    } catch (error) {
+        console.log(error.message);
+
+    }
+
+});
+
 router.get('/productosBycategori/:categoriaId', async (req, res) => {
 
     let productbycategory = await Producto.findAll({
-      include:{
-        model: Promociones
-      },
+        include: {
+            model: Promociones
+        },
         where: {
             categoriaId: req.params.categoriaId
         }
     });
     let result = JSON.parse(JSON.stringify(productbycategory));
 
-    result.map((item,i ) => {
+    result.map((item, i) => {
         //console.log(json[i]);
 
-        result[i].precio = parseFloat(item.precio - ( item.precio * item.promocione.valor )).toFixed(2)
+        result[i].precio = parseFloat(item.precio - (item.precio * item.promocione.valor)).toFixed(2)
 
     });
 
@@ -45,7 +79,7 @@ router.get('/productosBycategori/:categoriaId', async (req, res) => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get('/ProdXCat', async (req, res) => { //Consulta para productos
-    const ProductCat = await Conexion.query("select p.producto, p.precio, c.categoria AS Categoria, p.estado from productos p inner join categoria c ON p.categoriaId = c.categoriaId", {type:QueryTypes.SELECT});
+    const ProductCat = await Conexion.query("select p.producto, p.precio, c.categoria AS Categoria, p.estado from productos p inner join categoria c ON p.categoriaId = c.categoriaId", { type: QueryTypes.SELECT });
     console.log(ProductCat)
     res.json(ProductCat);
 });
@@ -55,7 +89,7 @@ router.get('/ProdMasV', async (req, res) => { //Consulta para productos mas vend
     const ProdMasV = await Conexion.query(`SELECT d.nombreProducto as Producto, SUM(d.unidades) AS Cantidad, ROUND(SUM(d.precio * d.unidades) , 2) AS Total, o.fecha AS Fecha FROM
     ordens o INNER JOIN ordendetalles d USING(ordenId)
     WHERE Fecha=CURDATE()
-    GROUP BY Producto ORDER BY Cantidad DESC`, {type:QueryTypes.SELECT});
+    GROUP BY Producto ORDER BY Cantidad DESC`, { type: QueryTypes.SELECT });
     //console.log(ProductCat)
     res.json(ProdMasV);
 });
@@ -64,7 +98,7 @@ router.get('/VentasG', async (req, res) => { //Consulta para productos mas vendi
     const VentasG = await Conexion.query(`SELECT o.ordenId, o.mesaId, o.tipo_orden, o.tipo_pago, o.descuento, o.total,
     o.cambio, o.fecha, o.hora FROM ordens o
     WHERE Fecha=CURDATE()
-    ORDER BY ordenId ASC`, {type:QueryTypes.SELECT});
+    ORDER BY ordenId ASC`, { type: QueryTypes.SELECT });
     //console.log(ProductCat)
     res.json(VentasG);
 });
@@ -74,8 +108,8 @@ router.get('/VentasD', async (req, res) => { //Consulta para detalle de lo que s
     SELECT d.nombreProducto as Producto, d.unidades AS Cantidad, m.num_mesa AS Mesa, d.precio AS Precio, o.fecha AS Fecha, o.hora AS Hora
     FROM (ordens o INNER JOIN ordendetalles d USING(ordenId)) INNER JOIN mesas m USING(mesaId)
     WHERE o.fecha=CURDATE() ORDER BY Hora,Fecha DESC
-    `, {type:QueryTypes.SELECT});
-   // console.log(ProductCat)
+    `, { type: QueryTypes.SELECT });
+    // console.log(ProductCat)
     res.json(VentasD);
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
