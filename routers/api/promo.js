@@ -36,6 +36,16 @@ router.post('/', async (req, res) => {
 router.put('/descuentoporproducto/:promoId', async (req, res) => { //estas rutas reciben parametros
 
 
+  let promo = await Promociones.findOne({
+      where: {
+          promoId: req.params.promoId
+      }
+  });
+
+  const validarEstado = JSON.parse(JSON.stringify(promo));
+
+  if(validarEstado.estado === '1'){
+
     const listToAdd = req.body.data.split(","); //estas rutas reciben parametros
     // var errores = 0;
     for (let i = 0; i < listToAdd.length; i++) {
@@ -53,6 +63,9 @@ router.put('/descuentoporproducto/:promoId', async (req, res) => { //estas rutas
             console.log(error.message);
         }
     }
+  }else {
+    return res.status(422).json({ error: 'La orden se encuentra inactiva.' });
+  }
 
     // if (errores > 0) {
     //     return res.status(422).json(
@@ -70,6 +83,24 @@ router.put('/descuentoporproducto/:promoId', async (req, res) => { //estas rutas
 
 
 router.put('/:promoId', async (req, res) => { //estas rutas reciben parametros
+
+    let promo = await Promociones.findOne({
+        where: {
+            promoId: req.params.promoId
+        }
+    });
+
+    const validarEstado = JSON.parse(JSON.stringify(promo));
+
+    if(validarEstado.estado === '1'){
+      await Producto.update({promoId: 1},{ // funcion para actualizar
+
+          where: {
+              promoId: req.params.promoId
+          }
+      });
+    }
+
     await Promociones.update(req.body, { // funcion para actualizar
         where: {
             promoId: req.params.promoId

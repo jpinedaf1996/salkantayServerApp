@@ -103,6 +103,13 @@ document.querySelector("#formWithCheck").addEventListener("submit", async (event
         'data': getCheckBoxChecked()
     })).request();
 
+    if(response.error){
+      alertify.error(response.error);
+    }else {
+      alertify.success(response.success);
+    }
+    //console.log(response.error);
+
 });
 
 document.querySelector("#promoForm").addEventListener("submit", async (event) => {
