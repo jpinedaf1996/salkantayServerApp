@@ -6,35 +6,6 @@ Proposito de esta pagina: Esta es la pagina de reportes
 aqui se gestionanran los reportes que se generan
 -->
     <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
-    <style id="CustomT">
-        #MasTable {
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        #MasTable td,
-        #MasTable th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        #MasTable tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        #MasTable tr:hover {
-            background-color: #ddd;
-        }
-
-        #MasTable th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #023374;
-            color: white;
-        }
-    </style>
     <!-- cards TAbles -->
 
     <body class="body__menu" >
@@ -51,6 +22,13 @@ aqui se gestionanran los reportes que se generan
                     onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
                     <div class="card-body text-center">
                         <p class="card-text"><strong><i>MAS VENDIDOS</i></strong></p>
+                    </div>
+                </div>
+
+                <div id="GenOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
+                    onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
+                    <div class="card-body">
+                        <p class="card-text"><strong><i>VENTAS GENERALES</i></strong></p>
                     </div>
                 </div>
 
@@ -240,6 +218,61 @@ aqui se gestionanran los reportes que se generan
                 <hr>
             </div>
 
+            <!--REPORTE GENERAL-->
+            <div id="GenOp" class="d-none main-container-list">
+                <!-- Reportes ordenar lista de manera ascendente -->
+                <center>
+                    <table>
+                        <tr>
+                            <td>Desde</td>
+                            <td>Hasta</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="date" class="form-control" id="fechaG1">
+                            </td>
+                            <td>
+                                <input type="date" class="form-control" id="fechaG2">
+
+                            </td>
+                            <td><button class="btn btn-success ver" onclick="makePdfGen1()">Cargar reporte</button> </td>
+                            <td><button class="btn btn-success ver" onclick="makePdfGen2()">Reporte Diario</button> </td>
+                        </tr>
+                    </table>
+                </center>
+                <h1 class="text-white">LISTA DE VENTAS GENERALES DEL DIA</h1>
+
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div id="ListaGenTable" class="card-body">
+                                <h3 class="text-dark text-center">LISTA DE VENTAS GENERALES DEL DIA</h3>
+                                <table id="TableUser"
+                                    class="borderless table table-responsive-lg text-dark text-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th><strong>N# Orden</strong></th>
+                                            <th><strong>Mesa</strong></th>
+                                            <th><strong>Tipo de orden</strong></th>
+                                            <th><strong>Tipo de pago</strong></th>
+                                            <th><strong>Descuento</strong></th>
+                                            <th><strong>Total</strong></th>
+                                            <th><strong>Cambio</strong></th>
+                                            <th><strong>Fecha</strong></th>
+                                            <th><strong>Hora</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="container-list-general">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div> <!-- Fin del container -->
 
         <hr>
@@ -250,6 +283,7 @@ aqui se gestionanran los reportes que se generan
             <script src="/public/js/repoProductoMasV.js"></script>
             <script src="/public/js/repoVentas.js"></script>
             <script src="/public/js/repoX.js"></script>
+            <script src="/public/js/repoGeneral.js"></script>
 
 
 
@@ -297,6 +331,13 @@ aqui se gestionanran los reportes que se generan
                                 // getListTable4();
                             }
                             lastElemnt = document.getElementById('XoP');
+                            break;
+                        case 'GenOption':
+                            if ($("#GenOp").hasClass("d-none")) {
+                                $("#GenOp").removeClass("d-none");
+                                 getListTable5();
+                            }
+                            lastElemnt = document.getElementById('GenOp');
                             break;
 
                         default:

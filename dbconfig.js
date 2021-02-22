@@ -12,7 +12,6 @@ const InformacionModel = require('./models/informacion');
 
 const bcrypt = require('bcryptjs');
 
-
 /**
  * se genera la Conexion de la DB
  *
@@ -56,6 +55,7 @@ ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
 
 /**
  * Se sincroniza con la base de datos
+ *
  *
  *
  */

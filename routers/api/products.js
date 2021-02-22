@@ -60,6 +60,15 @@ router.get('/ProdMasV', async (req, res) => { //Consulta para productos mas vend
     res.json(ProdMasV);
 });
 
+router.get('/VentasG', async (req, res) => { //Consulta para productos mas vendidos Falta el WHERE o.fecha=CURDATE()
+    const VentasG = await Conexion.query(`SELECT o.ordenId, o.mesaId, o.tipo_orden, o.tipo_pago, o.descuento, o.total,
+    o.cambio, o.fecha, o.hora FROM ordens o
+    WHERE Fecha=CURDATE()
+    ORDER BY ordenId ASC`, {type:QueryTypes.SELECT});
+    //console.log(ProductCat)
+    res.json(VentasG);
+});
+
 router.get('/VentasD', async (req, res) => { //Consulta para detalle de lo que se vendio Falta el WHERE o.fecha=CURDATE()
     const VentasD = await Conexion.query(`
     SELECT d.nombreProducto as Producto, d.unidades AS Cantidad, m.num_mesa AS Mesa, d.precio AS Precio, o.fecha AS Fecha, o.hora AS Hora

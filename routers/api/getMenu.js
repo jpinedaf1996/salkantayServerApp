@@ -82,5 +82,4 @@ router.delete('/delete/:ordendetId', async (req, res) => { //estas rutas reciben
     });
     res.json({ success: 'Se ha borrado un registro.' });
 });
-
 module.exports = router; // se exporta el router hacia api.js

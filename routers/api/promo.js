@@ -28,6 +28,16 @@ router.get('/activas', async (req, res) => {
     });
     res.json(promo);
 });
+router.get('/activas', async (req, res) => {
+    let promo = await Promociones.findAll({
+        order: [
+            ['PromoId', 'DESC']
+        ],where: {
+            estado: '1'
+        }
+    });
+    res.json(promo);
+});
 router.post('/', async (req, res) => {
     await Promociones.create(req.body);
 

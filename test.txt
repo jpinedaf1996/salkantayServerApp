@@ -1,0 +1,3 @@
+SELECT MONTH(o.fecha) AS Mes, d.nombreProducto as Producto, SUM(d.unidades) AS Cantidad, ROUND(SUM(d.precio * d.unidades) , 2) AS Total, o.fecha AS Fecha  FROM ordens o INNER JOIN ordendetalles d USING(ordenId)
+    WHERE o.fecha BETWEEN '2021-01-01' AND '2021-02-28'
+    GROUP BY Producto ORDER BY Mes ASC
