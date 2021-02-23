@@ -18,10 +18,7 @@ const bcrypt = require('bcryptjs');
  */
 const Conexion = new Sequelize('salkantaydb', 'root', 'catolica', {
   host: 'localhost',
-  dialect: 'mariadb',
-  dialectOptions: {
-    timezone: 'America/El_Salvador',
-  }
+  dialect: 'mariadb'
 });
 
 /**

@@ -1,6 +1,6 @@
  // FUNCIONES PARA VISUALIZAR ventas
  const getListTable4 = async () => {
-    const response = await new GetInfoByFetch(`${url.products}VentasD`).request();
+    const response = await new GetInfoByFetch(`${url.apiReportesGenerales}VentasD`).request();
      
      document.getElementById('container-list-table4').innerHTML = " ";
      if (response.length === 0) {

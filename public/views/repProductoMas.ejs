@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,56 +18,69 @@
         }
     </SCRIPT>
 </head>
-<% const prod = JSON.parse(detalleM) %>
-<!--Aqui va el estilo-->
-<style id="CustomT">
-    #MasTable {
-      font-family: Arial, Helvetica, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
-    
-    #MasTable td, #MasTable th {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    
-    #MasTable tr:nth-child(even){background-color: #f2f2f2;}
-    
-    #MasTable tr:hover {background-color: #ddd;}
-    
-    #MasTable th {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      text-align: left;
-      background-color: #023374;
-      color: white;
-    }
-    </style>
-<body onload="imprimir();">
+<% const prod=JSON.parse(detalleM) %>
+    <!--Aqui va el estilo-->
+    <style id="CustomT">
+        #MasTable {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-                    <center><h3 class="text-dark text-center">PRODUCTOS MAS VENDIDOS</h3></center>
-                    <table id="MasTable" class="borderless table table-responsive-lg text-dark text-center">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th><strong>Producto</strong></th>
-                                <th><strong>Cantidad</strong></th>
-                                <th><strong>Total</strong></th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% prod.forEach(function(detalleProd){ %>
-                            <tr >
-                                <td><%= detalleProd.Producto %></td>
-                                <td><%= detalleProd.Cantidad %></td>
-                                <td>$<%= detalleProd.Total %></td>
-                                     
-                            </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                    <!-- 
+        #MasTable td,
+        #MasTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #MasTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #MasTable tr:hover {
+            background-color: #ddd;
+        }
+
+        #MasTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #023374;
+            color: white;
+        }
+    </style>
+
+    <body onload="imprimir();">
+
+        <center>
+            <h3 class="text-dark text-center">PRODUCTOS MAS VENDIDOS</h3>
+        </center>
+        <table id="MasTable" class="borderless table table-responsive-lg text-dark text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th><strong>Producto</strong></th>
+                    <th><strong>Cantidad</strong></th>
+                    <th><strong>Total</strong></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% prod.forEach(function(detalleProd){ %>
+                    <tr>
+                        <td>
+                            <%= detalleProd.Producto %>
+                        </td>
+                        <td>
+                            <%= detalleProd.Cantidad %>
+                        </td>
+                        <td>$<%= detalleProd.Total %>
+                        </td>
+
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+        <!-- 
                     <table width="100%"
                             style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
                             <tr>
@@ -74,6 +88,6 @@
                                 <td><b></b></td>
                             </tr>
                         </table> -->
-</body>
-</html>
+    </body>
 
+</html>

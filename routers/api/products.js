@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const { Producto, Conexion, Promociones, Categoria } = require('../../dbconfig');
+const { Producto, Promociones, Categoria } = require('../../dbconfig');
 const upload = require('../middlewares/storage')
-const { queryType, Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
 //Se crean las rutas para una API REST con los diferente metodos
@@ -76,43 +76,6 @@ router.get('/productosBycategori/:categoriaId', async (req, res) => {
     res.json(result);
 
 });
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-router.get('/ProdXCat', async (req, res) => { //Consulta para productos
-    const ProductCat = await Conexion.query("select p.producto, p.precio, c.categoria AS Categoria, p.estado from productos p inner join categoria c ON p.categoriaId = c.categoriaId", { type: QueryTypes.SELECT });
-    console.log(ProductCat)
-    res.json(ProductCat);
-});
-
-
-router.get('/ProdMasV', async (req, res) => { //Consulta para productos mas vendidos Falta el WHERE o.fecha=CURDATE()
-    const ProdMasV = await Conexion.query(`SELECT d.nombreProducto as Producto, SUM(d.unidades) AS Cantidad, ROUND(SUM(d.precio * d.unidades) , 2) AS Total, o.fecha AS Fecha FROM
-    ordens o INNER JOIN ordendetalles d USING(ordenId)
-    WHERE Fecha=CURDATE()
-    GROUP BY Producto ORDER BY Cantidad DESC`, { type: QueryTypes.SELECT });
-    //console.log(ProductCat)
-    res.json(ProdMasV);
-});
-
-router.get('/VentasG', async (req, res) => { //Consulta para productos mas vendidos Falta el WHERE o.fecha=CURDATE()
-    const VentasG = await Conexion.query(`SELECT o.ordenId, o.mesaId, o.tipo_orden, o.tipo_pago, o.descuento, o.total,
-    o.cambio, o.fecha, o.hora FROM ordens o
-    WHERE Fecha=CURDATE()
-    ORDER BY ordenId ASC`, { type: QueryTypes.SELECT });
-    //console.log(ProductCat)
-    res.json(VentasG);
-});
-
-router.get('/VentasD', async (req, res) => { //Consulta para detalle de lo que se vendio Falta el WHERE o.fecha=CURDATE()
-    const VentasD = await Conexion.query(`
-    SELECT d.nombreProducto as Producto, d.unidades AS Cantidad, m.num_mesa AS Mesa, d.precio AS Precio, o.fecha AS Fecha, o.hora AS Hora
-    FROM (ordens o INNER JOIN ordendetalles d USING(ordenId)) INNER JOIN mesas m USING(mesaId)
-    WHERE o.fecha=CURDATE() ORDER BY Hora,Fecha DESC
-    `, { type: QueryTypes.SELECT });
-    // console.log(ProductCat)
-    res.json(VentasD);
-});
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.get('/findOne/:productoId', async (req, res) => {
 

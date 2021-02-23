@@ -17,7 +17,7 @@ Index Css
     --text-side:#ffff;
     --hover-boder:var(--nav-bar);
     --bg-hover:rgba(59, 59, 59, 0.301);
-    --body-color:#ffffff;
+    --body-color:#fff;
 
 }
 
@@ -37,7 +37,29 @@ body {
     font-family: 'Maven Pro', sans-serif;
     background-color: var(--body-color);
 }
+.reportes-name-container{
+    border: 2px solid white;
+    cursor: pointer;
+    color: white;
+    height: 50px;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2a83bb;
+}
+.reportes-name-container:hover{
+    background-color: #0a4575;
+}
 
+.reportes-name-container:active{
+    background-color: #5118ad;
+}
+
+.reportes-name-container:focus{
+    background-color: #ff1414;
+}
 .orden-pending h4 {
   margin-top: 25px;
   color: white;

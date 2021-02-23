@@ -1,4 +1,4 @@
-const IPV4 = 'http://192.168.0.4:3000';
+const IPV4 = 'http://192.168.0.5:3000';
 
 const url = {
      apiuser: IPV4 + '/apiv0.1/users/',
@@ -10,7 +10,8 @@ const url = {
      apiclientes: IPV4 + '/apiv0.1/cliente',
      apiInfo: IPV4 + '/apiv0.1/info/',
      apipromo: IPV4 + '/apiv0.1/promociones/',
-     apiMenu: IPV4 + '/apiv0.1/menu/'
+     apiMenu: IPV4 + '/apiv0.1/menu/',
+     apiReportesGenerales: IPV4 + '/apiv0.1/reportesgenerales/'
 }
 
 function GetInfoByFetch(url, method = 'GET', body) {

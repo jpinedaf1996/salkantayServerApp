@@ -14,6 +14,7 @@ const apiOrdenRouter = require('./api/orden');
 const apiOrdenDetRouter = require('./api/ordendet');
 const apiPromoRouter = require('./api/promo');
 const apiReports = require('./api/reports');
+const apiReportesGenerales = require('./api/reportesgenerales');
 const apiInfoRouter = require('./api/info');
 const menuRouter = require('./api/getMenu');
 
@@ -33,6 +34,7 @@ router.use('/promociones',middleware.validarToken ,apiPromoRouter);
 router.use('/info',middleware.validarToken ,apiInfoRouter);
 router.use('/menu',menuRouter);
 router.use('/reportes', apiReports);
+router.use('/reportesgenerales', apiReportesGenerales);
 
 
 

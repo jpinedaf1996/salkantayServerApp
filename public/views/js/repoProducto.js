@@ -3,7 +3,7 @@
 
 const getListTable2 = async () => {
     //let response = await new GetInfoByFetch(url.products).request();
-    const response = await new GetInfoByFetch(`${url.products}ProdXCat`).request();
+    const response = await new GetInfoByFetch(`${url.apiReportesGenerales}ProdXCat`).request();
 
     document.getElementById('container-list-table2').innerHTML = " ";
     if (response.length === 0) {
@@ -17,8 +17,7 @@ const getListTable2 = async () => {
                      <td>${productos.producto}</td>
                      <td>$${productos.precio}</td>
                      <td>${productos.Categoria}</td>
-                     <td>${productos.estado == 1 ? "Inactivo" : "Activo"}</td>
-                           
+                     <td>${productos.estado == 1 ? "Inactivo" : "Activo"}</td>              
                  </tr>
              `;
         document.getElementById('container-list-table2').insertAdjacentHTML('beforeEnd', table);
@@ -27,8 +26,8 @@ const getListTable2 = async () => {
 };
 
 function makePdf1() {
-    window.open("http://localhost:3000/apiv0.1/reportes/repProducto/"+sessionStorage.getItem("token"), 
-    "PRECUENTA", 
-    "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
+    window.open("http://localhost:3000/apiv0.1/reportes/repProducto/" + sessionStorage.getItem("token"),
+        "PRECUENTA",
+        "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
 
 }
