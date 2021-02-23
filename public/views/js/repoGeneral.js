@@ -9,7 +9,13 @@ const getListTable5 = async () => {
         document.getElementById('container-list-general').innerHTML = "<p class='text-white'> No hay informacion disponible </p>";
     }
 
+    document.getElementById('fechaOntableVentas').innerHTML = "HOY: "+response[0].fecha;
+    let totalFactura = 0; 
+    let totalCambio = 0; 
+
     response.map((VentasG) => {
+        totalFactura += VentasG.total; 
+        totalCambio += VentasG.cambio;
         const table = `
                  <tr >
                     <td>${VentasG.ordenId}</td>
@@ -18,8 +24,8 @@ const getListTable5 = async () => {
                     <td>${(VentasG.tipo_orden === 'M') ? 'MESA' : 'LLEVAR'}</td>
                     <td>${(VentasG.tipo_pago === 't') ? 'Tarjeta': 'Efectivo'}</td>
                     <td>${VentasG.descuento}</td>
-                    <td style="font-size: 20px; text-align:right; "><span class="badge badge-success">$${VentasG.total}</span> </td>
-                    <td style="font-size: 20px; text-align:right;" ><span class="badge badge-danger">$${VentasG.cambio}</span></td>
+                    <td style="font-size: 20px; text-align:right; "><span class="badge badge-success">$${parseFloat(VentasG.total).toFixed(2)}</span> </td>
+                    <td style="font-size: 20px; text-align:right;" ><span class="badge badge-danger">$${parseFloat(VentasG.cambio).toFixed(2)}</span></td>
                     <td>${VentasG.fecha}</td>
                     <td>${VentasG.hora}</td>
                     <td class="text-center"><i class="fas text-success fa-print"></i></td>
@@ -28,7 +34,9 @@ const getListTable5 = async () => {
              `;
         document.getElementById('container-list-general').insertAdjacentHTML('beforeEnd', table);
 
-    })
+    });
+    document.getElementById('totalFactura').innerHTML = "$"+ totalFactura ;
+    document.getElementById('totalCambio').innerHTML =  "$"+ totalCambio;
 };
 
 async function filterSales() {
@@ -48,12 +56,18 @@ async function filterSales() {
         document.getElementById('container-list-table3').innerHTML = "<p class='text-white'> No hay mesas disponibles </p>";
     }
     document.getElementById('container-list-general').innerHTML = " ";
-    document.getElementById('fechaOntable').innerHTML = "";
-    document.getElementById('fechaOntable').innerHTML = "DEL: "+ fecha1 + " AL: " + fecha2 ;
 
-    let totalFinal = 0; 
+    document.getElementById('fechaOntableVentas').innerHTML = "";
+    document.getElementById('fechaOntableVentas').innerHTML = "DEL: "+ fecha1 + " AL: " + fecha2 ;
+
+    let totalFactura = 0; 
+    let totalCambio = 0; 
 
     response.map((VentasG) => {
+
+    totalFactura += VentasG.total; 
+    totalCambio += VentasG.cambio;
+
         const table = `
                  <tr >
                     <td>${VentasG.ordenId}</td>
@@ -62,8 +76,8 @@ async function filterSales() {
                     <td>${(VentasG.tipo_orden === 'M') ? 'MESA' : 'LLEVAR'}</td>
                     <td>${(VentasG.tipo_pago === 't') ? 'Tarjeta': 'Efectivo'}</td>
                     <td>${VentasG.descuento}</td>
-                    <td style="font-size: 20px; text-align:right; "><span class="badge badge-success">$${VentasG.total}</span> </td>
-                    <td style="font-size: 20px; text-align:right;" ><span class="badge badge-danger">$${VentasG.cambio}</span></td>
+                    <td style="font-size: 20px; text-align:right; "><span class="badge badge-success">$${parseFloat(VentasG.total).toFixed(2)}</span> </td>
+                    <td style="font-size: 20px; text-align:right;" ><span class="badge badge-danger">$${parseFloat(VentasG.cambio).toFixed(2)}</span></td>
                     <td>${VentasG.fecha}</td>
                     <td>${VentasG.hora}</td>
                     <td class="text-center"><i class="fas text-success fa-print"></i></td>
@@ -72,13 +86,15 @@ async function filterSales() {
              `;
         document.getElementById('container-list-general').insertAdjacentHTML('beforeEnd', table);
 
-    })
+    });
+    document.getElementById('totalFactura').innerHTML = "$"+ totalFactura ;
+    document.getElementById('totalCambio').innerHTML =  "$"+ totalCambio;
 
    // document.getElementById('totalFinal').innerHTML = "$ "+ parseFloat(totalFinal).toFixed(2);
 }
 
-function reload(params) {
-    getListTable3();
+function reloadSales(params) {
+    getListTable5();
 }
 
 

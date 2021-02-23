@@ -94,27 +94,26 @@ aqui se gestionanran los reportes que se generan
                                 </tr>
                             </table>
                             <br>
+                            <table class="table w-100">
+                                <tr>
+                                    
+                                    <th style="text-align:left; font-size: 20px;" colspan="2">FECHA: <span id="fechaOntable">  </span></th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center"></th>
+                                    <th style="text-align:right; font-size: 20px;" colspan="2">Total: <strong id="totalFinal">  </strong> </th>
+                                    
+                                </tr>
+                            </table>
                             <table style="text-align:left" id="TableUser"
                                 class="table-bordered table table-hover text-dark ">
                                 <thead class="thead-white">
 
-                                    
-                                    <tr>
-                                        <th style="text-align:center"></th>
-                                        <th class="bg-info text-white" colspan="2">FECHA: <span id="fechaOntable">  </span></th>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center"></th>
-                                        <th style="text-align:right; font-size: 20px;" colspan="2">Total: <strong id="totalFinal">  </strong> </th>
-                                        
-                                    </tr>
-                                    
-                                    
                                     <tr class="bg-info text-white">
-                                        <th style="width: 20%;text-align: center!important;">Producto</th>
-                                        <th style="width: 20%;">Cantidad de producto</th>
-                                        <th style="width: 20%;">Precio total</th>
+                                        <th style="width: 40%;text-align: center!important;"></th>
+                                        <th style="width: 20%;">CANTIDAD POR PRODUCTO</th>
+                                        <th  style="width: 20%;">TOTAL POR PRODUCTO</th>
 
                                     </tr>
 
@@ -244,13 +243,24 @@ aqui se gestionanran los reportes que se generan
                                     
                                 </tr>
                             </table>
+                            <table class="table w-100">                              
+                                <tr >
+                                    <th colspan="2" style="text-align: right;" id="fechaOntableVentas"> </th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Total facturado :</th>
+                                    <th style="text-align: right;  font-size: 20px;" > <strong id="totalFactura"> </strong></th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Total en cambio :</th>
+                                    <th style="text-align: right;  font-size: 20px;" > <strong id="totalCambio"> </strong></th>
+                                </tr>
+                            </table>
                             <table id="TableUser" class="table-bordered table table-hover text-dark ">
                                 <thead >
-                                    <tr>
-                                        <th colspan="6"></th>
-                                                                                
-                                        <th colspan="5"> FECHA 20-20-20</th>
-                                    </tr>
+                                    
                                 
                                     <tr class="bg-dark text-white">
                                         <th><strong>N# Orden</strong></th>
@@ -265,14 +275,7 @@ aqui se gestionanran los reportes que se generan
                                         <th><strong>Hora</strong></th>
                                         <th><strong>Imprimir</strong></th>
                                     </tr>
-                                    <tr>
-                                        <th colspan="6"></th>
-                                        
-                                        <th><strong>Total: $500</strong></th>
-                                        <th><strong>Total: $500</strong></th>
-
-                                        <th colspan="3"></th>
-                                    </tr>
+                                    
                                 </thead>
                                 <tbody id="container-list-general">
 

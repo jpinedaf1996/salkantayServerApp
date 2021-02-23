@@ -18,7 +18,7 @@ const getListTable3 = async () => {
                  <tr >
                      <td style='text-align: center!important;'>${ProdMasV.Producto}</td>
                      <td>${ProdMasV.Cantidad}</td>
-                     <td ><strong>$${parseFloat(ProdMasV.Total).toFixed(2)}</strong></td>
+                     <td style="text-align:right; font-size: 20px;" ><strong>$${parseFloat(ProdMasV.Total).toFixed(2)}</strong></td>
                  </tr>
              `;
         document.getElementById('container-list-table3').insertAdjacentHTML('beforeEnd', table);
@@ -59,7 +59,7 @@ async function filter() {
                  <tr >
                      <td style='text-align: center!important;'>${ProdMasV.Producto}</td>
                      <td>${ProdMasV.Cantidad}</td>
-                     <td><strong>$${parseFloat(ProdMasV.Total).toFixed(2)}</strong></td>
+                     <td style="text-align:right; font-size: 20px;"><strong>$${parseFloat(ProdMasV.Total).toFixed(2)}</strong></td>
                  </tr>
              `;
         document.getElementById('container-list-table3').insertAdjacentHTML('beforeEnd', table);
