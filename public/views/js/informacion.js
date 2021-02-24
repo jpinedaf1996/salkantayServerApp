@@ -7,8 +7,8 @@
             const response = await new GetInfoByFetch(url.apiInfo).request();
             if (Object.keys(response).length < 1) {
                 let List =
-                            ` <tr>
-                                <td colspan="5">Sin Informacion</td>
+                            `<tr>
+                                <td class="text-align:center" colspan="9">Sin Informacion</td>
                             </tr>`;
                 content.insertAdjacentHTML('beforeEnd', List);
             }

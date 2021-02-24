@@ -1,4 +1,4 @@
-const {queryType , Sequelize} = require('sequelize'); // Se importa la libreria
+const { queryType, Sequelize } = require('sequelize'); // Se importa la libreria
 const ProdModel = require('./models/productos'); // Se importa la funcion que esta creando la tabla
 const CateModel = require('./models/categorias');
 const UserModel = require('./models/usuarios');
@@ -10,18 +10,15 @@ const PromocionesModel = require('./models/promociones');
 const ticketventaModel = require('./models/ticketventa');
 const InformacionModel = require('./models/informacion');
 
-
+const bcrypt = require('bcryptjs');
 
 /**
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('salkantaydb', 'admin', 'password', {
-    host: 'localhost',
-    dialect: 'mysql',
-    dialectOptions: {
-        timezone: 'America/El_Salvador',
-    }
+const Conexion = new Sequelize('feb24test', 'root', '2125', {
+  host: 'localhost',
+  dialect: 'mariadb'
 });
 
 /**
@@ -43,36 +40,68 @@ const Info = InformacionModel(Conexion, Sequelize);
 
 // RELACIONES
 
-Categoria.hasMany(Producto, { as: 'categorias', foreignKey: 'categoriaId', onDelete: 'restrict' });
-Orden.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId', onDelete: 'cascade' });
+Producto.belongsTo(Categoria, { foreignKey: 'categoriaId', onDelete: 'restrict' });
+Orden.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId', onDelete: 'restrict' });
 Orden.belongsTo(Mesa, { foreignKey: 'mesaId', onDelete: 'cascade' });
 OrdenDet.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
-ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
+
+Producto.belongsTo(Promociones, { foreignKey: 'promoId', onDelete: 'restrict' });
+
+ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'restrict' });
 
 
 /**
  * Se sincroniza con la base de datos
  *
- *
- */ 
+ * 
+ * 
+ */
 Conexion.sync({ force: false })
-    .then(() => {
-        console.log('Databases has been updated!!')
-    });
+  .then(() => {
+    createInit()
+    console.log('Databases has been updated!!')
+  });
 /**
  *se exportan los objetos para ser reutilizados
  *
  */
+async function createInit() {
+
+  try {
+
+    await Promociones.create({
+      promoId: '1',
+      desc: 'Sin promo',
+      valor: '0.00'
+    });
+
+    await Usuarios.create({
+      usuarioId: '1',
+      usuario: '@admin',
+      pass: bcrypt.hashSync('catolica2021', 10),
+      tipo: '1'
+    });
+
+
+  } catch (error) {
+
+    console.log("La promocion y el usuario inicial ya han sido creados: " + error.message);
+
+  }
+  
+}
+
+
 module.exports = {
-    Conexion,
-    Producto,
-    Mesa,
-    Categoria,
-    Usuarios,
-    Cliente,
-    Orden,
-    OrdenDet,
-    ticketVenta,
-    Promociones,
-    Info
+  Conexion,
+  Producto,
+  Mesa,
+  Categoria,
+  Usuarios,
+  Cliente,
+  Orden,
+  OrdenDet,
+  ticketVenta,
+  Promociones,
+  Info
 };

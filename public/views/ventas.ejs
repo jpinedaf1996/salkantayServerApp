@@ -140,7 +140,8 @@ aqui se gestionanran los diferente produstos
                             </span>
                         </div>
                         <div class="col-md-6  orden-option card-center-vh">
-                            <span onclick="addNewOrdenLlevar()" class="bg-primary card-center-vh btn-new-orden-mesa"> LLEVAR </span>
+                            <span onclick="addNewOrdenLlevar()" class="bg-primary card-center-vh btn-new-orden-mesa">
+                                LLEVAR </span>
                         </div>
                     </div>
                 </div>
@@ -213,41 +214,43 @@ aqui se gestionanran los diferente produstos
                 </div>
             </div>
         </div>
-        <div class="totals row without-margen card-center-vh ">
-
-            <div class="col-md-12 ">
-
+        
+        <div class="totals row without-margen ">
+            <div class="container">
+                <hr>
                 <table class="borderless table ">
                     <tbody>
                         <tr class="alert alert-success">
-                            <th class="text-right">
-                                <strong>Total a pagar</strong>
+                            <th class="text-right float-left">
+                                <strong style="font-size:35px">Total a cobrar: </strong>
                             </th>
                             <td  class="text-right">
-                                <strong id="ct-totalApagar"">
+                                <strong style="font-size:35px" id="ct-totalApagar"">
                                     $0
                                 </strong>
                             </td>
 
                         </tr>
+<!--                         
                         <tr>
-                            <th  class="text-right">
+                            <th  class="text-right float-left">
                                 Sub total
                             </th>
-                            <td class="text-right">
+                            <td class="text-right  ">
                                 <strong id="ct-subtotal">
                                     $0
                                 </strong>
                             </td>
                         </tr>
                         <tr>
-                            <th onclick="modalPromo();"  class="text-right">
+                            <th onclick="modalPromo();"  class="text-right  float-left">
                                 <span style="cursor: pointer;">Descuento <i class="far fa-edit"></i> </span>
                             </th>
                             <td id="promoValor" class="text-right">
                                 0%
                             </td>
-                        </tr>
+                        </tr> -->
+                        
 
                     </tbody>
                 </table>
@@ -298,8 +301,7 @@ aqui se gestionanran los diferente produstos
     </div>
 
 
-    <div onclick="newOrden();" data-toggle="tooltip" data-placement="left" title="NUEVA ORDEN"
-        class="btn-new-orden">
+    <div onclick="newOrden();" data-toggle="tooltip" data-placement="left" title="NUEVA ORDEN" class="btn-new-orden">
         <i class="fas fa-plus"></i>
     </div>
 

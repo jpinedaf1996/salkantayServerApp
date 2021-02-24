@@ -6,345 +6,468 @@ Proposito de esta pagina: Esta es la pagina de reportes
 aqui se gestionanran los reportes que se generan
 -->
     <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
+
+    
     <!-- cards TAbles -->
 
-    <body class="body__menu" >
-        <div class="container text-white ">
-            <div class="row justify-content-center w-100">
-                <div id="ProdOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR USUARIOS"
-                    onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
-                    <div class="card-body">
-                        <p class="card-text"><strong><i>PRODUCTOS</i></strong></p>
+    <br>
+    <div class="container">
+        <div class="row row-cols-6">
+
+            <div id="ProdOption" onclick="changeOptionConfig(this.id)" class="reportes-name-container col">PRODUCTOS</div>
+            <div id="MasOption"  onclick="changeOptionConfig(this.id)" class="reportes-name-container col">VENTAS POR PRODUCTOS</div>
+            <div id="GenOption"  onclick="changeOptionConfig(this.id)" class="reportes-name-container col">VENTAS</div>
+            <div id="DetOption"  onclick="changeOptionConfig(this.id)" class="reportes-name-container col">DETALLES DE VENTAS</div>
+            <div id="CajaOption"  onclick="changeOptionConfig(this.id)" class="reportes-name-container col">REPORTE DE CAJA</div>
+            <div id="XOption"    onclick="changeOptionConfig(this.id)" class="reportes-name-container col">REPORTE X y Z</div>
+            
+            
+        </div>
+    </div>
+
+    <div class="justify-content-center">
+        <br>
+        <br>
+        <div id="ProdOp" class="d-none main-container-list">
+        
+            <div class="row w-100">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div id="ProductoTable" class="card-body">
+                            <h3 class="text-dark float-left"><strong>LISTADO DE PRODUCTOS</strong></h3>
+                            
+                            <button class="btn btn-success ver float-right" onclick="makePdf1()">Imprimir <i class="fas fa-print"></i></button>
+                            <table id="TableUser"
+                                class="table-bordered table table-hover text-dark border-info">
+                                <thead class="bg-info text-white">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                        <th>Cateoria</th>
+                                        <th>Estado</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="container-list-table2">
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-
-                <div id="MasOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
-                    onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
-                    <div class="card-body text-center">
-                        <p class="card-text"><strong><i>MAS VENDIDOS</i></strong></p>
-                    </div>
-                </div>
-
-                <div id="GenOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
-                    onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
-                    <div class="card-body">
-                        <p class="card-text"><strong><i>VENTAS GENERALES</i></strong></p>
-                    </div>
-                </div>
-
-                <div id="DetOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
-                    onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
-                    <div class="card-body">
-                        <p class="card-text"><strong><i>LISTAS VENTAS</i></strong></p>
-                    </div>
-                </div>
-
-                <div id="XOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
-                    onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 12rem;">
-                    <div class="card-body text-center">
-                        <div class="card-text"><strong><i>REPORTE X</i></strong></div>
-                    </div>
-                </div>
-
             </div>
         </div>
 
-        <div class="container-fuid justify-content-center">
 
-            <div id="ProdOp" class="d-none main-container-list">
-                <!-- Reportes Productos -->
-                <center>
-                    <table>
-                        <tr>
-                            <td><button class="btn btn-success ver" onclick="makePdf1()">Cargar reporte PDF</button> </td>
-                        </tr>
-                    </table>
-                </center>
+        <div id="MasOp" class="d-none main-container-list">
+            <!-- Reportes ordenar lista de manera ascendente -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        
+                        <div id="MasTable" class="card-body">
+                            <br>
+                            <h3 class="text-dark"><strong>REPORTE DE VENTAS POR PRODUCTOS</strong></h3>
+                            <hr>
+                            <table class="table w-100">
+                                <tr>
+                                    <td>Desde</td>
+                                    <td>Hasta</td>
+                                    <td class="6"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input value="" type="date" class="form-control" id="fechaX1">
+                                    </td>
+                                    <td>
+                                        <input value="" type="date" class="form-control" id="fechaY1">
+                                    </td>                                       
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-secondary ver  form-group" onclick="filter()">Filtrar por fechas <i class="fas fa-filter"></i></button> 
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <button class="btn btn-primary ver  form-group" onclick="reload()">Recargar reporte de hoy <i class="fas fa-sync"></i></button>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-success ver form-group" onclick="makePdf3()">Imprimir reporte actual <i class="fas fa-print"></i></button> 
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-success ver  form-group" onclick="makePdf31()">Imprimir reporte de hoy <i class="fas fa-print"></i></button>
+                                    </td>                                   
+                                </tr>
+                            </table>
+                            <br>
+                            <table class="table w-100">
+                                <tr>
+                                    
+                                    <th style="text-align:left; font-size: 20px;" colspan="2">FECHA: <span id="fechaOntable">  </span></th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center"></th>
+                                    <th style="text-align:right; font-size: 20px;" colspan="2">Total: <strong id="totalFinal">  </strong> </th>
+                                    
+                                </tr>
+                            </table>
+                            <table style="text-align:left" id="TableUser"
+                                class="table-bordered table table-hover text-dark ">
+                                <thead class="thead-white">
 
-                <h1 class="text-white">Lista de productos</h1>
+                                    <tr class="bg-info text-white">
+                                        <th style="width: 40%;text-align: center!important;"></th>
+                                        <th style="width: 20%;">CANTIDAD POR PRODUCTO</th>
+                                        <th  style="width: 20%;">TOTAL POR PRODUCTO</th>
 
-                <div class="row w-100">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div id="ProductoTable" class="card-body">
-                                <h3 class="text-dark text-center">Lista de productos</h3>
-                                <table id="TableUser"
-                                    class="borderless table table-responsive-lg text-dark text-center border border-dark">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Precio</th>
-                                            <th>Cateoria</th>
-                                            <th>Estado</th>
+                                    </tr>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody id="container-list-table2">
+                                </thead>
+                                <tbody id="container-list-table3">
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            <div id="MasOp" class="d-none main-container-list">
-                <!-- Reportes ordenar lista de manera ascendente -->
-                <center>
-                    <table>
-                        <tr>
-                            <td>Desde</td>
-                            <td>Hasta</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="date" class="form-control" id="fechaX1">
-                            </td>
-                            <td>
-                                <input type="date" class="form-control" id="fechaY1">
+        <div id="DetOp" class="d-none main-container-list">
+            <!-- Reportes ordenar lista de manera ascendente -->
+            <center>
+                <table>
+                    <tr>
+                        <td>Desde</td>
+                        <td>Hasta</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="date" class="form-control" id="fechaX2">
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" id="fechaY2">
 
-                            </td>
-                            <td><button class="btn btn-success ver" onclick="makePdf3()">Cargar reporte</button> </td>
-                            <td><button class="btn btn-success ver" onclick="makePdf31()">Reporte Diario</button> </td>
-                        </tr>
-                    </table>
-                </center>
-                <h1 class="text-white">PRODUCTOS MAS VENDIDOS</h1>
+                        </td>
+                        <td><button class="btn btn-success ver" onclick="makePdf4()">Cargar reporte</button> </td>
+                        <td><button class="btn btn-success ver" onclick="makePdf41()">Reporte Diario</button> </td>
+                    </tr>
+                </table>
+            </center>
+            <h1 class="text-white">LISTA DE VENTAS DETALLADA</h1>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div id="MasTable" class="card-body">
-                                <h3 class="text-dark text-center">LISTA DE PRODUCTOS MAS VENDIDOS DEL DIA</h3>
-                                <table style="text-align:center" id="TableUser" class="borderless table table-responsive-md text-dark text-center">
-                                    <thead   class="thead-dark">
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div id="ListaVTable" class="card-body">
+                            <h3 class="text-dark text-center">LISTA DE VENTAS DETALLADA</h3>
+                            <table id="TableUser" class="borderless table table-responsive-lg text-dark text-center">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Mesa</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="container-list-table4">
 
-                                        <tr >
-                                            <th style="text-align:center" >Producto</th>
-                                            <th style="text-align:center" >Cantidad</th>
-                                            <th style="text-align:center"> Total</th>
-
-                                        </tr>
-
-                                    </thead>
-                                    <tbody id="container-list-table3">
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- REP X-->
+        <div id="XoP" class="d-none main-container-list">
+            <!-- Reporte x -->
+            <center>
+                <h2 class="text-white">Reporte X</h2>
+                <table>
+                    <tr>
+                        <td><button class="btn btn-success btn-lg ver form-group form-control" onclick="makePdf5()">IMPRIMIR Z MENSUAL <i class="fas fa-print"></i></button> </td>
+                    </tr>
+                    <tr>
+                        
+                        <td><button class="btn btn-primary btn-lg  ver form-control" onclick="makePdf51()">IMPRIMIR REPORTE X <i class="fas fa-print"></i></button> </td>
+                    </tr>
+                </table>
+            </center>
 
+        </div>
 
-            <div id="DetOp" class="d-none main-container-list">
-                <!-- Reportes ordenar lista de manera ascendente -->
-                <center>
-                    <table>
-                        <tr>
-                            <td>Desde</td>
-                            <td>Hasta</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="date" class="form-control" id="fechaX2">
-                            </td>
-                            <td>
-                                <input type="date" class="form-control" id="fechaY2">
+        <!--REPORTE GENERAL-->
+        <div id="GenOp" class="d-none main-container-list">
+            <!-- Reportes ordenar lista de manera ascendente -->
+        
+            <div class="row ">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div id="ListaGenTable" class="card-body">
+                            <h3 class="text-dark">LISTA DE VENTAS GENERALES DEL DIA</h3>
+                            <table class="table">
+                                <tr>
+                                    <td>Desde</td>
+                                    <td>Hasta</td>
+                                    <td colspan="4"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="date" class="form-control" id="fechaG1">
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" id="fechaG2">
+                                    </td>
 
-                            </td>
-                            <td><button class="btn btn-success ver" onclick="makePdf4()">Cargar reporte</button> </td>
-                            <td><button class="btn btn-success ver" onclick="makePdf41()">Reporte Diario</button> </td>
-                        </tr>
-                    </table>
-                </center>
-                <h1 class="text-white">LISTA DE VENTAS DETALLADA DEL DIA</h1>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-secondary ver  form-group" onclick="filterSales()">Filtrar por fechas <i class="fas fa-filter"></i></button> 
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <button class="btn btn-primary ver  form-group" onclick="reloadSales()">Recargar reporte de hoy <i class="fas fa-sync"></i></button>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-success ver form-group" onclick="makePdfGen1()">Imprimir reporte actual <i class="fas fa-print"></i></button> 
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-success ver  form-group"  onclick="makePdfGen2()">Imprimir reporte de hoy <i class="fas fa-print"></i></button>
+                                    </td> 
+                                    
+                                </tr>
+                            </table>
+                            <table class="table w-100">                              
+                                <tr >
+                                    <th colspan="2" style="text-align: right;" id="fechaOntableVentas"> </th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Total facturado :</th>
+                                    <th style="text-align: right;  font-size: 20px;" > <strong id="totalFactura"> </strong></th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Total en cambio :</th>
+                                    <th style="text-align: right;  font-size: 20px;" > <strong id="totalCambio"> </strong></th>
+                                </tr>
+                            </table>
+                            <table id="TableUser" class="table-bordered table table-hover text-dark ">
+                                <thead >
+                                    
+                                
+                                    <tr class="bg-dark text-white">
+                                        <th><strong>N# Orden</strong></th>
+                                        <th><strong>N# TICKET</strong></th>
+                                        <th><strong>ID MESA</strong></th>
+                                        <th><strong>Tipo de orden</strong></th>
+                                        <th><strong>Tipo de pago</strong></th>
+                                        <th><strong>Descuento</strong></th>
+                                        <th><strong>Total de la factura</strong></th>
+                                        <th><strong>Cambio</strong></th>
+                                        <th><strong>Fecha</strong></th>
+                                        <th><strong>Hora</strong></th>
+                                        <th><strong>Imprimir</strong></th>
+                                    </tr>
+                                    
+                                </thead>
+                                <tbody id="container-list-general">
 
-                <div class="row ">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div id="ListaVTable" class="card-body">
-                                <h3 class="text-dark text-center">LISTA DE VENTAS DETALLADA DEL DIA</h3>
-                                <table id="TableUser"
-                                    class="borderless table table-responsive-lg text-dark text-center">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
-                                            <th>Hora</th>
-                                            <th>Fecha</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="container-list-table4">
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- REP X-->
-            <div id="XoP" class="d-none main-container-list">
-                <!-- Reporte x -->
-                <center>
-                    <h2 class="text-white">Reporte X</h2>
-                    <table>
-                        <tr>
-                            <td>Desde</td>
-                            <td>Hasta</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="date" class="form-control" id="fechaNX1">
-                            </td>
-                            <td>
-                                <input type="date" class="form-control" id="fechaNX2">
+        </div>
 
-                            </td>
-                            <td><button class="btn btn-success ver" onclick="makePdf5()">Cargar reporte</button> </td>
-                            <td><button class="btn btn-success ver" onclick="makePdf51()">Reporte Diario</button> </td>
-                        </tr>
-                    </table>
-                </center>
 
-                <hr>
-            </div>
+        <!-- SECCION DE REPORTE DE CAJAS-->
 
-            <!--REPORTE GENERAL-->
-            <div id="GenOp" class="d-none main-container-list">
-                <!-- Reportes ordenar lista de manera ascendente -->
-                <center>
-                    <table>
-                        <tr>
-                            <td>Desde</td>
-                            <td>Hasta</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="date" class="form-control" id="fechaG1">
-                            </td>
-                            <td>
-                                <input type="date" class="form-control" id="fechaG2">
+        <div id="CajaOp" class="d-none main-container-list">
+            <!-- Reportes ordenar lista de manera ascendente -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        
+                        <div id="CTable" class="card-body">
+                            <br>
+                            <h3 class="text-dark"><strong>REPORTE DE VENTAS POR PRODUCTOS</strong></h3>
+                            <hr>
+                            <table class="table w-100">
+                                <tr>
+                                    <td>Desde</td>
+                                    <td>Hasta</td>
+                                    <td class="6"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input value="" type="date" class="form-control" id="fechaC1">
+                                    </td>
+                                    <td>
+                                        <input value="" type="date" class="form-control" id="fechaC2">
+                                    </td>                                       
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-secondary ver  form-group" onclick="filterC()">Filtrar por fechas <i class="fas fa-filter"></i></button> 
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <button class="btn btn-primary ver  form-group" onclick="reloadC()">Recargar reporte de hoy <i class="fas fa-sync"></i></button>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-success ver form-group" id="btnImprimir" onclick="makePdfCaja1()">Imprimir reporte actual <i class="fas fa-print"></i></button> 
+                                    </td>
+                                    <!--   
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-success ver  form-group" onclick="makePdfCaja2('Print1')">Imprimir reporte de hoy <i class="fas fa-print"></i></button>
+                                    </td>   
+                                    -->                                
+                                </tr>
+                            </table>
+                            <br>
+                            <div id="print1" name="print1" >
+                            <table class="table w-100" id="CajaTable1">
+                                
+                                <tr>
+                                    
+                                    <th style="text-align:left; font-size: 20px;" colspan="2">FECHA: <span id="fechaOntableC">  </span></th>
+                                    
+                                </tr>
+                            </table>
+                            <table style="text-align:left" id="CajaTable"
+                                class="table-bordered table table-hover text-dark ">
 
-                            </td>
-                            <td><button class="btn btn-success ver" onclick="makePdfGen1()">Cargar reporte</button> </td>
-                            <td><button class="btn btn-success ver" onclick="makePdfGen2()">Reporte Diario</button> </td>
-                        </tr>
-                    </table>
-                </center>
-                <h1 class="text-white">LISTA DE VENTAS GENERALES DEL DIA</h1>
+                                <style id="CustomT">
+                                    #CajaTable {
+                                      font-family: Arial, Helvetica, sans-serif;
+                                      border-collapse: collapse;
+                                      width: 100%;
+                                    }
+                                    
+                                    #CajaTable td, #CajaTable th {
+                                      border: 1px solid #ddd;
+                                      padding: 8px;
+                                    }
+                                    
+                                    #CajaTable tr:nth-child(even){background-color: #f2f2f2;}
+                                    
+                                    #MasTable tr:hover {background-color: #ddd;}
+                                    
+                                    #CajaTable th {
+                                      padding-top: 12px;
+                                      padding-bottom: 12px;
+                                      text-align: left;
+                                      background-color: #3791a5;
+                                      color: white;
+                                    }
+                                    </style>
+                                <thead class="thead-white">
 
-                <div class="row ">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div id="ListaGenTable" class="card-body">
-                                <h3 class="text-dark text-center">LISTA DE VENTAS GENERALES DEL DIA</h3>
-                                <table id="TableUser"
-                                    class="borderless table table-responsive-lg text-dark text-center">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th><strong>N# Orden</strong></th>
-                                            <th><strong>Mesa</strong></th>
-                                            <th><strong>Tipo de orden</strong></th>
-                                            <th><strong>Tipo de pago</strong></th>
-                                            <th><strong>Descuento</strong></th>
-                                            <th><strong>Total</strong></th>
-                                            <th><strong>Cambio</strong></th>
-                                            <th><strong>Fecha</strong></th>
-                                            <th><strong>Hora</strong></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="container-list-general">
+                                    <tr class="bg-info text-white">
+                                        <th style="width: 40%;text-align: center!important;"><strong>ITEMS</strong></th>
+                                        <th  style="width: 20%;"><strong>TOTALES</strong></th>
 
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </tr>
+
+                                </thead>
+                                <tbody id="container-list-table6">
+
+                                </tbody>
+                            </table>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div> <!-- Fin del container -->
-
-        <hr>
-
-        <%- include('./templates/scripts.ejs'); -%>
-            <script src="/public/js/repoCliente.js"></script>
-            <script src="/public/js/repoProducto.js"></script>
-            <script src="/public/js/repoProductoMasV.js"></script>
-            <script src="/public/js/repoVentas.js"></script>
-            <script src="/public/js/repoX.js"></script>
-            <script src="/public/js/repoGeneral.js"></script>
+        </div>
 
 
 
-            <script>
 
-                $(document).ready(() => {
-                    getListTable2();
-                });
-                //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS
 
-                let lastElemnt = document.getElementById('ProdOp');
-                const changeOptionConfig = (option) => {
-                    if (lastElemnt) {
-                        lastElemnt.classList.add('d-none');
-                    }
-                    switch (option) {
+        <!--FIN DE SECCION DE REPORTE DE CAJAS-->
 
-                        case 'ProdOption':
-                            if ($("#ProdOp").hasClass("d-none")) {
-                                $("#ProdOp").removeClass("d-none");
-                                getListTable2();
-                            }
-                            lastElemnt = document.getElementById('ProdOp');
-                            break;
+    </div> <!-- Fin del container -->
 
-                        case 'MasOption':
-                            if ($("#MasOp").hasClass("d-none")) {
-                                $("#MasOp").removeClass("d-none");
-                                getListTable3();
-                            }
-                            lastElemnt = document.getElementById('MasOp');
-                            break;
+    <hr>
 
-                        case 'DetOption':
-                            if ($("#DetOp").hasClass("d-none")) {
-                                $("#DetOp").removeClass("d-none");
-                                getListTable4();
-                            }
-                            lastElemnt = document.getElementById('DetOp');
-                            break;
+    <%- include('./templates/scripts.ejs'); -%>
+        <script src="/public/js/repoCliente.js"></script>
+        <script src="/public/js/repoProducto.js"></script>
+        <script src="/public/js/repoProductoMasV.js"></script>
+        <script src="/public/js/repoVentas.js"></script>
+        <script src="/public/js/repoX.js"></script>
+        <script src="/public/js/repoGeneral.js"></script>
+        <script src="/public/js/repoCaja.js"></script>
 
-                        case 'XOption':
-                            if ($("#XoP").hasClass("d-none")) {
-                                $("#XoP").removeClass("d-none");
-                                // getListTable4();
-                            }
-                            lastElemnt = document.getElementById('XoP');
-                            break;
-                        case 'GenOption':
-                            if ($("#GenOp").hasClass("d-none")) {
-                                $("#GenOp").removeClass("d-none");
-                                 getListTable5();
-                            }
-                            lastElemnt = document.getElementById('GenOp');
-                            break;
 
-                        default:
-                            break;
-                    }
+
+        <script>
+
+            // $(document).ready(() => {
+            //     getListTable2();
+            // });
+            //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS
+
+            let lastElemnt = document.getElementById('ProdOp');
+            const changeOptionConfig = (option) => {
+                if (lastElemnt) {
+                    lastElemnt.classList.add('d-none');
                 }
+                switch (option) {
+
+                    case 'ProdOption':
+                        if ($("#ProdOp").hasClass("d-none")) {
+                            $("#ProdOp").removeClass("d-none");
+                            getListTable2();
+                        }
+                        lastElemnt = document.getElementById('ProdOp');
+                        break;
+
+                    case 'MasOption':
+                        if ($("#MasOp").hasClass("d-none")) {
+                            $("#MasOp").removeClass("d-none");
+                            getListTable3();
+                        }
+                        lastElemnt = document.getElementById('MasOp');
+                        break;
+
+                    case 'DetOption':
+                        if ($("#DetOp").hasClass("d-none")) {
+                            $("#DetOp").removeClass("d-none");
+                            getListTable4();
+                        }
+                        lastElemnt = document.getElementById('DetOp');
+                        break;
+
+                    case 'XOption':
+                        if ($("#XoP").hasClass("d-none")) {
+                            $("#XoP").removeClass("d-none");
+                            // getListTable4();
+                        }
+                        lastElemnt = document.getElementById('XoP');
+                        break;
+
+                    case 'GenOption':
+                        if ($("#GenOp").hasClass("d-none")) {
+                            $("#GenOp").removeClass("d-none");
+                            getListTable5();
+                        }
+                        lastElemnt = document.getElementById('GenOp');
+                        break;
+
+                        case 'CajaOption':
+                        if ($("#CajaOp").hasClass("d-none")) {
+                            $("#CajaOp").removeClass("d-none");
+                            getListTable6();
+                        }
+                        lastElemnt = document.getElementById('CajaOp');
+                        break;
+
+                    default:
+                        break;
+                }
+            }
 
 
 
-            </script>
+        </script>

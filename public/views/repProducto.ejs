@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,55 +21,70 @@
         table2excel.export(document.querySelectorAll("MasTable"));
     </SCRIPT>
 </head>
-<% const prod = JSON.parse(ProdL) %>
-<!--Aqui va el estilo-->
-<style id="CustomT">
-    #MasTable {
-      font-family: Arial, Helvetica, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
-    
-    #MasTable td, #MasTable th {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    
-    #MasTable tr:nth-child(even){background-color: #f2f2f2;}
-    
-    #MasTable tr:hover {background-color: #ddd;}
-    
-    #MasTable th {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      text-align: left;
-      background-color: #023374;
-      color: white;
-    }
-    </style>
-<body onload="imprimir();">
+<% const prod=JSON.parse(ProdL) %>
+    <!--Aqui va el estilo-->
+    <style id="CustomT">
+        #MasTable {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-                    <center><h3 class="text-dark text-center">LISTADO DE PRODUCTOS</h3></center>
-                    <table id="MasTable" class="borderless table table-responsive-lg text-dark text-center">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th><strong>Producto</strong></th>
-                                <th><strong>Precio</strong></th>
-                                <th><strong>Categoria</strong></th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% prod.forEach(function(ProdList){ %>
-                            <tr >
-                                <td><%= ProdList.producto %></td>
-                                <td><%= ProdList.precio %></td>
-                                <td><%= ProdList.Categoria %></td>
-                                     
-                            </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                   
-</body>
+        #MasTable td,
+        #MasTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #MasTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #MasTable tr:hover {
+            background-color: #ddd;
+        }
+
+        #MasTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #023374;
+            color: white;
+        }
+    </style>
+
+    <body onload="imprimir();">
+
+        <center>
+            <h3 class="text-dark text-center">LISTADO DE PRODUCTOS</h3>
+        </center>
+        <table id="MasTable" class="borderless table table-responsive-lg text-dark text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th><strong>Producto</strong></th>
+                    <th><strong>Precio</strong></th>
+                    <th><strong>Categoria</strong></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% prod.forEach(function(ProdList){ %>
+                    <tr>
+                        <td>
+                            <%= ProdList.producto %>
+                        </td>
+                        <td>
+                            <%= ProdList.precio %>
+                        </td>
+                        <td>
+                            <%= ProdList.Categoria %>
+                        </td>
+
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+
+    </body>
+
 </html>

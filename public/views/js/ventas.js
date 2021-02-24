@@ -23,14 +23,14 @@ const drawTable = async (id_orden) => {
     try {
         const response = await new GetInfoByFetch(`${url.apiordendetalle}ordendetbyproducto/${id_orden}`).request();
         const content = document.getElementById("container-table-producto");
-        const subtotal = document.getElementById("ct-subtotal");
+        //const subtotal = document.getElementById("ct-subtotal");
         const totalapagarcontent = document.getElementById("ct-totalApagar");
 
         let descuento = 0;
         let subTotal = 0;
 
         content.innerHTML = " ";
-        subtotal.innerHTML = " ";
+        //subtotal.innerHTML = " ";
         totalapagarcontent.innerHTML = " ";
 
         try {
@@ -58,8 +58,8 @@ const drawTable = async (id_orden) => {
             content.insertAdjacentHTML('beforeEnd', detalleOrden);
         });
 
-        subtotal.innerHTML = `$${subTotal}`;
-        document.getElementById("promoValor").innerHTML = `${descuento * 100}%`;
+        //subtotal.innerHTML = `$${subTotal}`;
+        //document.getElementById("promoValor").innerHTML = `${descuento * 100}%`;
         totalapagarcontent.innerHTML = `$${totalApagar = parseFloat(subTotal - (subTotal * descuento)).toFixed(2)}`;
 
         listProductsInOrden = response;
@@ -261,6 +261,8 @@ let selectedCat = null;
 const getProductsByCategory = async (id) => {
     const content = document.getElementById('container-productos');
     let response = await new GetInfoByFetch(`${url.products}productosBycategori/${id}`).request();
+
+    console.log(response);
     //HACE EL FOCUS AL HACER CLICK A UNA TARGETA DE CATEGORIAS
     if (selectedCat === null) {
         $(`#${id}`).addClass("selected");
@@ -320,7 +322,7 @@ const filterItems = query => {
                     <strong>${productos.producto.toUpperCase()}</strong><br>
                     (${productos.desc})
                     </p>
-                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio}</span></p>
+                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio} ${productos.promoId == 1 ? ' ' : '<i class="text-warning fas fa-star"></i>'}</span></p>
                 </div>
             </div>
                 `;
@@ -338,7 +340,7 @@ const drawProduct = (data, ct) => {
                     <strong>${productos.producto.toUpperCase()}</strong><br>
                     (${productos.desc})
                     </p>
-                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio}</span></p>
+                    <p class="card-text"><span class="badge badge-text-size badge-info">$${productos.precio} ${productos.promoId == 1 ? ' ' : '<i class="text-warning fas fa-star"></i>'}</span></p>
                 </div>
             </div>
             `;

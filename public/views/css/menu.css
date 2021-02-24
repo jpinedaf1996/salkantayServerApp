@@ -1,8 +1,10 @@
 /******
 
-Css Menu 
+Css Menu
 
 *********/
+
+
 .main-container-list{
     background-color: var(--body-color);
     width: 90%;
@@ -16,7 +18,7 @@ Css Menu
     border: none;
     background-color:  var(--side-menu);
     color: var(--text-side) !important;
-    
+
 }
 .nav-bar-color{
     background-color:  var(--nav-bar);
@@ -37,16 +39,17 @@ Css Menu
 .main-content{
     width: 100%;
     height: 100vh;
-} 
+}
 .option:hover{
     border-left: 8px solid var(--hover-boder);
     background-color: var(--bg-hover);
 }
 .option > .fas{
-    
+
     margin-right: 18px;
 }
-.option{ 
+.option{
+
     font-weight: bold;
     cursor: pointer;
     width: 100%;
@@ -54,7 +57,7 @@ Css Menu
     width: 100%;
     text-align: left;
     padding: 20px;
-    
+
 }
 .tittle{
     font-weight: bold;

@@ -10,7 +10,9 @@ const url = {
      apiclientes: IPV4 + '/apiv0.1/cliente',
      apiInfo: IPV4 + '/apiv0.1/info/',
      apipromo: IPV4 + '/apiv0.1/promociones/',
-     apiMenu: IPV4 + '/apiv0.1/menu/'
+     apiMenu: IPV4 + '/apiv0.1/menu/',
+     apiReports: IPV4 + '/apiv0.1/reportes/',
+     apiReportesGenerales: IPV4 + '/apiv0.1/reportesgenerales/'
 }
 
 function GetInfoByFetch(url, method = 'GET', body) {

@@ -11,8 +11,19 @@ module.exports = (sequelize, type)=>{ // Esta es una funcion sin nombre que esta
             type: type.INTEGER,         // Tipo de datos 
             primaryKey: true,
             autoIncrement: true
-        }  
-    });   
+        } 
+        ,
+        fecha: {
+            type: type.DATEONLY,
+            allowNull: false,
+            defaultValue: type.NOW
+        },
+        hora: {
+            type: type.TIME,
+            allowNull: false,
+            defaultValue: type.NOW
+        }, 
+    },{ timestamps: false });   
 };
 
 // ESTE ARCHIVO SE PUEDE TOMAR DE EJEMPLO SOLO CAMBIAR EL NOMBRE DE LA TABLA Y LOS CAMPOS 

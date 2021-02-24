@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Categoria, Orden,Producto, OrdenDet} = require('../../dbconfig')
+const { Categoria, Orden,Producto, OrdenDet, Promociones} = require('../../dbconfig')
 
 //Se crean las rutas para una API REST con los diferente metodos
 
@@ -53,12 +53,26 @@ router.get('/detalles-orden-total/:ID', async (req, res) => {
 
 router.get('/productoporcategoria/:categoriaId', async (req, res) => {
 
-    let productbycategory = await Producto.findAll({
-        where: {
-            categoriaId: req.params.categoriaId
-        }
-    });
-    res.json(productbycategory);
+  let productbycategory = await Producto.findAll({
+    include:{
+      model: Promociones
+    },
+      where: {
+          categoriaId: req.params.categoriaId
+      }
+  });
+  let result = JSON.parse(JSON.stringify(productbycategory));
+
+  result.map((item,i ) => {
+      //console.log(json[i]);
+
+      result[i].precio = parseFloat(item.precio - ( item.precio * item.promocione.valor )).toFixed(2)
+
+  });
+
+  //console.log(result)
+
+  res.json(result);
 
 });
 
@@ -68,5 +82,4 @@ router.delete('/delete/:ordendetId', async (req, res) => { //estas rutas reciben
     });
     res.json({ success: 'Se ha borrado un registro.' });
 });
-
 module.exports = router; // se exporta el router hacia api.js

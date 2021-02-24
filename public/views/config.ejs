@@ -1,321 +1,394 @@
 <%- include('./templates/header'); -%>
-<!--
+    <!--
 Autor Jesus pineda / "Otro autor"
 14/08/2020
 Proposito de esta pagina: Esta es la pagina de productos
 aqui se gestionanran los diferente produstos
 -->
-<!-- Aqui Agregar el contenido para las paginas del sistemas  -->
+    <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
 
-<!-- cards TAbles -->
-<div class="container text-white ">
-    <div class="row justify-content-center w-100">
+    <!-- cards TAbles -->
+    <div class="container text-white ">
+        <div class="row justify-content-center w-100">
 
-        <div data-toggle="tooltip" data-placement="right" title="ADMINISTRAR MESAS" id="tablesOption"
-            onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
-            <div class="card-body">
-                <p class="card-text"><strong><i class="fas fa-table"></i></strong></p>
+            <div data-toggle="tooltip" data-placement="right" title="ADMINISTRAR MESAS" id="tablesOption"
+                onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
+                <div class="card-body">
+                    <p class="card-text"><strong><i class="fas fa-table"></i></strong></p>
+                </div>
             </div>
-        </div>
-        <div id="userOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR USUARIOS"
-            onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
-            <div class="card-body">
-                <p class="card-text"><strong><i class="fas fa-users"></i></strong></p>
+            <div id="userOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR USUARIOS"
+                onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
+                <div class="card-body">
+                    <p class="card-text"><strong><i class="fas fa-users"></i></strong></p>
+                </div>
             </div>
-        </div>
-        <div id="promOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
-            onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
-            <div class="card-body">
-                <p class="card-text"><i class="fas fa-wallet"></i></strong></p>
+            <div id="promOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR PROMOCIONES"
+                onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
+                <div class="card-body">
+                    <p class="card-text"><i class="fas fa-wallet"></i></strong></p>
+                </div>
             </div>
-        </div>
 
-        <div id="InformationOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR SOBRE NOSOTROS"
-            onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
-            <div class="card-body">
-                <p class="card-text"><i class="fas fa-info-circle"></i></strong></p>
+            <div id="InformationOption" data-toggle="tooltip" data-placement="right" title="ADMINISTRAR SOBRE NOSOTROS"
+                onclick="changeOptionConfig(this.id)" class="card oprtions text-dark" style="width: 10rem;">
+                <div class="card-body">
+                    <p class="card-text"><i class="fas fa-info-circle"></i></strong></p>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
-<hr>
-<div class="container-fuid">
-    <div id="optables" class="main-container-list">
-        <h1 class="card-title text-dark w-100">ADMINISTRAR MESAS</h1>
-        <hr>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="alert-edit-mesa">
+    <hr>
+    <div class="container-fuid">
+        <div id="optables" class="main-container-list">
+            <h1 class="card-title text-dark w-100">ADMINISTRAR MESAS</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="alert-edit-mesa">
+
+                            </div>
+                            <form id="formTable">
+                                <h3 class="card-title text-center">Agregar mesa</h3>
+                                <input type="hidden" value="0" name="idforedit" id="idforedit">
+
+                                <div class="form-group">
+                                    <label for="num_mesa"></i> Codigo de la mesa:</label>
+                                    <input type="text" class="form-control " name="num_mesa" id="num_mesa"
+                                        placeholder="Codigo de la mesa" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="descripcion">Descripcion (opcional)</label>
+                                    <textarea id="descripcion" name="descripcion" class="form-control"
+                                        rows="2"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <input id="seveTable" type="submit" class="btn btn-primary form-control"
+                                        value="Guardar">
+                                </div>
+                                <!-- Fin del formulario -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-md">
+
+                        <div class="card-body">
+                            <h3 class="card-title text-center">Listado de mesas</h3>
+                            <table class="borderless table table-responsive-lg text-dark text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Mesa</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Estado</th>
+                                        <th colspan="2" scope="col">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="container-list-table">
+
+                                </tbody>
+                            </table>
 
                         </div>
-                        <form id="formTable">
-                            <h3 class="card-title text-center">Agregar mesa</h3>
-                            <input type="hidden" value="0" name="idforedit" id="idforedit">
 
-                            <div class="form-group">
-                                <label for="num_mesa"></i> Codigo de la mesa:</label>
-                                <input type="text" class="form-control " name="num_mesa" id="num_mesa"
-                                    placeholder="Codigo de la mesa" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="descripcion">Descripcion (opcional)</label>
-                                <textarea id="descripcion" name="descripcion" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="modal-footer">
-                                <input id="seveTable" type="submit" class="btn btn-primary form-control"
-                                    value="Guardar">
-                            </div>
-                            <!-- Fin del formulario -->
-                        </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card card-md">
+            <!-- categorias -->
 
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Listado de mesas</h3>
-                        <table class="borderless table table-responsive-lg text-dark text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Mesa</th>
-                                    <th scope="col">Descripcion</th>
-                                    <th scope="col">Estado</th>
-                                    <th colspan="2" scope="col">Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="container-list-table">
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                </div>
-            </div>
         </div>
-        <!-- categorias -->
 
-    </div>
+        <div id="opUser" class="d-none main-container-list">
+            <h1 class="text-dark">ADMINISTRAR USUARIOS</h1>
+            <hr>
+            <div class="row ">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="alert-edit-user">
 
-    <div id="opUser" class="d-none main-container-list">
-        <h1 class="text-dark">ADMINISTRAR USUARIOS</h1>
-        <hr>
-        <div class="row ">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="alert-edit-user">
-
-                        </div>
-                        <h3 class="text-dark text-center">Agregar de usuario</h3>
-                        <form id="userForm">
-                            <div class="form-group">
-                                <a>Nombre del Usuario</a>
-                                <input type="text" id="usuario" name="usuario" placeholder="Ejem. Usuario21"
-                                    class="form-control" required autofocus>
                             </div>
-                            <div class="form-group">
-                                <a>Digite una Contraseña</a>
-                                <div class="input-group">
-                                    <input id="Pass" name="pass" type="Password" required Class="form-control">
-                                    <div class="input-group-append">
-                                        <button id="show_password" class="btn btn-primary" type="button"
-                                            onclick="ShowPassword()">
-                                            <span class="fa fa-eye-slash icon"></span> </button>
+                            <h3 class="text-dark text-center">Agregar de usuario</h3>
+                            <form id="userForm">
+                                <div class="form-group">
+                                    <a>Nombre del Usuario</a>
+                                    <input type="text" id="usuario" name="usuario" placeholder="Ejem. Usuario21"
+                                        class="form-control" required autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <a>Digite una Contraseña</a>
+                                    <div class="input-group">
+                                        <input id="Pass" name="pass" type="Password" required Class="form-control">
+                                        <div class="input-group-append">
+                                            <button id="show_password" class="btn btn-primary" type="button"
+                                                onclick="ShowPassword()">
+                                                <span class="fa fa-eye-slash icon"></span> </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <a>Tipo de Usuario</a>
-                                <select required id="tipo" name="tipo" placeholder="Tipo de usuario"
-                                    class="form-control">
+                                <div class="form-group">
+                                    <a>Tipo de Usuario</a>
+                                    <select required id="tipo" name="tipo" placeholder="Tipo de usuario"
+                                        class="form-control">
 
-                                    <option value="0" selected>Selecciona una opcion....</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="2">Invitado</option>
-                                </select>
-                            </div>
-                            <div>
-                                <input type="hidden" value="0" name="idForEditUser" id="idForEditUser">
-                            </div>
-                            <button id="btn-User" type="submit" class="btn btn-primary form-control">
-                                Guardar
-                            </button>
-                        </form>
+                                        <option value="0" selected>Selecciona una opcion....</option>
+                                        <option value="1">Administrador</option>
+                                        <option value="2">Invitado</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input type="hidden" value="0" name="idForEditUser" id="idForEditUser">
+                                </div>
+                                <button id="btn-User" type="submit" class="btn btn-primary form-control">
+                                    Guardar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="text-dark text-center">Lista de usuario</h3>
-                        <table id="TableUser" class="borderless table table-responsive-md text-dark text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Usuario</th>
-                                    <th>Tipo</th>
-                                    <th colspan="2">Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="myTableUser">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="text-dark text-center">Lista de usuario</h3>
+                            <table id="TableUser" class="borderless table table-responsive-md text-dark text-center">
 
-                            </tbody>
-                        </table>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Usuario</th>
+                                        <th>Tipo</th>
+                                        <th colspan="2">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myTableUser">
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="opProm" class="d-none main-container-list">
-        <h1 class="text-dark">ADMINISTRAR PROMOCIONES</h1>
-        <hr>
-        <div class="row ">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="alert-edit-promo">
+        <!-- MODAL PARA PROMOCIONES -->
 
-                        </div>
-                        <h3 class="text-dark text-center">Agregar de promociones</h3>
-                        <form id="promoForm">
-                            <div class="form-group">
-                                <a>Descripcion de la promocion</a>
-                                <input type="text" id="desc" name="desc" placeholder="Ejem. Descuento 1"
-                                    class="form-control" required autofocus>
-                            </div>
-                            <div class="form-group">
-                                <a>Ingresa el valor de la promocion ( <strong>Decimal</strong> )</a>
-                                <div class="input-group">
-                                    <input id="valor" name="valor" type="number" step="0.01" placeholder="Ejem. 0.10"
-                                        required Class="form-control">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-white" id="exampleModalLabel">Agregar productos a la promocion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="formWithCheck">
+
+                            <div class="container">
+                                <div id='categorias' class="categorias">
+
+
+
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <a>Estado</a>
-                                <select required id="estado" name="estado" placeholder="Estado de la promocion"
-                                    class="form-control">
 
-                                    <option selected>Selecciona una opcion....</option>
-                                    <option selected value="1">Activa</option>
-                                    <option value="0">Inactiva</option>
-                                </select>
-                            </div>
-                            <div>
-                                <input type="hidden" value="0" name="idForEditPromo" id="idForEditPromo">
-                            </div>
-                            <button type="submit" class="btn btn-primary form-control">
-                                Guardar
-                            </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button id="btn-saveDiscount" type="submit" class="btn btn-primary">Guardar Cambios</button>
                         </form>
                     </div>
+
                 </div>
             </div>
+        </div>
+         <!-- MODAL PARA VER PRODUCTOS CON PROMOCION -->
 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="text-dark text-center">Lista de promociones</h3>
-                        <table id="TableUser" class="borderless table table-responsive-lg text-dark text-center">
-                            <thead class="thead-dark">
+        <div class="modal fade" id="productosEnPromocion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-white" id="exampleModalLabel">Ver o borrar productos de la promocion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="formWithCheckToProducto">
+
+                            <div class="container">
+                                <div id='listProducto' class="categorias">
+
+
+
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button id="btn-remove-discount" type="submit" class="btn btn-danger">Borrar</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div id="opProm" class="d-none main-container-list">
+            <h1 class="text-dark">ADMINISTRAR PROMOCIONES</h1>
+            <hr>
+            <div class="row ">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="alert-edit-promo">
+
+                            </div>
+                            <h3 class="text-dark text-center">Agregar de promociones</h3>
+                            <form id="promoForm">
+                                <div class="form-group">
+                                    <a>Descripcion de la promocion</a>
+                                    <input type="text" id="desc" name="desc" placeholder="Ejem. Descuento 1"
+                                        class="form-control" required autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <a>Ingresa el valor de la promocion ( <strong>Decimal</strong> )</a>
+                                    <div class="input-group">
+                                        <input id="valor" name="valor" type="number" step="0.01"
+                                            placeholder="Ejem. 0.10" required Class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <a>Estado</a>
+                                    <select required id="estado" name="estado" placeholder="Estado de la promocion"
+                                        class="form-control">
+
+                                        <option selected>Selecciona una opcion....</option>
+                                        <option selected value="1">Activa</option>
+                                        <option value="0">Inactiva</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input type="hidden" value="0" name="idForEditPromo" id="idForEditPromo">
+                                </div>
+                                <button type="submit" class="btn btn-primary form-control">
+                                    Guardar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="text-dark text-center">Lista de promociones</h3>
+                            <table id="TableUser" class="borderless table table-responsive-lg text-dark text-center">
+                                <thead ">
                                 <tr>
                                     <th>Id promocion</th>
                                     <th>Descripcion</th>
                                     <th>Valor ( <strong>%</strong> )</th>
                                     <th>Estado</th>
-                                    <th colspan="2">Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="myTablePromo">
+                                    <th colspan=" 4">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="myTablePromo">
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="opinfo" class="d-none main-container-list">
-        <h1 class="text-dark">SOBRE NOSOTROS</h1>
-        <hr>
-        <div class="row ">
-            <div class="col-md-5">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="alert-edit-info">
+        <div id="opinfo" class="d-none main-container-list">
+            <h1 class="text-dark">DATOS DE LA EMPRESA</h1>
+            <hr>
+            <div class="row ">
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="alert-edit-info">
 
                             </div>
                             <h3 class="text-dark text-center">Agregar informacion</h3>
                             <div class="form-check form-switch">
-                                <button onclick="hideshow()" class="btn btn-primary form-control">Mostrar/Ocultar</button>
+                                <button onclick="hideshow()"
+                                    class="btn btn-primary form-control">Mostrar/Ocultar</button>
                             </div>
                             <form id="InfoForm" name="InfoForm" class="card card-body" style="display:none">
                                 <div class="form-group">
-                                <a>Empresa</a>
-                                <input type="text" id="empresa" name="empresa" placeholder="------" class="form-control" required
-                                    autofocus>
+                                    <a>Empresa</a>
+                                    <input type="text" id="empresa" name="empresa" placeholder="------"
+                                        class="form-control" required autofocus>
                                 </div>
 
                                 <div class="form-group">
-                                <a>Direccion</a>
-                                <input type="text" id="direccion" name="direccion" placeholder="------" class="form-control" required
-                                    autofocus>
+                                    <a>Direccion</a>
+                                    <input type="text" id="direccion" name="direccion" placeholder="------"
+                                        class="form-control" required autofocus>
                                 </div>
 
                                 <div class="form-group">
-                                <a>N# Telefono</a>
-                                <input type="number" id="telefono" name="telefono" placeholder="------" required
-                                    class="form-control" autofocus>
+                                    <a>N# Telefono</a>
+                                    <input type="number" id="telefono" name="telefono" placeholder="------" required
+                                        class="form-control" autofocus>
                                 </div>
 
                                 <div class="form-group">
-                                <a>Nit</a>
-                                <input type="text" id="nit" name="nit" placeholder="------" class="form-control" required
-                                    autofocus>
+                                    <a>Nit</a>
+                                    <input type="text" id="nit" name="nit" placeholder="------" class="form-control"
+                                        required autofocus>
                                 </div>
 
                                 <div class="form-group">
-                                <a>NRC</a>
-                                <input type="text" id="nrc" name="nrc" placeholder="------" class="form-control" required
-                                    autofocus>
+                                    <a>NRC</a>
+                                    <input type="text" id="nrc" name="nrc" placeholder="------" class="form-control"
+                                        required autofocus>
                                 </div>
 
                                 <div class="form-group">
-                                <a>GIRO</a>
-                                <input type="text" id="giro" name="giro" placeholder="------" class="form-control" required
-                                    autofocus>
+                                    <a>GIRO</a>
+                                    <input type="text" id="giro" name="giro" placeholder="------" class="form-control"
+                                        required autofocus>
                                 </div>
 
                                 <div class="form-group">
-                                <a>Sucursal</a>
-                                <input type="text" id="sucursal" name="sucursal" placeholder="------" class="form-control" required
-                                    autofocus>
+                                    <a>Sucursal</a>
+                                    <input type="text" id="sucursal" name="sucursal" placeholder="------"
+                                        class="form-control" required autofocus>
                                 </div>
 
                                 <div>
-                                <input type="hidden" value="0" name="idforeditInfo" id="idforeditInfo">
+                                    <input type="hidden" value="0" name="idforeditInfo" id="idforeditInfo">
                                 </div>
 
                                 <button id="btn-info" type="submit" class="btn btn-primary form-control">
-                                Guardar
+                                    Guardar
                                 </button>
                             </form>
                         </div>
+                    </div>
                 </div>
-            </div>
                 <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="text-dark text-center">SOBRE NOSOTROS </h3>
+                            <h3 class="text-dark text-center">DATOS DE LA EMPRESA</h3>
                             <table id="TableInfo" class="borderless w-100 text-dark text-center">
-                                <thead class="thead-dark">
+                                <thead>
                                     <tr>
                                         <th>Empresa</th>
                                         <th>Direccion</th>
@@ -327,81 +400,83 @@ aqui se gestionanran los diferente produstos
                                         <th colspan="2">Opciones</th>
                                     </tr>
                                 </thead>
+
                                 <tbody id="container-list-info">
 
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
                 </div>
 
+            </div>
+
         </div>
 
     </div>
 
-</div>
+    <hr>
 
-<hr>
+    <%- include('./templates/scripts.ejs'); -%>
+        <script src="/public/js/mesas.js"></script>
+        <script src="/public/js/usuarios.js"></script>
+        <script src="/public/js/promociones.js"></script>
+        <script src="/public/js/informacion.js"></script>
 
-<%- include('./templates/scripts.ejs'); -%>
-<script src="/public/js/mesas.js"></script>
-<script src="/public/js/usuarios.js"></script>
-<script src="/public/js/promociones.js"></script>
-<script src="/public/js/informacion.js"></script>
+        <script>
 
-<script>
+            $(document).ready(() => {
+                getListTable();
+            });
+            //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS
 
-    $(document).ready(() => {
-        getListTable();
-    });
-    //FUNCION PARA HACER EL CAMBIO DE PANTALLA Y OCULTAR OTROS ELEMENTOS
-
-    let lastElemnt = document.getElementById('optables');
-    const changeOptionConfig = (option) => {
-        if (lastElemnt) {
-            lastElemnt.classList.add('d-none');
-        }
-        switch (option) {
-            case 'tablesOption':
-                if ($("#optables").hasClass("d-none")) {
-                    $("#optables").removeClass("d-none");
-                    getListTable();
+            let lastElemnt = document.getElementById('optables');
+            const changeOptionConfig = (option) => {
+                if (lastElemnt) {
+                    lastElemnt.classList.add('d-none');
                 }
-                lastElemnt = document.getElementById('optables');
-                break;
-            case 'userOption':
-                if ($("#opUser").hasClass("d-none")) {
-                    $("#opUser").removeClass("d-none");
-                    drawTableUser();
+                switch (option) {
+                    case 'tablesOption':
+                        if ($("#optables").hasClass("d-none")) {
+                            $("#optables").removeClass("d-none");
+                            getListTable();
+                        }
+                        lastElemnt = document.getElementById('optables');
+                        break;
+                    case 'userOption':
+                        if ($("#opUser").hasClass("d-none")) {
+                            $("#opUser").removeClass("d-none");
+                            drawTableUser();
+                        }
+                        lastElemnt = document.getElementById('opUser');
+                        break;
+                    case 'promOption':
+                        if ($("#opProm").hasClass("d-none")) {
+                            $("#opProm").removeClass("d-none");
+                            drawTablePromo();
+                        }
+                        lastElemnt = document.getElementById('opProm');
+                        break;
+
+                    case 'InformationOption':
+                        if ($("#opinfo").hasClass("d-none")) {
+                            $("#opinfo").removeClass("d-none");
+                            getListInfo();
+                        }
+                        lastElemnt = document.getElementById('opinfo');
+                        break;
+
+                    default:
+                        break;
                 }
-                lastElemnt = document.getElementById('opUser');
-                break;
-            case 'promOption':
-                if ($("#opProm").hasClass("d-none")) {
-                    $("#opProm").removeClass("d-none");
-                    drawTablePromo();
-                }
-                lastElemnt = document.getElementById('opProm');
-                break;
-
-            case 'InformationOption':
-                if ($("#opinfo").hasClass("d-none")) {
-                    $("#opinfo").removeClass("d-none");
-                    getListInfo();
-                }
-                lastElemnt = document.getElementById('opinfo');
-                break;
-
-            default:
-                break;
-        }
-    }
+            }
 
 
-    function hideshow(){
-        var frm=document.InfoForm;
-        if(frm.style.display=="block"){frm.style.display="none"}
-        else
-        if(frm.style.display=="none"){frm.style.display="block"}
-     }
-</script>
+            function hideshow() {
+                var frm = document.InfoForm;
+                if (frm.style.display == "block") { frm.style.display = "none" }
+                else
+                    if (frm.style.display == "none") { frm.style.display = "block" }
+            }
+        </script>
