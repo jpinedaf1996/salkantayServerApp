@@ -16,8 +16,8 @@ const bcrypt = require('bcryptjs');
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('salkantaydb', 'root', 'catolica', {
-  host: 'localhost',
+const Conexion = new Sequelize('heroku_1bb7b978542dd70', 'b74a52b9c01e7b', '01795586', {
+  host: 'us-cdbr-east-03.cleardb.com',
   dialect: 'mariadb'
 });
 
