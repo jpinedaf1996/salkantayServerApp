@@ -1,4 +1,6 @@
 // FUNCIONES PARA VISUALIZAR ventas
+
+PadLeft=(value, length) => (value.toString().length < length) ? PadLeft("0" + value, length) : value;
 const getListTable5 = async () => {
     const response = await new GetInfoByFetch(`${url.apiReportesGenerales}VentasG`).request();
 
@@ -19,7 +21,7 @@ const getListTable5 = async () => {
         const table = `
                  <tr >
                     <td>${VentasG.ordenId}</td>
-                    <td>${VentasG.tikectId}</td>
+                    <td>${PadLeft(VentasG.tikectId,5)}</td>
                     <td>${(VentasG.mesaId === null) ? 'LLEVAR' :  VentasG.mesaId }</td>
                     <td>${(VentasG.tipo_orden === 'M') ? 'MESA' : 'LLEVAR'}</td>
                     <td>${(VentasG.tipo_pago === 't') ? 'Tarjeta': 'Efectivo'}</td>
@@ -28,7 +30,7 @@ const getListTable5 = async () => {
                     <td style="font-size: 20px; text-align:right;" ><span class="badge badge-danger">$${parseFloat(VentasG.cambio).toFixed(2)}</span></td>
                     <td>${VentasG.fecha}</td>
                     <td>${VentasG.hora}</td>
-                    <td class="text-center"><i class="fas text-success fa-print"></i></td>
+                    <td class="text-center"><i onclick="tikect(${VentasG.ordenId})" style="cursor:pointer" class="fas text-success fa-print"></i></td>
                            
                  </tr>
              `;
@@ -71,7 +73,7 @@ async function filterSales() {
         const table = `
                  <tr >
                     <td>${VentasG.ordenId}</td>
-                    <td>${VentasG.tikectId}</td>
+                    <td>${PadLeft(VentasG.tikectId,5)}</td>
                     <td>${(VentasG.mesaId === null) ? 'LLEVAR' :  VentasG.mesaId }</td>
                     <td>${(VentasG.tipo_orden === 'M') ? 'MESA' : 'LLEVAR'}</td>
                     <td>${(VentasG.tipo_pago === 't') ? 'Tarjeta': 'Efectivo'}</td>
@@ -80,7 +82,7 @@ async function filterSales() {
                     <td style="font-size: 20px; text-align:right;" ><span class="badge badge-danger">$${parseFloat(VentasG.cambio).toFixed(2)}</span></td>
                     <td>${VentasG.fecha}</td>
                     <td>${VentasG.hora}</td>
-                    <td class="text-center"><i class="fas text-success fa-print"></i></td>
+                    <td class="text-center"><i onclick="tikect(${VentasG.ordenId})" style="cursor:pointer" class="fas text-success fa-print"></i></td>
                            
                  </tr>
              `;
@@ -95,6 +97,22 @@ async function filterSales() {
 
 function reloadSales(params) {
     getListTable5();
+}
+
+const tikect = (ordenId) => {
+    //console.log(await )
+    if (ordenId != 0) {
+
+        window.open(IPV4+"/apiv0.1/reportes/ticket/" + sessionStorage.getItem("token") + "/" + ordenId,
+            "PRECUENTA",
+            "directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no,top=0");
+        //console.log(response.success);
+
+    } else {
+        alertify.error("Seleccione una orden.")
+    }
+
+    //
 }
 
 

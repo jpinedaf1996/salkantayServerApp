@@ -48,7 +48,7 @@ router.get('/filtrarporfechas/:FECHA1?/:FECHA2', async (req, res) => { //Consult
 router.get('/filtrarporfechasventas/:FECHA1?/:FECHA2', async (req, res) => { //Consulta para productos mas vendidos Falta el WHERE o.fecha=CURDATE()
 
     $sql = `SELECT ordens.*, ticketventa.tikectId FROM ticketventa inner join ordens using (ordenId)
-    WHERE fecha BETWEEN '${req.params.FECHA1}' AND '${req.params.FECHA2}' AND estado='0' ORDER BY ordenId ASC`;
+    WHERE ordens.fecha BETWEEN '${req.params.FECHA1}' AND '${req.params.FECHA2}' AND estado='0' ORDER BY ordenId ASC`;
 
     try {
         const ventas = await Conexion.query($sql, { type: QueryTypes.SELECT });
@@ -64,7 +64,7 @@ router.get('/filtrarporfechasventas/:FECHA1?/:FECHA2', async (req, res) => { //C
 
 router.get('/VentasG', async (req, res) => { //Consulta para productos mas vendidos Falta el WHERE o.fecha=CURDATE()
 
-    const VentasG = await Conexion.query(`SELECT ordens.*, ticketventa.tikectId FROM ticketventa inner join ordens using (ordenId) WHERE fecha = '${now}' AND estado='0' ORDER BY ordenId ASC`, { type: QueryTypes.SELECT });
+    const VentasG = await Conexion.query(`SELECT ordens.*, ticketventa.tikectId FROM ticketventa inner join ordens using (ordenId) WHERE ordens.fecha = '${now}' AND estado='0' ORDER BY ordenId ASC`, { type: QueryTypes.SELECT });
     
     res.json(VentasG);
 });

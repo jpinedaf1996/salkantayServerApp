@@ -14,6 +14,6 @@ siempre y cuando este al archivo package.json
 Esto es con el fin de no estar subiendo todas la librerias 
 cada vez que se hace un push a git hub
 
-En esta apliacion de servidor se debe ihacer la conecion a la base de datos 
+En esta apliacion de servidor se debe hacer la conexicion a la base de datos 
 
 *********************************************************

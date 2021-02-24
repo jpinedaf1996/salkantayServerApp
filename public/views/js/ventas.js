@@ -23,14 +23,14 @@ const drawTable = async (id_orden) => {
     try {
         const response = await new GetInfoByFetch(`${url.apiordendetalle}ordendetbyproducto/${id_orden}`).request();
         const content = document.getElementById("container-table-producto");
-        const subtotal = document.getElementById("ct-subtotal");
+        //const subtotal = document.getElementById("ct-subtotal");
         const totalapagarcontent = document.getElementById("ct-totalApagar");
 
         let descuento = 0;
         let subTotal = 0;
 
         content.innerHTML = " ";
-        subtotal.innerHTML = " ";
+        //subtotal.innerHTML = " ";
         totalapagarcontent.innerHTML = " ";
 
         try {
@@ -58,8 +58,8 @@ const drawTable = async (id_orden) => {
             content.insertAdjacentHTML('beforeEnd', detalleOrden);
         });
 
-        subtotal.innerHTML = `$${subTotal}`;
-        document.getElementById("promoValor").innerHTML = `${descuento * 100}%`;
+        //subtotal.innerHTML = `$${subTotal}`;
+        //document.getElementById("promoValor").innerHTML = `${descuento * 100}%`;
         totalapagarcontent.innerHTML = `$${totalApagar = parseFloat(subTotal - (subTotal * descuento)).toFixed(2)}`;
 
         listProductsInOrden = response;

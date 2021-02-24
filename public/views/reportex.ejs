@@ -1,0 +1,167 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>REPORTE X</title>
+  <SCRIPT language="javascript">
+    function imprimir() {
+
+      if ((navigator.appName == "Netscape")) {
+        window.print();
+      }
+      else {
+        var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+        document.body.insertAdjacentHTML('beforeEnd', WebBrowser); WebBrowser1.ExecWB(6, -1); WebBrowser1.outerHTML = "";
+      }
+    }
+  </SCRIPT>
+</head>
+
+<style type="text/css" media="print">
+  #Imprime {
+    height: auto;
+    width: 377px;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 7px;
+    font-style: normal;
+    line-height: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    color: #000;
+  }
+
+  @page {
+    margin: 0;
+  }
+</style>
+<% const info=obj %>
+  <% const PadLeft=(value, length)=> (value.toString().length < length) ? PadLeft("0" + value, length) : value; %>
+
+      <BODY onload="imprimir();">
+        <div id="Imprime">
+          <table width="300px">
+            <tr>
+              <td>
+                <table width="100%"
+                  style="font-size:15px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif">
+                  <tr>
+                    <td rowspan="5" width="9%"></td>
+                    <td colspan="2">
+                      <center>
+                        <br /><br />
+                        <h2>
+                          <%= info.info[0].empresa %>
+                        </h2>
+                        Z MENSUAL <br>
+
+                        Nit:  <%= info.info[0].nit %><br />
+                        NRC:  <%= info.info[0].nrc %><br />
+                        <center>
+
+                          Dirección:  <%= info.info[0].direccion %> <br />
+                          Telefono:  <%= info.info[0].telefono %><br />
+                          Giro:  <%= info.info[0].giro %><br />
+
+
+                        </center>
+                      </center>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <center>
+                        <b>Fecha:</b>
+                        <%= info.fecha %> 
+                        <br />
+                      </center>
+                    </td>
+                  </tr>
+                </table>
+                <br>
+                ******************************************************************************
+                <table width="100%"  style="font-size:15px;">
+                  <tr>
+                    <td>Total de ventas exentas : </td>
+                    <td style="text-align: right;"> 0.00</td>
+                  </tr>
+                  <tr>
+                    <td>Total de ventas Gravadas : </td>
+                    <td style="text-align: right;"> $<%= info.total %> </td>
+                  </tr>
+                  <tr>
+                    <td>Total de ventas no sujetas : </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+                  <tr>
+                    <td>Total propina : </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+
+                </table>
+                ******************************************************************************
+                <table width="100%"  style="font-size:15px;">
+                  <tr>
+                    <td>ventas exentas ticket: </td>
+                    <td style="text-align: right;"> 0.00</td>
+                  </tr>
+                  <tr>
+                    <td>ventas Gravadas ticket: </td>
+                    <td style="text-align: right;"> $<%= info.total %> </td>
+                  </tr>
+                  <tr>
+                    <td>ventas no sujetas ticket: </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+                  <tr>
+                    <td>Ticket Inicial: </td>
+                    <td style="text-align: right;"> <%= info.min %> </td>
+                  </tr>
+                  <tr>
+                    <td>Ticket Final: </td>
+                    <td style="text-align: right;"> <%= info.max %> </td>
+                  </tr>
+                  <tr>
+                    <td>Total Tickets: </td>
+                    <td style="text-align: right;"> <%= info.tickect %> </td>
+                  </tr>
+
+                </table>
+                ******************************************************************************
+                <table width="100%"  style="font-size:15px;">
+                  <tr>
+                    <td>ventas de ventas exentas FAC: </td>
+                    <td style="text-align: right;"> 0.00</td>
+                  </tr>
+                  <tr>
+                    <td>ventas de ventas Gravadas FAC: </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+                  <tr>
+                    <td>ventas de ventas no sujetas FAC: </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+                  <tr>
+                    <td>FAC Inicial: </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+                  <tr>
+                    <td>FAC Final: </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+                  <tr>
+                    <td>FC Tickets: </td>
+                    <td style="text-align: right;"> 0.00 </td>
+                  </tr>
+
+                </table>
+                ******************************************************************************
+      </body>
+
+</html>

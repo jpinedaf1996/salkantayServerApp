@@ -16,7 +16,7 @@ aqui se gestionanran los reportes que se generan
             <div id="MasOption"  onclick="changeOptionConfig(this.id)" class="reportes-name-container col">VENTAS POR PRODUCTOS</div>
             <div id="GenOption"  onclick="changeOptionConfig(this.id)" class="reportes-name-container col">VENTAS</div>
             <div id="DetOption"  onclick="changeOptionConfig(this.id)" class="reportes-name-container col">DETALLES DE VENTAS</div>
-            <div id="XOption"    onclick="changeOptionConfig(this.id)" class="reportes-name-container col">REPORTE X</div>
+            <div id="XOption"    onclick="changeOptionConfig(this.id)" class="reportes-name-container col">REPORTE X y Z</div>
             
             
         </div>
@@ -184,25 +184,15 @@ aqui se gestionanran los reportes que se generan
                 <h2 class="text-white">Reporte X</h2>
                 <table>
                     <tr>
-                        <td>Desde</td>
-                        <td>Hasta</td>
-                        <td></td>
+                        <td><button class="btn btn-success btn-lg ver form-group form-control" onclick="makePdf5()">IMPRIMIR Z MENSUAL <i class="fas fa-print"></i></button> </td>
                     </tr>
                     <tr>
-                        <td>
-                            <input type="date" class="form-control" id="fechaNX1">
-                        </td>
-                        <td>
-                            <input type="date" class="form-control" id="fechaNX2">
-
-                        </td>
-                        <td><button class="btn btn-success ver" onclick="makePdf5()">Cargar reporte</button> </td>
-                        <td><button class="btn btn-success ver" onclick="makePdf51()">Reporte Diario</button> </td>
+                        
+                        <td><button class="btn btn-primary btn-lg  ver form-control" onclick="makePdf51()">IMPRIMIR REPORTE X <i class="fas fa-print"></i></button> </td>
                     </tr>
                 </table>
             </center>
 
-            <hr>
         </div>
 
         <!--REPORTE GENERAL-->

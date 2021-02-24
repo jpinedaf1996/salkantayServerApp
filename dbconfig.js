@@ -41,13 +41,13 @@ const Info = InformacionModel(Conexion, Sequelize);
 // RELACIONES
 
 Producto.belongsTo(Categoria, { foreignKey: 'categoriaId', onDelete: 'restrict' });
-Orden.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId', onDelete: 'cascade' });
+Orden.belongsTo(Cliente, { as: 'cliente', foreignKey: 'clienteId', onDelete: 'restrict' });
 Orden.belongsTo(Mesa, { foreignKey: 'mesaId', onDelete: 'cascade' });
 OrdenDet.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
 
-Producto.belongsTo(Promociones, { foreignKey: 'promoId', onDelete: 'cascade' });
+Producto.belongsTo(Promociones, { foreignKey: 'promoId', onDelete: 'restrict' });
 
-ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'cascade' });
+ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'restrict' });
 
 
 /**

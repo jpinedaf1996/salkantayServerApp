@@ -56,17 +56,20 @@
                                         <td colspan="2">
                                             <center>
                                                 <br /><br />
-                                                <h2><%= orden.empresa[0].empresa %></h2>
+                                                <h2>
+                                                    <%= orden.empresa[0].empresa %>
+                                                </h2>
 
 
-                                                  Nit: <%= orden.empresa[0].nit %> <br/>
-                                                <center>
-                                                  Dirección: <%= orden.empresa[0].direccion %> <br/>
-                                                  Telefono: <%= orden.empresa[0].telefono %><br />
-                                                  Giro: <%= orden.empresa[0].giro %><br />
+                                                Nit: <%= orden.empresa[0].nit %> <br />
+                                                    NRC: <%= orden.empresa[0].nrc %> <br />
+                                                        <center>
+                                                            Dirección: <%= orden.empresa[0].direccion %> <br />
+                                                                Telefono: <%= orden.empresa[0].telefono %><br />
+                                                                    Giro: <%= orden.empresa[0].giro %><br />
 
 
-                                                </center>
+                                                        </center>
                                             </center>
                                         </td>
                                     </tr>
@@ -74,12 +77,16 @@
                                         <td colspan="2"><BR />
                                             <b>Ticket No.</b>
                                             <% const number=PadLeft(orden.headers.tikectId , 5) %>
-                                            <%= number %> <br />
-                                            <b>Orden No.</b>
-                                            <%= orden.headers.orden.ordenId %>  <br>
-                                                    <b>Fecha:</b>
-                                                    <%= orden.headers.orden.fecha %>  <strong><%= orden.headers.orden.hora %> </strong> <br />
-                                                    <b>MESA: </b><%= orden.headers.orden.mesaId ? orden.headers.orden.mesaId : 'LLEVAR' %><br />
+                                                <%= number %> <br />
+                                                    <b>Orden No.</b>
+                                                    <%= orden.headers.orden.ordenId %> <br>
+                                                        <b>Fecha:</b>
+                                                        <%= orden.headers.orden.fecha %> <strong>
+                                                                <%= orden.headers.orden.hora %>
+                                                            </strong> <br />
+                                                            <b>MESA: </b>
+                                                            <%= orden.headers.orden.mesaId ? orden.headers.orden.mesaId
+                                                                : 'LLEVAR' %><br />
                                         </td>
                                     </tr>
                                 </table>
@@ -124,7 +131,7 @@
                                                             </td>
                                                             <td>
                                                                 <div align="right" style="font-size: 12px;">
-                                                                    <%=  orden.headers.orden.descuento %>
+                                                                    <%= orden.headers.orden.descuento %>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -162,41 +169,44 @@
                                                                                 descuento)).toFixed(2) %> </b></div>
                                                                 </td>
                                                             </tr>
-                                                            <!-- <tr style="font-size: 14px;">
-                                                <td colspan="4">
-                                                    <div align="right"><b>DESCUENTO</b></div>
-                                                </td>
-                                                <td>
-                                                    <div align="right"><b>$0</b></div>
-                                                </td>
-                                            </tr> -->
-                                                            <!-- <tr style="font-size: 14px;">
-                                                                <td colspan="4">
-                                                                    <div align="right"><b>PROPINA</b></div>
-                                                                </td>
-                                                                <td>
-                                                                    <div align="right"><b>$0</b></div>
-                                                                </td>
-                                                            </tr> -->
-                                                            <tr>
-                                                                <td colspan="4">
-                                                                    <div align="right"></div>
-                                                                </td>
-                                                                <td>
-                                                                    <div align="right"><b></div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="font-size: 17px;">
-                                                                <td colspan="4">
-                                                                    <div align="right"><b>TOTAL</b></div>
-                                                                </td>
-                                                                <td>
-                                                                    <div align="right"><b>$<%= parseFloat(subtotal -
-                                                                                descuentoEfectivo ).toFixed(2) %> </b>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <!-- <tr style="font-size: 14px;">
+                        </tr> -->
+                        <!-- <tr>
+                            <td colspan="4">
+                                <div align="right"></div>
+                            </td>
+                            <td>
+                                <div align="right"><b></div>
+                            </td>
+                        </tr> -->
+                        <tr style="font-size: 17px;">
+                            <td colspan="4">
+                                <div align="right"><b>TOTAL: </b></div>
+                            </td>
+                            <td>
+                                <div align="right"><b>$<%= parseFloat(subtotal - descuentoEfectivo ).toFixed(2) %> </b>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 17px;">
+                            <td colspan="4">
+                                <div align="right"><b>EFECTIVO: </b></div>
+                            </td>
+                            <td>
+                                <div align="right"><b>$ <%= orden.headers.orden.efectivo %> </b>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 17px;">
+                            <td colspan="4">
+                                <div align="right"><b>CAMBIO: </b></div>
+                            </td>
+                            <td>
+                                <div align="right"><b>$ <%= orden.headers.orden.cambio %> </b>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- <tr style="font-size: 14px;">
                                                 <td colspan="4">
                                                     <div align="right"><b>EFECTIVO</b></div>
                                                 </td>
@@ -212,9 +222,9 @@
                                                 </td>
                                             </tr>
                                             <tr> -->
-                                                            <td colspan="5">
-                                                                <div align="center" style="font-size: 15px;"></div>
-                                                            </td>
+                        <td colspan="5">
+                            <div align="center" style="font-size: 15px;"></div>
+                        </td>
                         </tr>
                         <tr>
                             <td colspan="5">
