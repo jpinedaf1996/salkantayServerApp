@@ -56,7 +56,7 @@ ticketVenta.belongsTo(Orden, { foreignKey: 'ordenId', onDelete: 'restrict' });
  * 
  * 
  */
-Conexion.sync({ force: false })
+Conexion.sync({ force: true })
   .then(() => {
     createInit()
     console.log('Databases has been updated!!')
