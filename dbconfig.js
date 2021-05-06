@@ -16,8 +16,8 @@ const bcrypt = require('bcryptjs');
  * se genera la Conexion de la DB
  *
  */
-const Conexion = new Sequelize('iwzp0x1xdhz32l1f', 'o41pgx1wssgmjsmw', 'vyeotjnopvs63q1j', {
-  host: 'jhdjjtqo9w5bzq2t.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+const Conexion = new Sequelize('x9cksx02sh5e4krj', 'tp78cq4r96702bl7', 'sc1kzkwxhb3kvqdh', {
+  host: '5svr1t2r5xudqeq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   dialect: 'mariadb'
 });
 
