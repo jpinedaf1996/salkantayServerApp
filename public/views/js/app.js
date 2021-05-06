@@ -1,4 +1,4 @@
-const IPV4 = 'https://coffecode.herokuapp.com/';
+const IPV4 = 'https://www.coffecode.herokuapp.com';
 const url = {
      apiuser: IPV4 + '/apiv0.1/users/',
      products: IPV4 + '/apiv0.1/products/',
