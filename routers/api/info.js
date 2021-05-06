@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Info } = require('../../dbconfig');
 const upload = require('../middlewares/storage')
-const { QueryTypes } = require('sequelize');
+const {QueryTypes} = require('sequelize');
 
 //Se crean las rutas para una API REST con los diferente metodos
 
@@ -24,14 +24,14 @@ router.post('/', async (req, res) => {
     let info = await Info.findAll({});
     const valInfo = JSON.parse(JSON.stringify(info));
 
-    if (parseInt(Object.keys(valInfo).length) < 1) {
+    if(parseInt(Object.keys(valInfo).length) < 1 ){
 
-        await Info.create(req.body);
+       await Info.create(req.body);
         res.json({ success: 'Se ha guardado con registro.' });
 
-    } else {
+    }else {
 
-        res.json({ error: 'La informacion de la empresa ya existe.' });
+       res.json({ error: 'La informacion de la empresa ya existe.' });
     }
 
 

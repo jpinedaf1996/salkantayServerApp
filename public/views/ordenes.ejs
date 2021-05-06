@@ -1,91 +1,85 @@
 <%- include('./templates/header'); -%>
-  <!--
+    <!--
 Autor Jesus pineda / "Otro autor"
 14/08/2020
 Proposito de esta pagina: Esta es la pagina de productos
 aqui se gestionanran los diferente produstos
 -->
-  <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
+    <!-- Aqui Agregar el contenido para las paginas del sistemas  -->
 
-  <!-- Modal -->
+    <!-- Modal -->
 
-  <br>
+        <br>
 
-  <div class="container">
-    <div id="content-orden-pending" class="row justify-content-center">
-
-
-
-    </div>
-  </div>
-  <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
-  <%- include('./templates/scripts.ejs'); -%>
-
-    <script>
-
-      $(() => {
-
-        drawOrden();
-        
-      });
-      var socket = io.connect(IPV4, { 'forceNew': true });// conecion al servidro WS
+        <div class="container">
+          <div  id="content-orden-pending" class="row justify-content-center">
 
 
-      socket.on('update-orden', function (data) {
-        document.getElementById('play').play();
 
-      });
-      socket.on('update-orden', function (data) {
+          </div>
+        </div>
 
-        drawOrden();
+        <%- include('./templates/scripts.ejs'); -%>
 
-      });
-      socket.on('finished', function (data) {
+            <script>
 
-        if (data.success === 'ok') {
-          alertify.confirm('Informacion', data.data, function () {
-            window.location.replace(IPV4 + "/coffecode/admin/ventas");
-          }
-            , function () { alertify.error('Cancelado') });
-        } else {
+                $(() => {
 
-          alertify.alert('Informacion', data.data);
+                    drawOrden();
 
-        }
+                });
+
+                socket.on('update-orden', function (data) {
+
+                  drawOrden();
+
+                });
+                socket.on('finished', function (data) {
+
+                  if(data.success === 'ok'){
+                    alertify.confirm('Informacion', data.data, function(){
+                      window.location.replace(IPV4+"/coffecode/admin/ventas");
+                    }
+                    , function(){ alertify.error('Cancelado')});
+                  }else {
+
+                    alertify.alert('Informacion', data.data);
+
+                  }
 
 
-      });
+                });
 
-      socket.on('delete-response', function (data) {
+                socket.on('delete-response', function (data) {
 
-        getDetallebySocket(parseInt(data.id));
+                  getDetallebySocket(parseInt(data.id));
 
-      });
+                });
 
-      socket.on('update-detalle', function (data) {
+                socket.on('update-detalle', function (data) {
 
-        getDetallebySocket(parseInt(data));
+                   getDetallebySocket(parseInt(data));
 
-      });
+                });
 
-      const drawOrden = async () => {
-        const response = await new GetInfoByFetch(url.apiordenes + "pendientes").request();
-        const ct = document.getElementById('content-orden-pending');
+                  const drawOrden = async () => {
+                    const response = await new GetInfoByFetch(url.apiordenes + "pendientes").request();
+                    const ct = document.getElementById('content-orden-pending');
 
-        ct.innerHTML = " ";
+                    ct.innerHTML = " ";
 
-        if (response.orden.length === 0) {
-          const products = `
+                    if(response.orden.length === 0 ){
+                      const products = `
                       <div style='text-align: center;' class="w-100">
                         <h1 > <strong> No hay ordenes desde mesa </strong> </h1>
                       </div>
                       `;
-          ct.insertAdjacentHTML('beforeEnd', products);
-          return false;
-        }
-        response.orden.map((orden) => {
+                      ct.insertAdjacentHTML('beforeEnd', products);
+                      return false;
+                    }
+                    response.orden.map((orden) => {
 
-          let products = `
+                        let products = `
                         <div  class="col-md-4 bg-primary orden-pending w-100 animate__animated animate__bounce" >
                           <h4 ><strong>N.${orden.ordenId} - ${orden.mesa.num_mesa} </strong></h4>
                           <h4 ><strong id="sumatoria${orden.ordenId}"></strong></h4>
@@ -104,66 +98,66 @@ aqui se gestionanran los diferente produstos
                         </div>
                     `;
 
-          ct.insertAdjacentHTML('beforeEnd', products);
+                        ct.insertAdjacentHTML('beforeEnd', products);
 
-        });
+                    });
 
-      };
-      function remove(detId, ordenId) {
+                  };
+                  function remove(detId, ordenId) {
 
-        alertify.prompt('Eliminar producto de la orden', 'Escribir algun mensaje al cliente', ''
-          , function (evt, value) {
+                    alertify.prompt( 'Eliminar producto de la orden', 'Escribir algun mensaje al cliente' , ''
+                     , function(evt, value) {
 
-            socket.emit('delete-product', { detId, ordenId, value });
+                       socket.emit('delete-product', {detId, ordenId, value});
 
-            alertify.success('El cliente fue notificado! ')
+                       alertify.success('El cliente fue notificado! ')
 
-          }
-          , function () { alertify.error('Cancelado') });
+                     }
+                     , function() { alertify.error('Cancelado') });
 
-      }
-
-
-      async function getDetalle(id) {
-
-        let ct = document.getElementById(id);
-
-        if (ct.classList.contains('d-none')) {
-
-          drawDatailOrden(ct, id);
-
-          ct.classList.remove('d-none');
-
-        } else {
-
-          ct.classList.add('d-none');
-
-        }
-
-      }
-      async function getDetallebySocket(id) {
-        let ct = document.getElementById(id);
-
-        ct.classList.remove('d-none');
-
-        drawDatailOrden(ct, id);
+                  }
 
 
-      }
+                  async function getDetalle(id){
 
-      async function drawDatailOrden(ct, id) {
+                    let ct = document.getElementById(id);
 
-        //let ct = document.getElementById(id);
-        const sumatoria = document.getElementById("sumatoria" + id);
-        const response = await new GetInfoByFetch(url.apiMenu + "detalles-orden/" + id).request();
-        ct.innerHTML = "";
+                    if(ct.classList.contains('d-none')){
 
-        let total = 0;
+                      drawDatailOrden(ct,id);
 
-        response.map((detalle) => {
-          total = total + detalle.precio;
+                      ct.classList.remove('d-none');
 
-          const products = `
+                    }else{
+
+                      ct.classList.add('d-none');
+
+                    }
+
+                  }
+                  async function getDetallebySocket(id){
+                    let ct = document.getElementById(id);
+
+                    ct.classList.remove('d-none');
+
+                    drawDatailOrden(ct,id);
+
+
+                  }
+
+                  async function drawDatailOrden(ct,id) {
+
+                    //let ct = document.getElementById(id);
+                    const sumatoria = document.getElementById("sumatoria"+id);
+                    const response = await new GetInfoByFetch(url.apiMenu + "detalles-orden/"+ id).request();
+                    ct.innerHTML = "";
+
+                    let total = 0;
+
+                    response.map((detalle) => {
+                      total = total + detalle.precio;
+
+                        const products = `
                         <table  class="table w-100 text-dark bg-white">
                           <tr>
                             <td onclick="remove(${detalle.ordendetId},${detalle.ordenId})" style='text-align: left; cursor:pointer'>
@@ -180,44 +174,44 @@ aqui se gestionanran los diferente produstos
                           </tr>
                         </table>`;
 
-          if (detalle.ordenId === id) {
-            ct.insertAdjacentHTML('beforeEnd', products);
-            sumatoria.innerHTML = '$' + parseFloat(total).toFixed(2);
-          }
-        });
-      }
-      async function saveOrden(ordenId, mesaId) {
+                          if(detalle.ordenId === id){
+                            ct.insertAdjacentHTML('beforeEnd', products);
+                            sumatoria.innerHTML= '$'+parseFloat(total).toFixed(2);
+                          }
+                    });
+                  }
+                  async function saveOrden (ordenId,mesaId){
 
-        alertify.confirm('Informacion', '¿Esta seguro de finalizar la orden?', function () {
-          socket.emit('save-orden', {
+                    alertify.confirm('Informacion', '¿Esta seguro de finalizar la orden?', function(){
+                      socket.emit('save-orden', {
 
-            ordenId,
-            mesaId,
-          });
-        }
-          , function () { alertify.error('Cancelado') });
-
-
+                        ordenId,
+                        mesaId,
+                       });
+                    }
+                    , function(){ alertify.error('Cancelado')});
 
 
-      }
 
 
-      function closeOrden(ordenId) {
-
-        alertify.confirm('Cancelar', '¿Decea cancelar la orden?', function () {
-          socket.emit('close-orden', {
-
-            data: ordenId
-
-          });
-
-          window.location.replace(IPV4 + "/coffecode/admin/ordenes");
-
-        }
-          , function () { alertify.error('Cancelado') });
-
-      }
+                  }
 
 
-    </script>
+                  function closeOrden(ordenId) {
+
+                    alertify.confirm('Cancelar', '¿Decea cancelar la orden?', function(){
+                      socket.emit('close-orden', {
+
+                        data: ordenId
+
+                       });
+
+                       window.location.replace(IPV4+"/coffecode/admin/ordenes");
+
+                    }
+                    , function(){ alertify.error('Cancelado')});
+
+                  }
+
+
+            </script>

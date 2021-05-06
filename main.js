@@ -75,8 +75,8 @@ app.get('/menu/:ID', (req, res) => {
 
 
 **/
-const port = process.env.PORT || 3000;
-const server  = app.listen(port, () => {
+
+const server  = app.listen(3000, () => {
     console.log("El servidor esta escuchando en el puerto 3000...")
 });
 

@@ -11,7 +11,8 @@
      response.map((VentasD) => {
          const table = `
                  <tr >
-                     <td>${VentasD.Producto}</td>
+                     <td>${VentasD.Producto}</td> Mesa
+                     <td>${VentasD.Mesa}</td>
                      <td>${VentasD.Cantidad}</td>
                      <td>$${VentasD.Precio}</td>
                      <td>${VentasD.Fecha}</td>

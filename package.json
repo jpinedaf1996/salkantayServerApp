@@ -4,7 +4,7 @@
   "description": "Servidor para servidor de Salkantay",
   "main": "main.js",
   "scripts": {
-    "start": "node  main.js"
+    "start": "nodemon main.js"
   },
   "author": "Jesus Pineda",
   "license": "MIT",
